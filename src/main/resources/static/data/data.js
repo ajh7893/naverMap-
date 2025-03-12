@@ -41,7 +41,36 @@ var polylinePath = [
     new naver.maps.LatLng(37.3210994, 127.0517556),
     new naver.maps.LatLng(37.3084352, 127.0590529),
     new naver.maps.LatLng(37.2877049, 127.0692822),
-    new naver.maps.LatLng(37.2762087, 127.0808982)
+    new naver.maps.LatLng(37.2762087, 127.0808982),
+    new naver.maps.LatLng(34.760374, 127.662222), // 여수시청 근처
+    new naver.maps.LatLng(34.774871, 127.645593),
+    new naver.maps.LatLng(34.789632, 127.631945),
+    new naver.maps.LatLng(34.805273, 127.615489),
+    new naver.maps.LatLng(34.820158, 127.601774),
+    new naver.maps.LatLng(34.835419, 127.589218),
+    new naver.maps.LatLng(34.849597, 127.574892),
+    new naver.maps.LatLng(34.863712, 127.561233),
+    new naver.maps.LatLng(34.877561, 127.548005),
+    new naver.maps.LatLng(34.892203, 127.535982),
+    new naver.maps.LatLng(34.905317, 127.524738),
+    new naver.maps.LatLng(34.920684, 127.514004),
+    new naver.maps.LatLng(34.936472, 127.503473),
+    new naver.maps.LatLng(34.950841, 127.494828),
+    new naver.maps.LatLng(34.965227, 127.487349),
+    new naver.maps.LatLng(34.979563, 127.479587),
+    new naver.maps.LatLng(34.993112, 127.471728),
+    new naver.maps.LatLng(35.007439, 127.463891),
+    new naver.maps.LatLng(35.021326, 127.457038),
+    new naver.maps.LatLng(35.035204, 127.450293),
+    new naver.maps.LatLng(35.048391, 127.443935),
+    new naver.maps.LatLng(35.062237, 127.437215),
+    new naver.maps.LatLng(35.075918, 127.431483),
+    new naver.maps.LatLng(35.090174, 127.426032),
+    new naver.maps.LatLng(35.104912, 127.421293),
+    new naver.maps.LatLng(35.118679, 127.416928),
+    new naver.maps.LatLng(35.133418, 127.412294),
+    new naver.maps.LatLng(35.147392, 127.408093),
+    new naver.maps.LatLng(35.162183, 127.403984), // 순천시청 근처
 ];
 
 var polylinePath2 = [

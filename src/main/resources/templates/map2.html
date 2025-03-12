@@ -1,13 +1,14 @@
-<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Home Page</title>
 
-    <script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=ebw9oxmgrs"></script>
+    <!--<script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=tzo0erifbf"></script>-->
+    <script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?govClientId=tzo0erifbf"></script>
     <!--<script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=ebw9oxmgrs&amp;submodules=panorama,geocoder,drawing,visualization"></script>-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="/data/data.js"></script>
 
     <script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps-panorama.js"></script>
     <script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps-geocoder.js"></script>
@@ -16,277 +17,84 @@
 </head>
 <body>
 
-<div id="map" style="width: 100%; height: 600px; position: relative; overflow: hidden; background: rgb(248, 249, 250);"
-     tabindex="0">
-    <div class="search" style="">
-        <input id="address" type="text" placeholder="검색할 주소" value="불정로 6">
-        <input id="submit" type="button" value="주소 검색">
-    </div>
-
-
+<div id="wrap" class="section">
+    <div id="map" style="width:100%;height:100%;"></div>
 </div>
 <div style="display:inline;">
-    <button style="padding:10px 10px; margin:2px;" id="drawSingle" class="btn">단일 폴리라인으로 그리기</button>
-    <button style="padding:10px 10px; margin:2px;" id="drawMulti" class="btn">멀티 폴리라인으로 그리기</button>
-    <button style="padding:10px 10px; margin:2px;" id="remove" class="btn">폴리라인 삭제</button>
-</div>
-<div id="map2" style="width: 100%; height: 600px; position: relative; overflow: hidden; background: rgb(248, 249, 250);" tabindex="0">
-
+    <input type="checkbox" style="padding:10px 10px; margin:2px;" id="RIVER_NATION" class="btn">river_nation</input>
+    <input type="checkbox" style="padding:10px 10px; margin:2px;" id="ECRIV" class="btn">ecriv</input>
+    <button style="padding:10px 10px; margin:2px;" id="remove" class="btn"> 삭제</button>
 </div>
 
 <script>
-    var map = new naver.maps.Map("map", {
-            center: new naver.maps.LatLng(37.5666103, 126.9783882),
-            zoom: 16
-        }),
-        infoWindow = null;
-
-    function initGeocoder() {
-        var latlng = map.getCenter();
-        var utmk = naver.maps.TransCoord.fromLatLngToUTMK(latlng); // 위/경도 -> UTMK
-        var tm128 = naver.maps.TransCoord.fromUTMKToTM128(utmk);   // UTMK -> TM128
-        var naverCoord = naver.maps.TransCoord.fromTM128ToNaver(tm128); // TM128 -> NAVER
-
-        infoWindow = new naver.maps.InfoWindow({
-            content: ''
-        });
-
-        map.addListener('click', function(e) {
-            var latlng = e.coord,
-                utmk = naver.maps.TransCoord.fromLatLngToUTMK(latlng),
-                tm128 = naver.maps.TransCoord.fromUTMKToTM128(utmk),
-                naverCoord = naver.maps.TransCoord.fromTM128ToNaver(tm128);
-
-            utmk.x = parseFloat(utmk.x.toFixed(1));
-            utmk.y = parseFloat(utmk.y.toFixed(1));
-
-            infoWindow.setContent([
-                '<div style="padding:10px;width:380px;font-size:14px;line-height:20px;">',
-                '<strong>LatLng</strong> : '+ '좌 클릭 지점 위/경도 좌표: '+ latlng+'<br />',
-
-                '</div>'
-            ].join(''));
-
-            infoWindow.open(map, latlng);
-            console.log('LatLng: ' + latlng.toString());
-            //console.log('UTMK: ' + utmk.toString());
-            //console.log('TM128: ' + tm128.toString());
-            //console.log('NAVER: ' + naverCoord.toString());
-        });
-    }
-
-    naver.maps.onJSContentLoaded = initGeocoder;
+    var map = new naver.maps.Map(document.getElementById('map'), {
+        zoom: 10,
+        mapTypeId: 'normal',
+        center: new naver.maps.LatLng(37.3586524, 127.1060678)
+    });
 
     var HOME_PATH = window.HOME_PATH || '.';
-    var cityhall = new naver.maps.LatLng(37.5666805, 126.9784147),
-        map = new naver.maps.Map('map', {
-            center: cityhall,
-            zoom: 15
-        }),
-        marker = new naver.maps.Marker({
-            map: map,
-            position: cityhall
+
+
+
+    naver.maps.Event.once(map, 'init', function () {
+        $.ajax({
+            //url: 'https://navermaps.github.io/maps.js.ncp/docs/data/naver.json',
+            //url: 'http://localhost/data/ctzn_excelList_sigunNm_gm.json',
+            //url: 'http://localhost/data/works_RIVER_NATION.json',
+            url: 'http://localhost/data/works_ECRIV.json',
+            dataType: 'json',
+            success: startDataLayer
         });
-
-    var contentString = [
-            '<div class="iw_inner">',
-            '   <h3>서울특별시청</h3>',
-            '   <p>서울특별시 중구 태평로1가 31 | 서울특별시 중구 세종대로 110 서울특별시청<br />',
-            '       <img src="' +'/img/sally.png" width="55" height="55" alt="서울시청" class="thumb" /><br />',
-            '       02-120 | 공공,사회기관 &gt; 특별,광역시청<br />',
-            '       <a href="http://www.seoul.go.kr" target="_blank">www.seoul.go.kr/</a>',
-            '   </p>',
-            '</div>'
-        ].join('');
-
-    var infowindow = new naver.maps.InfoWindow({
-        content: contentString,
-        maxWidth: 500,
-        backgroundColor: "#eee",
-        borderColor: "#2db400",
-        borderWidth: 3,
-        anchorSize: new naver.maps.Size(30, 30),
-        anchorSkew: true,
-        anchorColor: "#eee",
-        pixelOffset: new naver.maps.Point(20, -20)
     });
 
-    naver.maps.Event.addListener(marker, "click", function(e) {
-        if (infowindow.getMap()) {
-            infowindow.close();
-        } else {
-            infowindow.open(map, marker);
-        }
-    });
-</script>
-<script>
-    // 서울 -> 부산 길찾기
-    var HOME_PATH = window.HOME_PATH || '.';
-    var bicycleRouteUrl = 'http://localhost/data/polyline_route.json'
+    function startDataLayer(geojson) {
 
+        map.data.addGeoJson(geojson);
 
-    console.log(bicycleRouteUrl)
-
-</script>
-<script id="code">
-    var cacheSteps,
-        polyLines,
-        polylineOptions = {
-            fillColor: '#E16E79',
-            fillOpacity: 1,
-            strokeColor: '#E16E79',
-            strokeOpacity: 1,
-            strokeWeight: 3,
-        };
-
-    var map2 = new naver.maps.Map('map2', {
-        center: new naver.maps.LatLng(36.3835833, 128.0344242),
-        zoom: 6,
-        zoomControl: true,
-        zoomControlOptions: {
-            style: naver.maps.ZoomControlStyle.SMALL,
-            position: naver.maps.Position.RIGHT_CENTER
-        }
-    });
-
-    function loadData(localCompleteCallback) {
-        console.time('loadData');
-        console.log('loadData');
-        console.log('bicycleRouteUrl: '+ bicycleRouteUrl);
-        console.log('@@localCompleteCallback: '+ localCompleteCallback);
-        $.get(bicycleRouteUrl, localCompleteCallback, 'json').fail(loadFail);
-    }
-
-    function draw(result, drawMethod) {
-        // 데이터 구조를 체크
-        if (!Array.isArray(result)) {
-            console.error("❌ result가 배열이 아닙니다!", result);
-            return;
-        }
-
-        try {
-            // 🚨 기존 코드에서 result.routes[0].legs[0].steps를 사용했는데, JSON 구조를 다시 확인해야 함
-            if (!result[0].path) {
-                console.error("❌ 데이터 구조 오류! path 속성이 없음:", result[0]);
-                return;
+        map.data.setStyle(function(feature) {
+            var color = 'blue';
+            //console.log(feature)
+            if (feature.getProperty('isColorful')) {
+                color = feature.getProperty('color');
+                console.log(color);
             }
 
-            polyLines = drawMethod(result);  // 여기서 result를 직접 전달
-        } catch (error) {
-            console.error("❌ 오류 발생:", error);
-        }
-    }
-
-
-    function loadFail(error) {
-        console.log('loadFail', error);
-    }
-
-    function drawSingle() {
-        console.log('1');
-
-        if (!map2) return;
-        remove();
-        console.log('cacheSteps: '+cacheSteps);
-        console.log('polyLines: '+polyLines);
-        cacheSteps ? polyLines = drawSinglePolyline(cacheSteps) : loadData(function (result) {
-            draw(result, drawSinglePolyline);
+            return {
+                fillColor: color,
+                strokeColor: color,
+                strokeWeight: 5,
+                icon: null
+            };
         });
-    }
 
-    function drawMulti() {
-        if (!map2) return;
-        remove();
-        cacheSteps ? polyLines = drawMultiPolyline(cacheSteps) : loadData(function (result) {
-            draw(result, drawMultiPolyline);
+
+        map.data.addListener('click', function(e) {
+            console.log(e)
+            e.feature.setProperty('isColorful', true);
         });
-    }
 
-    function filterAndCacheSteps(steps) {
-        console.time('filterAndCacheSteps');
-        console.log('filterAndCacheSteps');
+        map.data.addListener('dblclick', function(e) {
+            var bounds = e.feature.getBounds();
 
-        if (!Array.isArray(steps)) {
-            console.error("❌ steps가 배열이 아닙니다!", steps);
-            return [];
-        }
-
-        cacheSteps = steps.filter(step => !!step.path);
-
-        console.log(`✅ cacheSteps 길이: ${cacheSteps.length}`);
-        console.log("🧐 첫 번째 항목:", cacheSteps[0]);
-        console.log("📌 path 값만 출력:", cacheSteps.map(step => step.path));
-        console.log("📝 JSON 형태로 전체 출력:", JSON.stringify(cacheSteps, null, 2));
-
-        console.timeEnd('filterAndCacheSteps');
-        return cacheSteps;
-    }
-
-
-    function drawSinglePolyline(steps) {
-        if (!Array.isArray(steps)) {
-            console.error("❌ steps가 배열이 아닙니다!", steps);
-            return [];
-        }
-
-        console.log("📌 steps 데이터 확인:", steps);
-
-        console.time('drawSinglePolyline');
-        var allPaths = [];
-
-        steps.forEach(step => {
-            if (!step.path) {
-                console.warn("⚠️ path가 없는 데이터:", step);
-                return;
+            if (bounds) {
+                map.panToBounds(bounds);
             }
-            allPaths = allPaths.concat(getPaths(step.path));
         });
 
-        polyLines = [createPolyline(allPaths)];
-        console.timeEnd('drawSinglePolyline');
-
-        return polyLines;
-    }
-
-
-    function drawMultiPolyline(steps) {
-        if (!steps) return;
-        console.time('drawMultiPolyline');
-        var polyLines = filterAndCacheSteps(steps).map(step => createPolyline(getPaths(step.path)));
-        console.timeEnd('drawMultiPolyline');
-        return polyLines;
-    }
-
-    function getPaths(path) {
-        var paths = [],
-            steps = path.split(' ');
-        steps.map(step => {
-            var splitStep = step.split(',').map(point => parseFloat(point)),
-                latLng = new naver.maps.LatLng(splitStep[1], splitStep[0]);
-            paths.push(latLng);
+        map.data.addListener('mouseover', function(e) {
+            map.data.overrideStyle(e.feature, {
+                strokeWeight: 8,
+                icon: HOME_PATH +'/img/example/pin_spot.png'
+            });
         });
-        return paths;
-    }
 
-    function createPolyline(paths) {
-        var polyline = new naver.maps.Polyline({
-            map2: map2,
-            path: paths,
-            ...polylineOptions,
+        map.data.addListener('mouseout', function(e) {
+            map.data.revertStyle();
         });
-        return polyline;
+
     }
 
-    function remove() {
-        if (!polyLines) return;
-        polyLines.map(polyLine => polyLine.setMap(null));
-        polyLines.length = 0;
-        polyLines = [];
-    }
-
-    $('#drawSingle').on('click', drawSingle);
-    $('#drawMulti').on('click', drawMulti);
-    $('#remove').on('click', remove);
 
 </script>
 </body>
