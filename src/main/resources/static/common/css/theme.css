@@ -1,0 +1,709 @@
+@charset "UTF-8";
+
+/*---- Customer CSS ----*/
+
+/* 네이버지도 */
+#mapService {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    background-color: #ffffff;
+    overflow: hidden;
+}
+#sampleMap {
+    height: 100%;
+    background-image: url("/common/images/sample_map.jpg");
+    background-size: cover;
+}
+
+#mapControlBox, .map_marker, .map_marker_title, .mapPopUp {
+    position: absolute;
+    z-index: 10; /* 지도보다 위에 오도록 설정 */
+}
+
+#map {
+    position: relative;
+    z-index: 1;
+}
+
+/* 지도 컨트롤 박스 (필터) */
+#mapControlBox {
+    position: relative;
+    width: 100%;
+}
+    .location_group {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        display: flex;
+        gap: 10px;
+        margin-right: 45px;
+    }
+        .btn_location > div {
+            width: 40px;
+            height: 40px;
+            background-color: #ffffff;
+            background-image: url("../images/ico_location.svg");
+            background-repeat: no-repeat;
+            background-position: center;
+            border-radius: 8px;
+            box-shadow: 0px 4px 4px 0 rgba(0, 0, 0, .1);
+        }
+    .location_group .mapSelect {
+        width: 130px;
+        height: 40px;
+        border-radius: 8px;
+        border-color: #ffffff;
+        background: #ffffff;
+        box-shadow: 0px 4px 4px 0 rgba(0, 0, 0, .1);
+    }
+
+    .filter_group {
+        position: absolute;
+        top: 10px;
+        left: 235px;
+    }
+    .filter_group .filter_m_btn {display: none;}
+        .filter_group ul {
+            display: flex;
+            gap: 10px;
+        }
+        .filter_group ul li button {
+            font-size: 14px;
+            padding: 11px 12px 11px 37px;
+            background-color: #ffffff;
+            background-repeat: no-repeat;
+            background-position: 12px center;
+            border-radius: 8px;
+            border: 1px solid #ffffff;
+            box-shadow: 0px 4px 4px 0 rgba(0, 0, 0, .1);
+        }
+        .filter_group ul li:first-child button {padding-left: 12px;}
+        .filter_group ul li.flt_1 button {background-image:url("../images/ico_flt_1.svg");}
+        .filter_group ul li.flt_2 button {background-image:url("../images/ico_flt_2.svg");}
+        .filter_group ul li.flt_3 button {background-image:url("../images/ico_flt_3.svg");}
+        .filter_group ul li.flt_4 button {background-image:url("../images/ico_flt_4.svg");}
+        .filter_group ul li.flt_5 button {background-image:url("../images/ico_flt_5.svg");}
+        .filter_group ul li.flt_6 button {background-image:url("../images/ico_flt_6.svg");}
+        .filter_group ul li:hover button {border: 1px solid #0445BA;}
+        .filter_group ul li.check button {border: 1px solid #0445BA;color:#0445BA;font-weight: 500;}
+
+@media (max-width: 996px) {
+    .filter_group {
+        left: unset;
+        right: 10px;
+    }
+        .filter_group .filter_m_btn {
+            display: block;
+            width: 40px;
+            height: 40px;
+            margin-bottom: 10px;
+            background-color: #09408a;
+            background-image: url("../images/ico_list.svg");
+            background-repeat: no-repeat;
+            background-position: center center;
+            border-radius: 8px;
+            float: right;
+        }
+        .filter_group ul {
+            height: 0;
+            gap: 5px;
+            flex-direction: column;
+            align-items: flex-end;
+            clear: both;
+            transition: all 0.2s ease-out;
+            overflow: hidden;
+            opacity: 0;
+        }
+        .filter_group ul.active {
+            height: 100%;
+            opacity: 1;
+        }
+}
+
+/* 지도 마커 */
+.map_marker {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-14px, -35px);
+}
+    .map_marker .point_img {
+        width: 28px;
+        height: 35px;
+        background-image: url("../images/ico_marker_1.svg");
+        background-repeat: no-repeat;
+        
+    }
+.map_marker_title {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+}
+    .map_marker_title span {
+        /* display: none; */
+        padding: 7px 23px;
+        font-size: 14px;
+        font-weight: 500;
+        color: #333333;
+        background: #ffffff;
+        border-radius: 10px;
+    }
+
+/* 시설 정보 팝업 */
+.mapPopUp {
+    position:absolute;
+    top: 50%;
+    left: 50%;
+    width: 410px;
+    padding: 10px;
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0px 4px 4px 0 rgba(0, 0, 0, .1);
+}
+    .mapPopUp .place_title {
+        position: relative;
+        display: flex;
+        font-size: 14px;
+        padding-bottom: 5px;
+        border-bottom: 1px solid #00000010;
+    }
+    .mapPopUp .place_title .flt_icon {
+        padding-left:20px;
+        background-repeat: no-repeat;
+        background-position: 0 center;
+        color: #000000;
+    }
+.mapPopUp .place_title .flt_icon.flt_1 {background-image:url("../images/ico_flt_1_b.svg");}
+.mapPopUp .place_title .flt_icon.flt_2 {background-image:url("../images/ico_flt_2_b.svg");}
+.mapPopUp .place_title .flt_icon.flt_3 {background-image:url("../images/ico_flt_3_b.svg");}
+.mapPopUp .place_title .flt_icon.flt_4 {background-image:url("../images/ico_flt_4_b.svg");}
+.mapPopUp .place_title .flt_icon.flt_5 {background-image:url("../images/ico_flt_5_b.svg");}
+.mapPopUp .place_title .flt_icon.flt_6 {background-image:url("../images/ico_flt_6_b.svg");}
+    .mapPopUp .place_title span {padding-left: 20px;}
+    .mapPopUp .place_title span.able {color:#1a5cd0;}
+    .mapPopUp .place_title span.disable {color:#D24545;}
+    .mapPopUp .place_title .btn_close {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 22px;
+        height: 22px;
+        background: url("../images/ico_close.svg") no-repeat center center;
+    }
+
+.mapPopUp .place_con {
+    display: flex;
+    gap: 20px;
+    padding: 15px 5px;
+}
+    .mapPopUp .place_con .img {
+        width: 175px;
+        height: 117px;
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+    }
+    .mapPopUp .place_con .place_name {
+        font-size: 15px;
+        font-weight: 500;
+    }
+    .mapPopUp .place_con .place_info {
+        margin-top: 9px;
+    }
+    .mapPopUp .place_con .place_info li {
+        font-size: 13px;
+        font-weight: 400;
+        color: #333333;
+    }
+
+/* HEAD */
+#header {
+    height: 95px;
+    border-bottom: 1px solid #00000015;
+}
+
+#nav {
+
+}
+    #nav ul {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 95px;
+        margin-left: 120px;
+    }
+    #nav ul li.depth1 {
+        height: 100%;
+    }
+    #nav ul li.depth1 > a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0 25px;
+        height: 100%;
+        font-size: 18px;
+        font-weight: 500;
+    }
+
+    #nav .subnav {
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+
+.logo {
+    position: absolute;
+    top: 20px;
+    left: 0;
+    display: block; 
+    width: 210px;
+}
+    .logo img {width: 100%;}
+
+
+.search_btn {
+    display: block;
+    width: 45px;
+    height: 45px;
+    border: 1px solid #DBDBDB;
+    border-radius: 50%;
+    position: absolute;
+    top: 22px;
+    right: 0;
+    background: url("/common/images/ico_search.svg") no-repeat center center;
+}
+
+
+
+/* MAIN */
+.main_wrap {
+    position: relative;
+    padding:30px 0;
+    overflow: hidden;
+}
+    .main_wrap::after {
+        content: "";
+        width: 654px;
+        height: 686px;
+        position: absolute;
+        bottom: -190px;
+        left: -320px;
+        background:url("/common/images/bg1.png") no-repeat;
+        z-index: -1;
+    }
+    .main_wrap::before {
+        content: "";
+        width: 521px;
+        height: 546px;
+        position: absolute;
+        bottom: 180px;
+        right: -220px;
+        background:url("/common/images/bg2.png") no-repeat;
+        z-index: -1;
+    }
+
+.section1 {display: flex;gap: 30px;}
+.section2 {display: flex;gap: 30px;}
+.section_title {
+    margin-bottom: 20px;
+    font-size: 20px;
+    font-weight: 600;
+    color: #000000;
+}
+
+
+/* 메인 슬라이드 배너 */
+.main_slide_wrap {
+    position: relative;
+    width: 855px;
+    height: 444px;
+    border-radius: 15px;
+    background-color: pink;
+    overflow: hidden;
+}
+    .main_slide_wrap .custom_paging {
+        position: absolute;
+        bottom: 45px;
+        left: 50px;
+        width: 85px;
+        padding: 3px 0;
+        background: #00000060;
+        color: #ffffff;
+        text-align: center;
+        border-radius: 20px;
+    }
+    .main_slide_wrap .slide_controler {
+        position: absolute;
+        bottom: 45px;
+        left: 140px;
+        background: #00000060;
+        border-radius: 20px;
+    }
+    .main_slide_wrap .slide_controler button {
+        width: 30px;
+        height: 30px;
+    }
+    .main_slide_wrap .slide_controler button.btn_pause {background:url("/common/images/slick_pause.png") no-repeat center;}
+    .main_slide_wrap .slide_controler button.btn_play {background:url("/common/images/slick_play.png") no-repeat center;}
+
+    .main_slide .slick-arrow {
+        position: absolute;
+        bottom: 48px;
+        width: 25px;
+        height: 25px;
+        text-indent: -999px;
+        background-position: center;
+        background-repeat: no-repeat;
+        z-index: 1;
+    }
+    .main_slide .slick-prev {background-image: url("/common/images/slick_left.png");left: 52px;}
+    .main_slide .slick-next {background-image: url("/common/images/slick_right.png");left: 108px;}
+
+/* 수돗물 현황 */
+.water_info {
+    flex: 1;
+}
+    .water_info .water_search {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .water_info .water_search .text {
+        font-size: 20px;
+    }
+    .water_info .water_search .waterSelect {
+        width: 125px;
+        height: 34px;
+        border-radius: 8px;
+        border-color: #00000015;
+        background: #ffffff;
+    }
+    .water_info .water_search .btn {
+        color: #ffffff;
+        font-size: 14px;
+        background: #6A6A6A;
+        border-radius: 8px;
+        margin-left: 5px;
+        padding: 3px 10px;
+    }
+
+    .water_info .water_infoBox {
+        width: 100%;
+        height: auto;
+        padding: 20px 30px;
+        margin-top: 10px;
+        border-radius: 15px;
+        background: linear-gradient(180deg, rgba(84,188,236,1) 0%, rgba(26,92,208,1) 100%);
+    }
+    .water_infoBox .water_price {
+        display: flex;
+        gap: 15px;
+    }
+    .water_infoBox .water_price > div {
+        flex: 1;
+        padding: 15px;
+        border-radius: 15px;
+    }
+    .water_infoBox .water_price .left {
+        background: #ffffff90;
+    }
+    .water_infoBox .water_price .left .water_badge {
+        padding: 5px 9px;
+        font-size: 14px;
+        color: #ffffff;
+        background: #414141;
+        border-radius: 5px;
+    }
+    .water_infoBox .water_price .left > p {margin-top: 12px;}
+    .water_infoBox .water_price .left > p span {
+        padding-right: 10px;
+        font-size: 18px;
+        font-weight: 700;
+        color: #000000;
+    }
+    .water_infoBox .water_price .left .price {
+        margin-top: 25px;
+        text-align: right;
+    }
+    .water_infoBox .water_price .left .price span {
+        font-family: "oneMobileTitle";
+        font-size: 25px;
+        padding-right: 13px;
+        color: #1A5CD0;
+    }
+
+    .water_infoBox .water_price .right {
+        background: #ffffff;
+    }
+    .water_infoBox .water_price .right .water_badge {
+        padding: 5px 9px;
+        font-size: 14px;
+        color: #000000;
+        background: #F4F4FC;
+        border-radius: 5px;
+    }
+    .water_infoBox .water_price .right .waterData {
+        position: relative;
+        display: flex;
+        justify-content: space-between;
+        padding: 10px;
+        font-size: 14px;
+    }
+    .water_infoBox .water_price .right .waterData .dashed {
+        flex: 1;
+        position: relative;
+    }
+    .water_infoBox .water_price .right .waterData .dashed::after {
+        content: "";
+        width: 100%;
+        height: 1px;
+        border-bottom: 1px dashed #00000015;
+        position: absolute;
+        top: 40%;
+        left: 0;
+    }
+    .water_infoBox .water_price .right .waterData .st .icon {
+        background:url("/common/images/ico_1.png") no-repeat center;
+    }
+    .water_infoBox .water_price .right .waterData .fi .icon {
+        background:url("/common/images/ico_2.png") no-repeat center;
+    }
+
+    .water_infoBox .water_price .right .waterData .icon {
+        width: 55px;
+        height: 55px;
+        margin: 0 auto;
+        border: 1px solid #00000015;
+        background-color: #ffffff;
+        border-radius: 5px;
+    }
+    .water_infoBox .water_price .right .waterData p {
+        text-align: center;
+    }
+
+    .water_infoBox .water_state {
+        margin-top: 15px;
+    }
+    .water_infoBox .water_state .item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 8px;
+        margin-bottom: 15px;
+        background-color: #ffffff;
+        border-radius: 10px;
+    }
+    .water_infoBox .water_state .item .state_badge {
+        display: inline-block;
+        padding: 9px 19px;
+        color: #ffffff;
+        background-color: #80C85D;
+        border-radius: 8px;
+        line-height: 1.2;
+    }
+    .water_infoBox .water_state .item:last-child {
+        margin-bottom: 0;
+    }
+    .water_infoBox .water_state .item:nth-child(2) .state_badge {background-color: #0AA4B4;}
+    .water_infoBox .water_state .item:last-child .state_badge {background-color: #09408A;}
+
+/* 자주찾는 서비스 */
+.quick_link_wrap {
+    flex: 1;
+}
+.quick_link1 {/* 위 */
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+    .quick_link1 .item {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 120px;
+        flex: 1 1 40%;
+        border-radius: 15px;
+        background-repeat: no-repeat;
+        font-family: "oneMobileTitle";
+        font-size: 18px;
+        color: #ffffff;
+        overflow: hidden;
+    }
+    .quick_link1 .item:first-child {background-image: url("/common/images/quick1.jpg");background-size: 470px;background-position: -23px center;}
+    .quick_link1 .item:nth-child(2) {background-image: url("/common/images/quick2.jpg");background-size: 670px;background-position: center -225px;}
+    .quick_link1 .item:nth-child(3) {background-image: url("/common/images/quick3.jpg");background-size: 470px;background-position: -23px center;}
+    .quick_link1 .item:last-child {background-image: url("/common/images/quick4.jpg");background-size: 470px;background-position: -23px center;}
+    .quick_link1 .item .bg {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+        top:0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #00000025;
+    }
+
+.quick_link2 {/* 아래 */
+    display: flex;
+    gap: 30px;
+    margin-top: 20px;
+}
+    .quick_link2 .item {
+        display: block;
+        flex: 1;
+        height: 110px;
+        background-color: #ffffff;
+        border: 1px solid #00000015;
+        border-radius: 15px;
+    }
+    .quick_link2 .item > div {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+        height: 100%;
+        font-size: 16px;
+        font-weight: 600;
+    }
+    .quick_link2 .item > div .ico {
+        background-size: cover;
+        background-repeat: no-repeat;
+    }
+    .quick_link2 .item:hover {border-color:#1A5CD0;}
+    .quick_link2 .item:hover span {color:#1A5CD0;}
+    .quick_link2 .item:first-child .ico {background-image:url("/common/images/ico_quick1.svg");width: 45px;height: 35px;}
+    .quick_link2 .item:nth-child(2) .ico {background-image:url("/common/images/ico_quick2.svg");width: 34px;height: 39px;}
+    .quick_link2 .item:nth-child(3) .ico {background-image:url("/common/images/ico_quick3.svg");width: 40px;height: 37px;}
+    .quick_link2 .item:nth-child(4) .ico {background-image:url("/common/images/ico_quick4.svg");width: 31px;height: 40px;}
+    .quick_link2 .item:last-child .ico {background-image:url("/common/images/ico_quick5.svg");width: 33px;height: 33px;}
+    .quick_link2 .item:hover:first-child .ico {background-image:url("/common/images/ico_quick1_on.svg");}
+    .quick_link2 .item:hover:nth-child(2) .ico {background-image:url("/common/images/ico_quick2_on.svg");}
+    .quick_link2 .item:hover:nth-child(3) .ico {background-image:url("/common/images/ico_quick3_on.svg");}
+    .quick_link2 .item:hover:nth-child(4) .ico {background-image:url("/common/images/ico_quick4_on.svg");}
+    .quick_link2 .item:hover:last-child .ico {background-image:url("/common/images/ico_quick5_on.svg");}
+
+/* 공지사항 섹션 */
+.notice_wrap {flex: 1;}
+
+.notice {/* 공지사항 */
+    position: relative;
+    margin-bottom: 45px;
+}
+    .notice ul li {
+        margin-bottom:15px;
+    }
+    .notice ul li a {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+    }
+    .notice ul li a .ico {
+        width: 40px;
+        height: 40px;
+        background-color: #F4F4FC;
+        background-image: url("/common/images/ico_notifi.svg");
+        background-repeat: no-repeat;
+        background-position: center;
+        border-radius: 8px;
+    }
+    .notice ul li a p {
+        flex-grow: 1;
+    }
+    .notice ul li a:hover p {
+        text-decoration: underline;
+    }
+    .notice ul li a span {
+        flex-shrink: 0;
+        width: 100px;
+        text-align: right;
+    }
+    .notice .notice_more_btn {
+        position: absolute;
+        top: 0;
+        right: 0;
+        display: block;
+        width: 34px;
+        height: 34px;
+        background-color: #F2F2F2;
+        background-image: url("/common/images/ico_add.svg");
+        background-repeat: no-repeat;
+        background-position: center;
+        border-radius: 50%;
+    }
+    .notice.major_river ul li a .ico {background-image: url("/common/images/ico_list2.svg");}
+
+
+/* footer */
+.footer {
+    background-color: #FAFAFA;
+    border-top: 1px solid #00000010;
+}
+.footer_etc {border-bottom: 1px solid #00000010;}
+.footer_inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 25px 0;
+}
+    .footer_etc .f_logo {
+        color: #000000;
+        font-weight: 700;
+        font-size: 16px;
+        height: 50px;
+        margin-right: 35px;
+        float: left;
+    }
+    .footer_etc span {
+        float: left;
+    }
+    .footer_etc .fmy_btn {
+        width: 230px;
+        padding: 10px 20px;
+        border-radius: 8px;
+        border: 1px solid #00000015;
+        background:url("/common/images/ico_down.svg") no-repeat;
+        background-position: 190px center;
+    }
+
+    .fmy_box {
+        display: flex;
+        justify-content: flex-end;
+        max-width: 1400px;
+        margin: 0 auto;
+        opacity: 0;
+        height: 0;
+        overflow: hidden;
+    }
+    .fmy_box.open {
+        opacity: 1;
+        height: auto;
+        border: 0;
+        padding: 30px 0;
+    }
+    .fmy_box > div {
+        min-width: 280px;
+        padding: 0 20px;
+        border-right: 1px solid #00000015;
+    }
+    .fmy_box > div:last-child {border: 0;}
+    .fmy_box > div p {
+        font-size: 16px;
+        font-weight: 600;
+        color: #333333;
+        margin-bottom: 15px;
+    }
+    .fmy_box ul li {
+        font-size: 14px;
+        color: #333333;
+        margin-bottom: 5px;
+    }
+    .fmy_box .fmy_grid {
+        display: grid;
+        grid-template-columns: repeat(4, 100px);
+    }

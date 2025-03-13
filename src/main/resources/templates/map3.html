@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Home Page</title>
+
+    <!--<script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=tzo0erifbf"></script>-->
+    <script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?govClientId=tzo0erifbf"></script>
+    <!--<script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=ebw9oxmgrs&amp;submodules=panorama,geocoder,drawing,visualization"></script>-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="/data/data.js"></script>
+
+    <script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps-panorama.js"></script>
+    <script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps-geocoder.js"></script>
+    <script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps-drawing.js"></script>
+    <script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps-visualization.js"></script>
+</head>
+<body>
+
+<div id="wrap" class="section">
+    <p>지도에 경로및 마크 표시 기본적인 예제입니다.</p>
+    <div id="map" style="width:100%;height:600px;"></div>
+</div>
+<div style="display:inline;">
+    <button style="padding:10px 10px; margin:2px;" id="drawSingle" class="btn">단일 폴리라인으로 그리기</button>
+    <button style="padding:10px 10px; margin:2px;" id="drawMulti" class="btn">멀티 폴리라인으로 그리기</button>
+    <button style="padding:10px 10px; margin:2px;" id="remove" class="btn">폴리라인 삭제</button>
+</div>
+
+<script>
+        var latitude, longitude;
+
+        // 사용자의 현재 위치 가져오기
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                latitude = position.coords.latitude; // 위도
+                longitude = position.coords.longitude; // 경도
+
+                console.log(`위도: ${latitude}, 경도: ${longitude}`);
+
+                // 📌 위치 정보를 가져온 후 지도 초기화
+                initMap(latitude, longitude);
+            },
+            (error) => {
+                console.error("위치 정보를 가져올 수 없습니다.", error);
+                // 오류 발생 시 기본 위치 (서울 시청)로 지도 초기화
+                initMap(37.5666805, 126.9784147);
+            }
+        );
+
+        // 📌 지도 초기화 함수 (비동기 순서 해결)
+        function initMap(lat, lng) {
+            var map = new naver.maps.Map('map', {
+                zoom: 15,
+                center: new naver.maps.LatLng(lat, lng)
+            });
+
+            // 사용자 현재 위치 마커 추가
+            var userMarker = new naver.maps.Marker({
+                position: new naver.maps.LatLng(lat, lng),
+                map: map
+            });
+
+            // 서울 시청 위치 마커 추가
+            var cityhall = new naver.maps.LatLng(37.5666805, 126.9784147);
+            var marker2 = new naver.maps.Marker({
+                position: cityhall,
+                map: map
+            });
+
+            var contentString = [
+                '<div class="iw_inner">',
+                '   <h3>서울특별시청</h3>',
+                '   <p>서울특별시 중구 태평로1가 31 | 서울특별시 중구 세종대로 110 서울특별시청<br />',
+                '       <img src="/img/sally.png" width="55" height="55" alt="서울시청" class="thumb" /><br />',
+                '       02-120 | 공공,사회기관 &gt; 특별,광역시청<br />',
+                '       <a href="http://www.seoul.go.kr" target="_blank">www.seoul.go.kr/</a>',
+                '   </p>',
+                '</div>'
+            ].join('');
+
+            var infowindow = new naver.maps.InfoWindow({
+                content: contentString
+            });
+
+            naver.maps.Event.addListener(marker2, "click", function (e) {
+                if (infowindow.getMap()) {
+                    infowindow.close();
+                } else {
+                    infowindow.open(map, marker2);
+                }
+            });
+
+            infowindow.open(map, marker2);
+
+            // 지도 클릭 시 마커 추가 기능
+            var markerList = [];
+
+            naver.maps.Event.addListener(map, 'click', function (e) {
+                var marker = new naver.maps.Marker({
+                    position: e.coord,
+                    map: map
+                });
+
+                markerList.push(marker);
+            });
+
+            // 지도 우클릭 시 좌표 표시
+            var menuLayer = $('<div style="position:absolute;z-index:10000;background-color:#fff;border:solid 1px #333;padding:10px;display:none;"></div>');
+            map.getPanes().floatPane.appendChild(menuLayer[0]);
+            naver.maps.Event.addListener(map, 'rightclick', function (e) {
+                var coordHtml =
+                    'Coord: ' + '(우 클릭 지점 위/경도 좌표)' + '<br />' +
+                    'Point: ' + e.point + '<br />' +
+                    'Offset: ' + e.offset;
+
+                menuLayer.show().css({
+                    left: e.offset.x,
+                    top: e.offset.y
+                }).html(coordHtml);
+
+                console.log('Coord: ' + e.coord.toString());
+            });
+
+            // 선 그리기 (폴리라인)
+            var polyline; // 전역 변수
+
+            function drawSingle() {
+                if (polyline) {
+                    polyline.setMap(null);
+                }
+                remove();
+
+                polyline = new naver.maps.Polyline({
+                    path: polylinePath, // 선 위치 변수배열
+                    strokeColor: '#FF0000',
+                    strokeOpacity: 0.8,
+                    strokeWeight: 6,
+                    map: map
+                });
+            }
+
+            function drawMulti() {
+                if (polyline) {
+                    polyline.setMap(null);
+                }
+                remove();
+
+                polyline = new naver.maps.Polyline({
+                    path: polylinePath2,
+                    strokeColor: '#FF0000',
+                    strokeOpacity: 0.8,
+                    strokeWeight: 6,
+                    map: map
+                });
+
+                console.log('polylinePath2');
+                console.log(polylinePath2);
+            }
+
+            function remove() {
+                console.log('remove');
+                if (polyline) {
+                    polyline.setMap(null);
+                    polyline = null;
+                }
+            }
+
+            $('#drawSingle').on('click', drawSingle);
+            $('#drawMulti').on('click', drawMulti);
+            $('#remove').on('click', remove);
+        }
+    </script>
+</body>
+</html>

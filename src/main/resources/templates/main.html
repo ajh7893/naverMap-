@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+
+<html lang="ko" class="">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>경기도 물정보시스템</title>
+	<meta name="format-detection" content="telephone=no" />
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+	<meta name="description" content="경기도 우리집 수돗물, 안심 물놀이 시설, 우리동네 약수터, 아름다운 물길, 수질, 수량, 기상, 통계 제공">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    
+	<link rel="shortcut icon" href="common/images/favicon.ico" type="image/x-icon">
+
+	<!-- common -->
+	<link rel="stylesheet" type="text/css" href="common/plugin/bootstrap/bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="common/css/default.css">
+	<script src="common/js/jquery-1.12.4.min.js"></script>
+	<script src="common/js/jquery-ui.js"></script>
+	<script src="common/js/customScript.js"></script>
+
+	<!-- plugin -->
+	<link rel="stylesheet" type="text/css" href="common/plugin/slick/slick.css">
+	<script src="common/plugin/slick/slick.min.js"></script>
+	
+	<!-- design -->
+	<link rel="stylesheet" type="text/css" href="common/css/theme.css">
+
+</head>
+
+<body>
+	<div id="wrapper">
+		<header id="header">
+			<div class="container" style="position: relative;">
+				<h1>
+					<a href="#!" class="logo"><img src="/common/images/logo.png" alt="경기도물정보시스템"/></a>
+				</h1>
+				<nav id="nav">
+					<ul>
+						<li class="depth1">
+							<a href="#!">생활 속 물정보</a>
+							<!-- <div class="subnav">
+								<ul>
+									<li class="depth2"><a href="#!">우리집 수돗물</a>
+										<ul>
+											<li class="depth3"><a href="#!">상수도 보급률</a></li>
+											<li class="depth3"><a href="#!">상수도 보급률</a></li>
+											<li class="depth3"><a href="#!">상수도 보급률</a></li>
+											<li class="depth3"><a href="#!">상수도 보급률</a></li>
+											<li class="depth3"><a href="#!">상수도 보급률</a></li>
+											<li class="depth3"><a href="#!">상수도 보급률</a></li>
+											<li class="depth3"><a href="#!">상수도 보급률</a></li>
+											<li class="depth3"><a href="#!">상수도 보급률</a></li>
+											<li class="depth3"><a href="#!">상수도 보급률</a></li>
+											<li class="depth3"><a href="#!">상수도 보급률</a></li>
+										</ul>
+									</li>
+									<li class="depth2"><a href="#!">우리동네 약수터</a></li>
+									<li class="depth2"><a href="#!">물놀이형 수경시설</a></li>
+									<li class="depth2"><a href="#!">아름다운 물길</a></li>
+								</ul>
+							</div> -->
+						</li>
+						<li class="depth1"><a href="#!">실시간 물정보</a></li>
+						<li class="depth1"><a href="#!">도민참여 정보</a></li>
+						<li class="depth1"><a href="#!">팔당전망대</a></li>
+						<li class="depth1"><a href="#!">자료마당</a></li>
+						<li class="depth1"><a href="#!">지도서비스</a></li>
+					</ul>
+				</nav>
+				<a href="#!" class="search_btn"></a>
+			</div>
+		</header>
+
+		<div class="main_wrap">
+			<div class="container">
+				<div class="section1">
+					<!-- 메인 슬라이드 배너 -->
+					<div class="main_slide_wrap">
+						<div class="main_slide">
+							<div class="slide">
+								<a href="#!"><img src="/common/images/banner1.jpg" alt=""/></a>
+							</div>
+							<div class="slide">
+								<a href="#!"><img src="/common/images/banner1.jpg" alt=""/></a>
+							</div>
+							<div class="slide">
+								<a href="#!"><img src="/common/images/banner1.jpg" alt=""/></a>
+							</div>
+							<div class="slide">
+								<a href="#!"><img src="/common/images/banner1.jpg" alt=""/></a>
+							</div>
+						</div>
+						<div class="custom_paging"></div>
+						<div class="slide_controler">
+							<button class="btn_pause"></button>
+						</div>
+					</div>
+
+					<!-- 수돗물 현황 -->
+					<div class="water_info">
+						<div class="water_search">
+							<div class="text"><strong>광주시</strong>의 수돗물 현황입니다.</div>
+							<div>
+								<select class="waterSelect"> <!--시군구 선택박스-->
+									<option value="">전체</option>
+									<option value="수원시">수원시</option>
+									<option value="용인시">용인시</option>
+									<option value="고양시">고양시</option>
+									<option value="화성시">화성시</option>
+									<option value="성남시">성남시</option>
+									<option value="부천시">부천시</option>
+									<option value="남양주시">남양주시</option>
+									<option value="안산시">안산시</option>
+									<option value="평택시">평택시</option>
+									<option value="안양시">안양시</option>
+									<option value="시흥시">시흥시</option>
+									<option value="파주시">파주시</option>
+									<option value="김포시">김포시</option>
+									<option value="의정부시">의정부시</option>
+									<option value="광주시">광주시</option>
+									<option value="하남시">하남시</option>
+									<option value="광명시">광명시</option>
+									<option value="군포시">군포시</option>
+									<option value="양주시">양주시</option>
+									<option value="오산시">오산시</option>
+									<option value="이천시">이천시</option>
+									<option value="안성시">안성시</option>
+									<option value="구리시">구리시</option>
+									<option value="의왕시">의왕시</option>
+									<option value="포천시">포천시</option>
+									<option value="양평군">양평군</option>
+									<option value="여주시">여주시</option>
+									<option value="동두천시">동두천시</option>
+									<option value="과천시">과천시</option>
+									<option value="가평군">가평군</option>
+									<option value="연천군">연천군</option>
+								</select>
+								<button class="btn" type="button">바로가기</button>
+							</div>
+						</div>
+						<div class="water_infoBox">
+							<div class="water_price">
+								<div class="left">
+									<span class="water_badge">2022년 기준</span>
+									<p><span>수돗물 요금</span>가정용</p>
+									<div class="price"><span>512</span>원/m³</div>
+								</div>
+								<div class="right">
+									<span class="water_badge">2024년 2월</span>
+									<div class="waterData">
+										<div class="st">
+											<div class="icon"></div>
+											<p>광주1정수장</p>
+										</div>
+										<div class="dashed"></div>
+										<div class="fi">
+											<div class="icon"></div>
+											<p>광주시</p>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="water_state">
+								<div class="item">
+									<div>
+										<span class="state_badge">일반세균</span>
+										<span class="pl35">0.000</span>
+										CFU/mL
+									</div>
+									<div>※ 기준치 100 이하</div>
+								</div>
+								<div class="item">
+									<div>
+										<span class="state_badge">잔류염소</span>
+										<span class="pl35">0.000</span>
+										mg/L
+									</div>
+									<div>※ 기준치 100 이하</div>
+								</div>
+								<div class="item">
+									<div>
+										<span class="state_badge">염소이온</span>
+										<span class="pl35">0.000</span>
+										mg/L
+									</div>
+									<div>※ 기준치 100 이하</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="section2 mt50">
+					<!-- 자주 찾는 서비스 -->
+					<div class="quick_link_wrap">
+						<h4 class="section_title">자주찾는 서비스</h4>
+						<div class="quick_link1">
+							<a href="#!" class="item">
+								<span class="bg">우리집 수돗물</span>
+							</a>
+							<a href="#!" class="item">
+								<span class="bg">안심 물놀이 시설</span>
+							</a>
+							<a href="#!" class="item">
+								<span class="bg">우리동네 약수터</span>
+							</a>
+							<a href="#!" class="item">
+								<span class="bg">아름다운 물길</span>
+							</a>
+						</div>
+
+						<div class="quick_link2">
+							<a href="#!" class="item">
+								<div>
+									<div class="ico"></div>
+									<span>수질</span>
+								</div>
+							</a>
+							<a href="#!" class="item">
+								<div>
+									<div class="ico"></div>
+									<span>수질</span>
+								</div>
+							</a>
+							<a href="#!" class="item">
+								<div>
+									<div class="ico"></div>
+									<span>수질</span>
+								</div>
+							</a>
+							<a href="#!" class="item">
+								<div>
+									<div class="ico"></div>
+									<span>수질</span>
+								</div>
+							</a>
+							<a href="#!" class="item">
+								<div>
+									<div class="ico"></div>
+									<span>수질</span>
+								</div>
+							</a>
+						</div>
+					</div>
+
+					<!-- 공지사항 섹션 -->
+					<div class="notice_wrap">
+						<div class="notice">
+							<h4 class="section_title">공지사항</h4>
+							<ul>
+								<li>
+									<a href="#!">
+										<div class="ico"></div>
+										<p>경기도 지하수 방치공 찾기운동 안내</p>
+										<span class="date">2024-10-02</span>
+									</a>
+								</li>
+								<li>
+									<a href="#!">
+										<div class="ico"></div>
+										<p>경기도 지하수 방치공 찾기운동 안내</p>
+										<span class="date">2024-10-02</span>
+									</a>
+								</li>
+								<li>
+									<a href="#!">
+										<div class="ico"></div>
+										<p>경기도 지하수 방치공 찾기운동 안내</p>
+										<span class="date">2024-10-02</span>
+									</a>
+								</li>
+							</ul>
+							<a href="#!" class="notice_more_btn"><span class="hidden">공지사항 더보기</span></a>
+						</div>
+
+						<div class="notice major_river">
+							<h4 class="section_title">주요하천 수질현황</h4>
+							<ul>
+								<li>
+									<a href="#!">
+										<div class="ico"></div>
+										<p>경기도 지하수 방치공 찾기운동 안내</p>
+										<span class="date">2024-10-02</span>
+									</a>
+								</li>
+								<li>
+									<a href="#!">
+										<div class="ico"></div>
+										<p>경기도 지하수 방치공 찾기운동 안내</p>
+										<span class="date">2024-10-02</span>
+									</a>
+								</li>
+								<li>
+									<a href="#!">
+										<div class="ico"></div>
+										<p>경기도 지하수 방치공 찾기운동 안내</p>
+										<span class="date">2024-10-02</span>
+									</a>
+								</li>
+							</ul>
+							<a href="#!" class="notice_more_btn"><span class="hidden">주요하천 수질현황 더보기</span></a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<footer class="footer">
+			<div class="footer_etc">
+				<div class="container">
+					<div class="footer_inner">
+						<div>
+							<p class="f_logo">경기도 수자원본부</p>
+							<span>(우)12708 광주시 남종면 산수로 1692 / TEL 8008-6933 <Br/>COPYRIGHT© 2025 경기도수자원본부. ALL RIGHTS RESERVED.</span>
+						</div>
+						<a href="#!" class="fmy_btn">패밀리 사이트</a>
+					</div>
+				</div>
+			</div>
+			<div id="fmy_box" class="fmy_box">
+				<div>
+					<p>도 관련기관</p>
+					<ul>
+						<li><a target="_blank" href="https://www.gg.go.kr/">경기도청</a></li>
+						<li><a target="_blank" href="https://www.gg.go.kr/contents/contents.do?ciIdx=937&amp;menuId=2599">경기도 수자원본부</a></li>
+						<li><a target="_blank" href="https://www.gg.go.kr/gg_health">경기도보건환경연구원</a></li>
+						<li><a target="_blank" href="https://www.gri.re.kr/">경기연구원</a></li>
+						<li><a target="_blank" href="https://gto.or.kr/">경기관광공사</a></li>
+						<li><a target="_blank" href="http://www.gwisc.or.kr/">경기도물산업지원센터</a></li>
+						<li><a target="_blank" href="http://www.paldang.or.kr/index.php">특별대책지역수질보전협의회</a></li>
+					</ul>
+				</div>
+				<div>
+					<p>중앙관련기관</p>
+					<ul>
+						<li><a target="_blank" href="http://www.me.go.kr/">환경부</a></li>
+						<li><a target="_blank" href="http://www.molit.go.kr/">국토교통부</a></li>
+						<li><a target="_blank" href="https://www.weather.go.kr/w/index.do">기상청</a></li>
+						<li><a target="_blank" href="https://nier.go.kr/">국립환경과학원</a></li>
+						<li><a target="_blank" href="http://www.hrfco.go.kr/">홍수통제소</a></li>
+						<li><a target="_blank" href="https://www.nier.go.kr/NIER/egovHanIndex.jsp">물환경연구소</a></li>
+						<li><a target="_blank" href="https://www.ekr.or.kr">한국농어촌공사</a></li>
+						<li><a target="_blank" href="https://www.kwater.or.kr/">한국수자원공사</a></li>
+						<li><a target="_blank" href="https://www.keco.or.kr/">한국환경공단</a></li>
+						<li><a target="_blank" href="http://www.khnp.co.kr/">한국수력원자력</a></li>
+					</ul>
+				</div>
+				<div>
+					<p>물관련시스템</p>
+					<ul>
+						<li><a target="_blank" href="http://water.nier.go.kr">물환경정보시스템</a></li>
+						<li><a target="_blank" href="https://www.waternow.go.kr/web">국가상수도정보시스템</a></li>
+						<li><a target="_blank" href="https://www.hasudoinfo.or.kr/">국가하수도정보시스템</a></li>
+						<li><a target="_blank" href="https://www.gims.go.kr/">국가지하수정보센터</a></li>
+						<li><a target="_blank" href="http://www.wamis.go.kr/">국가수자원관리종합정보시스템</a></li>
+						<li><a target="_blank" href="http://floodmap.go.kr">홍수위험지도정보시스템</a></li>
+						<li><a target="_blank" href="http://rawris.ekr.or.kr/main.do">농촌용수종합정보시스템</a></li> 
+						<li><a target="_blank" href="http://sgis.nier.go.kr/">토양지하수정보시스템</a></li>
+						<li><a target="_blank" href="http://www.water.or.kr/">물정보포털(MyWater)</a></li>
+						 <li><a target="_blank" href="http://14.63.69.206:50085">팔당수계물정보시스템</a></li>
+					</ul>
+				</div>
+				<div>
+					<p>시/군 홈페이지</p>
+					<ul class="fmy_grid">
+						<li><a target="_blank" href="http://www.suwon.go.kr/">수원시</a></li>
+						<li><a target="_blank" href="https://www.yongin.go.kr/">용인시</a></li>
+						<li><a target="_blank" href="http://www.goyang.go.kr/">고양시</a></li>
+						<li><a target="_blank" href="http://www.hscity.go.kr/">화성시</a></li>
+						<li><a target="_blank" href="http://www.seongnam.go.kr/">성남시</a></li>
+						<li><a target="_blank" href="http://www.bucheon.go.kr/">부천시</a></li>
+						<li><a target="_blank" href="http://www.nyj.go.kr/">남양주시</a></li>
+						<li><a target="_blank" href="http://www.ansan.go.kr/">안산시</a></li>
+						<li><a target="_blank" href="http://www.pyeongtaek.go.kr/">평택시</a></li>
+						<li><a target="_blank" href="http://www.anyang.go.kr/">안양시</a></li>
+						<li><a target="_blank" href="http://www.siheung.go.kr/">시흥시</a></li>
+						<li><a target="_blank" href="http://www.paju.go.kr/">파주시</a></li>
+						<li><a target="_blank" href="http://www.gimpo.go.kr/">김포시</a></li>
+						<li><a target="_blank" href="https://www.ui4u.go.kr/">의정부시</a></li>
+						<li><a target="_blank" href="https://www.gjcity.go.kr/">광주시</a></li>
+						<li><a target="_blank" href="http://www.hanam.go.kr/">하남시</a></li>
+						<li><a target="_blank" href="http://www.gm.go.kr/">광명시</a></li>
+						<li><a target="_blank" href="http://www.gunpo.go.kr/">군포시</a></li>
+						<li><a target="_blank" href="http://www.yangju.go.kr/">양주시</a></li>
+						<li><a target="_blank" href="http://www.osan.go.kr/">오산시</a></li>
+						<li><a target="_blank" href="http://www.icheon.go.kr/">이천시</a></li>
+						<li><a target="_blank" href="https://www.anseong.go.kr/">안성시</a></li>
+						<li><a target="_blank" href="http://www.guri.go.kr/">구리시</a></li>
+						<li><a target="_blank" href="http://www.uiwang.go.kr/">의왕시</a></li>
+						<li><a target="_blank" href="http://www.pocheon.go.kr/">포천시</a></li>
+						<li><a target="_blank" href="http://www.yp21.go.kr/">양평군</a></li>
+						<li><a target="_blank" href="http://www.yeoju.go.kr/">여주시</a></li>
+						<li><a target="_blank" href="http://www.ddc.go.kr/">동두천시</a></li>
+						<li><a target="_blank" href="http://www.gccity.go.kr/">과천시</a></li>
+						<li><a target="_blank" href="http://www.gp.go.kr/">가평군</a></li>
+						<li><a target="_blank" href="http://www.yeoncheon.go.kr/">연천군</a></li>
+					</ul>
+				</div>
+			</div>
+			<script>
+				$('.fmy_btn').click(function() {
+					$('#fmy_box').toggleClass('open');
+				});
+			</script>
+		</footer>
+	</div>
+</body>
+
+</html>

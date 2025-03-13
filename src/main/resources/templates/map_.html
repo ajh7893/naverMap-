@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+
+<html lang="ko" class="">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>경기도 물정보시스템</title>
+	<meta name="format-detection" content="telephone=no" />
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+	<meta name="description" content="경기도 우리집 수돗물, 안심 물놀이 시설, 우리동네 약수터, 아름다운 물길, 수질, 수량, 기상, 통계 제공">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    
+	<link rel="shortcut icon" href="/common/images/favicon.ico" type="image/x-icon">
+
+	<!-- common -->
+	<!-- 네이버 지도 api  -->
+	<script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?govClientId=tzo0erifbf"></script>
+	<link rel="stylesheet" type="text/css" href="/common/plugin/bootstrap/bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="/common/css/default.css">
+	<script src="/common/js/jquery-1.12.4.min.js"></script>
+	<script src="/common/js/jquery-ui.js"></script>
+
+	<!-- design -->
+	<link rel="stylesheet" type="text/css" href="/common/css/theme.css">
+
+</head>
+
+<body>
+
+	<div id="mapService">
+		<!-- 필터 -->
+		<div id="mapControlBox">
+			<div class="location_group">
+				<button class="btn_location" type="button">
+					<div></div>
+				</button>
+
+				<div>
+					<select class="mapSelect"> <!--시군구 선택박스-->
+						<option value="">전체</option>
+						<option value="수원시">수원시</option>
+						<option value="용인시">용인시</option>
+						<option value="고양시">고양시</option>
+						<option value="화성시">화성시</option>
+						<option value="성남시">성남시</option>
+						<option value="부천시">부천시</option>
+						<option value="남양주시">남양주시</option>
+						<option value="안산시">안산시</option>
+						<option value="평택시">평택시</option>
+						<option value="안양시">안양시</option>
+						<option value="시흥시">시흥시</option>
+						<option value="파주시">파주시</option>
+						<option value="김포시">김포시</option>
+						<option value="의정부시">의정부시</option>
+						<option value="광주시">광주시</option>
+						<option value="하남시">하남시</option>
+						<option value="광명시">광명시</option>
+						<option value="군포시">군포시</option>
+						<option value="양주시">양주시</option>
+						<option value="오산시">오산시</option>
+						<option value="이천시">이천시</option>
+						<option value="안성시">안성시</option>
+						<option value="구리시">구리시</option>
+						<option value="의왕시">의왕시</option>
+						<option value="포천시">포천시</option>
+						<option value="양평군">양평군</option>
+						<option value="여주시">여주시</option>
+						<option value="동두천시">동두천시</option>
+						<option value="과천시">과천시</option>
+						<option value="가평군">가평군</option>
+						<option value="연천군">연천군</option>
+				  	</select>
+				</div>				
+			</div>
+
+			<div class="filter_group">
+				<a href="#!" class="filter_m_btn"><span></span></a>
+				<ul class="">
+					<li class="flt_all">
+						<button type="button">전체</button>
+					</li>
+					<li class="flt_1 check"><!--선택되면 .check 붙어야함-->
+						<button type="button">약수터</button>
+					</li>
+					<li class="flt_2">
+						<button type="button">분수시설</button>
+					</li>
+					<li class="flt_3">
+						<button type="button">계류시설</button>
+					</li>
+					<li class="flt_4">
+						<button type="button">벽천</button>
+					</li>
+					<li class="flt_5">
+						<button type="button">조합놀이대</button>
+					</li>
+					<li class="flt_6">
+						<button type="button">물놀이장</button>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<script>
+			$('.filter_m_btn').click(function() {
+				$('.filter_group > ul').toggleClass('active');
+			});
+		</script>
+
+		<!-- 지도 마커 -->
+		<div class="map_marker">
+			<div class="point_img flt_1"></div>
+		</div>
+
+		<!-- 지도 마커 장소명 -->
+		<div class="map_marker_title">
+			<span>한마음 약수터</span>
+		</div>
+
+		<!-- 팝업1 : 약수터만 사용 -->
+		<div class="mapPopUp" style="top:20%;left:20%;">
+			<div class="place_title">
+				<div class="flt_icon flt_1">약수터</div>
+				<span class="able">음용가능</span>
+				<a href="#!" class="btn_close"></a>
+			</div>
+			<div class="place_con">
+				<div class="img" style="background-image: url('/common/images/sample_img.jpg');"></div>
+				<div>
+					<p class="place_name">한마음 약수터</p>
+					<ul class="place_info">
+						<li>검사일 : <span>2024-11-30</span></li>
+						<li>주소 : <span>광명시 00구 00동 11번지</span></li>
+						<li>담당부서 : <span>광명시 수질환경과</span></li>
+						<li>연락처 : <span>1234-1234-5678</span></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+
+		<!-- 팝업2 : 약수터 제외 나머지 시설 사용 -->
+		<div class="mapPopUp" style="top:20%;left:60%;">
+			<div class="place_title">
+				<div class="flt_icon flt_2">분수시설</div>
+				<span class="disable">운영중단</span>
+				<a href="#!" class="btn_close"></a>
+			</div>
+			<div class="place_con">
+				<div class="img" style="background-image: url('/common/images/sample_img.jpg');"></div>
+				<div>
+					<p class="place_name">00공원 바닥분수</p>
+					<ul class="place_info">
+						<li>점검일 : <span>2023-01-27</span></li>
+						<li>주소 : <span>광명시 00구 00동 31번지</span></li>
+						<li>담당부서 : <span>광명시 수질환경과</span></li>
+						<li>연락처 : <span>1234-1234-5678</span></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+
+		<!-- 지도 영역 -->
+		<div id="sampleMap" class="map"></div>
+
+	</div>
+</body>
+<script>
+	navigator.geolocation.getCurrentPosition(
+			(position) => {
+				latitude = position.coords.latitude; // 위도
+				longitude = position.coords.longitude; // 경도
+
+				console.log(`위도: ${latitude}, 경도: ${longitude}`);
+
+				// 📌 위치 정보를 가져온 후 지도 초기화
+				initMap(latitude, longitude);
+			},
+			(error) => {
+				console.error("위치 정보를 가져올 수 없습니다.", error);
+				// 오류 발생 시 기본 위치 (서울 시청)로 지도 초기화
+				initMap(37.5666805, 126.9784147);
+			}
+	);
+
+	function initMap(lat, lng) {
+		var map = new naver.maps.Map('map', {
+			zoom: 18,
+			center: new naver.maps.LatLng(lat, lng)
+		});
+
+		// 사용자 현재 위치 마커 추가
+		var userMarker = new naver.maps.Marker({
+			position: new naver.maps.LatLng(lat, lng),
+			map: map
+		});
+
+	}
+
+
+</script>
+</html>
