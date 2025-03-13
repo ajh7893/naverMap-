@@ -1,175 +1,382 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+
+<html lang="ko" class="">
 <head>
-    <meta charset="UTF-8">
-    <title>Home Page</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>경기도 물정보시스템</title>
+    <meta name="format-detection" content="telephone=no"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+    <meta name="description" content="경기도 우리집 수돗물, 안심 물놀이 시설, 우리동네 약수터, 아름다운 물길, 수질, 수량, 기상, 통계 제공">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 
-    <script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=ebw9oxmgrs"></script>
-    <!--<script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=ebw9oxmgrs&amp;submodules=panorama,geocoder,drawing,visualization"></script>-->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
-    <script src="/data/data.js"></script>
+    <link rel="shortcut icon" href="/common/images/favicon.ico" type="image/x-icon">
 
-    <script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps-panorama.js"></script>
-    <script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps-geocoder.js"></script>
-    <script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps-drawing.js"></script>
-    <script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps-visualization.js"></script>
+    <!-- common -->
+    <!-- 네이버 지도 api  -->
+    <script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?govClientId=tzo0erifbf"></script>
+    <link rel="stylesheet" type="text/css" href="/common/plugin/bootstrap/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="/common/css/default.css">
+    <script src="/common/js/jquery-1.12.4.min.js"></script>
+    <script src="/common/js/jquery-ui.js"></script>
+
+    <!-- design -->
+    <link rel="stylesheet" type="text/css" href="/common/css/theme.css">
+
 </head>
+
 <body>
 
-<div id="wrap" class="section">
-    <p>지도에 경로및 마크 표시 기본적인 예제입니다.</p>
-    <div id="map" style="width:100%;height:600px;"></div>
-</div>
-<div style="display:inline;">
-    <button style="padding:10px 10px; margin:2px;" id="drawSingle" class="btn">단일 폴리라인으로 그리기</button>
-    <button style="padding:10px 10px; margin:2px;" id="drawMulti" class="btn">멀티 폴리라인으로 그리기</button>
-    <button style="padding:10px 10px; margin:2px;" id="remove" class="btn">폴리라인 삭제</button>
-</div>
+<div id="mapService">
+    <!-- 필터 -->
+    <div id="mapControlBox">
+        <div class="location_group">
+            <button class="btn_location" type="button">
+                <div></div>
+            </button>
 
+            <div>
+                <select class="mapSelect"> <!--시군구 선택박스-->
+                    <option value="">전체</option>
+                    <option value="수원시">수원시</option>
+                    <option value="용인시">용인시</option>
+                    <option value="고양시">고양시</option>
+                    <option value="화성시">화성시</option>
+                    <option value="성남시">성남시</option>
+                    <option value="부천시">부천시</option>
+                    <option value="남양주시">남양주시</option>
+                    <option value="안산시">안산시</option>
+                    <option value="평택시">평택시</option>
+                    <option value="안양시">안양시</option>
+                    <option value="시흥시">시흥시</option>
+                    <option value="파주시">파주시</option>
+                    <option value="김포시">김포시</option>
+                    <option value="의정부시">의정부시</option>
+                    <option value="광주시">광주시</option>
+                    <option value="하남시">하남시</option>
+                    <option value="광명시">광명시</option>
+                    <option value="군포시">군포시</option>
+                    <option value="양주시">양주시</option>
+                    <option value="오산시">오산시</option>
+                    <option value="이천시">이천시</option>
+                    <option value="안성시">안성시</option>
+                    <option value="구리시">구리시</option>
+                    <option value="의왕시">의왕시</option>
+                    <option value="포천시">포천시</option>
+                    <option value="양평군">양평군</option>
+                    <option value="여주시">여주시</option>
+                    <option value="동두천시">동두천시</option>
+                    <option value="과천시">과천시</option>
+                    <option value="가평군">가평군</option>
+                    <option value="연천군">연천군</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="filter_group">
+            <a href="#!" class="filter_m_btn"><span></span></a>
+            <ul class="">
+                <li class="flt_all">
+                    <button type="button">전체</button>
+                </li>
+                <li class="flt_1 check"><!--선택되면 .check 붙어야함-->
+                    <button type="button">약수터</button>
+                </li>
+                <li class="flt_2">
+                    <button type="button">분수시설</button>
+                </li>
+                <li class="flt_3">
+                    <button type="button">계류시설</button>
+                </li>
+                <li class="flt_4">
+                    <button type="button">벽천</button>
+                </li>
+                <li class="flt_5">
+                    <button type="button">조합놀이대</button>
+                </li>
+                <li class="flt_6">
+                    <button type="button" id="tt">물놀이장</button>
+                </li>
+                <li class="flt_7">
+                    <button type="button" id="ECRIV">생태하천</button>
+                </li>
+                <li class="flt_7">
+                    <button type="button" id="RIVER_NATION">국가하천</button>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <script>
+        $('.filter_m_btn').click(function () {
+            $('.filter_group > ul').toggleClass('active');
+        });
+
+        $('.filter_group ul li button').on('click', function () {
+            // 모든 li에서 check 클래스 제거
+            $('.filter_group ul li').removeClass('check');
+
+            // 클릭한 버튼의 부모 li에 check 클래스 추가
+            $(this).parent().addClass('check');
+        });
+    </script>
+
+    <!-- 지도 마커 -->
+    <div class="map_marker">
+        <div class="point_img flt_1"></div>
+    </div>
+
+    <!-- 지도 마커 장소명 -->
+    <div class="map_marker_title">
+        <span>한마음 약수터</span>
+    </div>
+
+    <!-- 팝업1 : 약수터만 사용 -->
+    <div class="mapPopUp" style="top:20%;left:20%;">
+        <div class="place_title">
+            <div class="flt_icon flt_1">약수터</div>
+            <span class="able">음용가능</span>
+            <a href="#!" class="btn_close"></a>
+        </div>
+        <div class="place_con">
+            <div class="img" style="background-image: url('/common/images/sample_img.jpg');"></div>
+            <div>
+                <p class="place_name">한마음 약수터</p>
+                <ul class="place_info">
+                    <li>검사일 : <span>2024-11-30</span></li>
+                    <li>주소 : <span>광명시 00구 00동 11번지</span></li>
+                    <li>담당부서 : <span>광명시 수질환경과</span></li>
+                    <li>연락처 : <span>1234-1234-5678</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- 팝업2 : 약수터 제외 나머지 시설 사용 -->
+    <div class="mapPopUp" style="top:20%;left:60%;">
+        <div class="place_title">
+            <div class="flt_icon flt_2">분수시설</div>
+            <span class="disable">운영중단</span>
+            <a href="#!" class="btn_close"></a>
+        </div>
+        <div class="place_con">
+            <div class="img" style="background-image: url('/common/images/sample_img.jpg');"></div>
+            <div>
+                <p class="place_name">00공원 바닥분수</p>
+                <ul class="place_info">
+                    <li>점검일 : <span>2023-01-27</span></li>
+                    <li>주소 : <span>광명시 00구 00동 31번지</span></li>
+                    <li>담당부서 : <span>광명시 수질환경과</span></li>
+                    <li>연락처 : <span>1234-1234-5678</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- 지도 영역 -->
+    <div id="sampleMap" class="map"></div>
+
+</div>
+</body>
 <script>
-        var latitude, longitude;
 
-        // 사용자의 현재 위치 가져오기
+    var map; // 전역 변수로 선언하여 재사용 가능하게 설정
+
+    var isLayerVisible = false; // GeoJSON 표시 여부 확인용 변수
+    var riverNationFeatures = []; // 추가된 features를 저장할 배열
+
+    var isEcrivVisible = false; // 생태하천 레이어 표시 여부 변수
+    var ecrivLayer; // 생태하천 레이어 저장 변수
+
+    var url = 'http://localhost'
+    var path = '/data/'
+
+    // 사용자의 현재 위치 가져오기
+    function getCurrentLocation() {
         navigator.geolocation.getCurrentPosition(
             (position) => {
-                latitude = position.coords.latitude; // 위도
-                longitude = position.coords.longitude; // 경도
+                let latitude = position.coords.latitude; // 위도
+                let longitude = position.coords.longitude; // 경도
 
-                console.log(`위도: ${latitude}, 경도: ${longitude}`);
+                //console.log(`현재 위치 - 위도: ${latitude}, 경도: ${longitude}`);
 
-                // 📌 위치 정보를 가져온 후 지도 초기화
-                initMap(latitude, longitude);
+                // 지도 이동
+                moveToLocation(latitude, longitude);
             },
             (error) => {
                 console.error("위치 정보를 가져올 수 없습니다.", error);
-                // 오류 발생 시 기본 위치 (서울 시청)로 지도 초기화
-                initMap(37.5666805, 126.9784147);
+                alert("위치 정보를 가져올 수 없습니다.");
             }
         );
+    }
 
-        // 📌 지도 초기화 함수 (비동기 순서 해결)
-        function initMap(lat, lng) {
-            var map = new naver.maps.Map('map', {
-                zoom: 15,
-                center: new naver.maps.LatLng(lat, lng)
-            });
+    // 지도 초기화 함수
+    function initMap(lat, lng) {
+        map = new naver.maps.Map('sampleMap', {
+            zoom: 12,
+            center: new naver.maps.LatLng(lat, lng)
+        });
+    }
 
-            // 사용자 현재 위치 마커 추가
-            var userMarker = new naver.maps.Marker({
-                position: new naver.maps.LatLng(lat, lng),
-                map: map
-            });
-
-            // 서울 시청 위치 마커 추가 126.5349, 37.7798
-            var cityhall = new naver.maps.LatLng(37.5666805, 126.9784147);
-            var marker2 = new naver.maps.Marker({
-                position: cityhall,
-                map: map
-            });
-
-            var contentString = [
-                '<div class="iw_inner">',
-                '   <h3>서울특별시청</h3>',
-                '   <p>서울특별시 중구 태평로1가 31 | 서울특별시 중구 세종대로 110 서울특별시청<br />',
-                '       <img src="/img/sally.png" width="55" height="55" alt="서울시청" class="thumb" /><br />',
-                '       02-120 | 공공,사회기관 &gt; 특별,광역시청<br />',
-                '       <a href="http://www.seoul.go.kr" target="_blank">www.seoul.go.kr/</a>',
-                '   </p>',
-                '</div>'
-            ].join('');
-
-            var infowindow = new naver.maps.InfoWindow({
-                content: contentString
-            });
-
-            naver.maps.Event.addListener(marker2, "click", function (e) {
-                if (infowindow.getMap()) {
-                    infowindow.close();
-                } else {
-                    infowindow.open(map, marker2);
-                }
-            });
-
-            infowindow.open(map, marker2);
-
-            // 지도 클릭 시 마커 추가 기능
-            var markerList = [];
-
-            naver.maps.Event.addListener(map, 'click', function (e) {
-                var marker = new naver.maps.Marker({
-                    position: e.coord,
-                    map: map
-                });
-
-                markerList.push(marker);
-            });
-
-            // 지도 우클릭 시 좌표 표시
-            var menuLayer = $('<div style="position:absolute;z-index:10000;background-color:#fff;border:solid 1px #333;padding:10px;display:none;"></div>');
-            map.getPanes().floatPane.appendChild(menuLayer[0]);
-            naver.maps.Event.addListener(map, 'rightclick', function (e) {
-                var coordHtml =
-                    'Coord: ' + '(우 클릭 지점 위/경도 좌표)' + '<br />' +
-                    'Point: ' + e.point + '<br />' +
-                    'Offset: ' + e.offset;
-
-                menuLayer.show().css({
-                    left: e.offset.x,
-                    top: e.offset.y
-                }).html(coordHtml);
-
-                console.log('Coord: ' + e.coord.toString());
-            });
-
-            // 선 그리기 (폴리라인)
-            var polyline; // 전역 변수
-
-            function drawSingle() {
-                if (polyline) {
-                    polyline.setMap(null);
-                }
-                remove();
-
-                polyline = new naver.maps.Polyline({
-                    path: polylinePath, // 선 위치 변수배열
-                    strokeColor: '#FF0000',
-                    strokeOpacity: 0.8,
-                    strokeWeight: 6,
-                    map: map
-                });
-            }
-
-            function drawMulti() {
-                if (polyline) {
-                    polyline.setMap(null);
-                }
-                remove();
-
-                polyline = new naver.maps.Polyline({
-                    path: polylinePath2,
-                    strokeColor: '#FF0000',
-                    strokeOpacity: 0.8,
-                    strokeWeight: 6,
-                    map: map
-                });
-
-                console.log('polylinePath2');
-                console.log(polylinePath2);
-            }
-
-            function remove() {
-                console.log('remove');
-                if (polyline) {
-                    polyline.setMap(null);
-                    polyline = null;
-                }
-            }
-
-            $('#drawSingle').on('click', drawSingle);
-            $('#drawMulti').on('click', drawMulti);
-            $('#remove').on('click', remove);
+    // 지도 중심 이동 함수
+    function moveToLocation(lat, lng) {
+        if (map) {
+            var newCenter = new naver.maps.LatLng(lat, lng);
+            map.setCenter(newCenter);
+            console.log("지도가 현재 위치로 이동했습니다.");
+        } else {
+            console.error("지도 객체가 초기화되지 않았습니다.");
         }
-    </script>
-</body>
+    }
+
+    function drowEcriv() {
+        var param = 'works_ECRIV.json';
+
+        if (isEcrivVisible) {
+            // 레이어가 이미 추가된 경우 삭제
+            clearEcriv();
+            isEcrivVisible = false;
+        } else {
+            // GeoJSON 데이터를 가져와서 지도에 추가
+            $.ajax({
+                url: url + path + param,
+                dataType: 'json',
+                success: function (geojson) {
+                    ecrivLayer = new naver.maps.Data();
+                    ecrivLayer.addGeoJson(geojson);
+                    ecrivLayer.setMap(map); // 지도에 추가
+
+                    ecrivLayer.setStyle(function (feature) {
+                        var color = 'green'; // 기본 색상
+                        if (feature.getProperty('isColorful')) {
+                            color = feature.getProperty('color');
+                        }
+
+                        return {
+                            fillColor: color,
+                            strokeColor: color,
+                            strokeWeight: 5
+                        };
+                    });
+
+                    isEcrivVisible = true; // 상태 업데이트
+                }
+            });
+        }
+    }
+
+    // 지도에서 생태하천 레이어 제거
+    function clearEcriv() {
+        if (ecrivLayer) {
+            ecrivLayer.setMap(null); // 지도에서 제거
+            ecrivLayer = null; // 메모리 정리
+        }
+    }
+
+    //국가 하천 그리기
+    function drowRiverNation() {
+        var param = 'works_RIVER_NATION.json';
+
+        if (isLayerVisible) {
+            // 이미 추가된 레이어가 있으면 삭제
+            clearRiverNation();
+            isLayerVisible = false;
+        } else {
+            // GeoJSON 데이터를 가져와서 지도에 추가
+            $.ajax({
+                url: url + path + param,
+                dataType: 'json',
+                success: function (geojson) {
+                    riverNationLayer = new naver.maps.Data();
+                    riverNationLayer.addGeoJson(geojson);
+                    riverNationLayer.setMap(map); // 지도에 추가
+
+                    riverNationLayer.setStyle(function (feature) {
+                        var color = 'blue';
+                        if (feature.getProperty('isColorful')) {
+                            color = feature.getProperty('color');
+                        }
+
+                        return {
+                            fillColor: color,
+                            strokeColor: color,
+                            strokeWeight: 5
+                        };
+                    });
+
+                    isLayerVisible = true; // 상태 업데이트
+                }
+            });
+        }
+    }
+
+    // 지도에서 국가하천 레이어 제거
+    function clearRiverNation() {
+        if (riverNationLayer) {
+            riverNationLayer.setMap(null); // 지도에서 제거
+            riverNationLayer = null; // 메모리 정리
+        }
+    }
+
+
+    // 데이터 레이어 생성
+    function startDataLayer(geojson) {
+
+
+        map.data.addGeoJson(geojson);
+
+        map.data.setStyle(function (feature) {
+            var color = 'blue';
+            //console.log(feature)
+            if (feature.getProperty('isColorful')) {
+                color = feature.getProperty('color');
+                console.log(color);
+            }
+
+            return {
+                fillColor: color,
+                strokeColor: color,
+                strokeWeight: 5,
+                icon: null
+            };
+        });
+    }
+
+    // 데이터 레이어 삭제 함수
+    function removeAllDataLayer() {
+        map.data.setMap(null);
+        map.data = new naver.maps.Data();
+        map.data.setMap(map);
+    }
+
+
+    // 초기 지도 설정 (내위치 기준)
+    navigator.geolocation.getCurrentPosition(
+        (position) => {
+            let latitude = position.coords.latitude; // 위도
+            let longitude = position.coords.longitude; // 경도
+
+            // 지도 이동
+            initMap(latitude, longitude);
+        },
+        (error) => {
+            console.error("위치 정보를 가져올 수 없습니다.", error);
+            alert("위치 정보를 가져올 수 없습니다.");
+        }
+    );
+
+
+    // 위치 버튼 클릭 이벤트 추가
+    $('.btn_location').on('click', getCurrentLocation);
+
+    //생태 하천
+    $('#ECRIV').on('click', drowEcriv);
+
+    //국가 하천
+    $('#RIVER_NATION').on('click', drowRiverNation);
+
+    //지우기
+    $('#tt').on('click', removeAllDataLayer);
+
+</script>
 </html>
