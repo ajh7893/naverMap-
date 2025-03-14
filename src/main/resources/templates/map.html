@@ -84,16 +84,16 @@
                     <button type="button" id="MNSP">약수터</button>
                 </li>
                 <li class="flt_2">
-                    <button type="button">분수시설</button>
+                    <button type="button" onclick="drawWATERFCLTSLayer('FOUNTAIN')">분수시설</button>
                 </li>
                 <li class="flt_3">
-                    <button type="button">계류시설</button>
+                    <button type="button" onclick="drawWATERFCLTSLayer('MOORAGE')">계류시설</button>
                 </li>
                 <li class="flt_4">
-                    <button type="button">벽천</button>
+                    <button type="button" onclick="drawWATERFCLTSLayer('WATERFLOW')">벽천</button>
                 </li>
                 <li class="flt_5">
-                    <button type="button">조합놀이대</button>
+                    <button type="button" onclick="drawWATERFCLTSLayer('COMBINATION')">조합놀이대</button>
                 </li>
                 <li class="flt_6">
                     <button type="button" id="tt">물놀이장</button>
@@ -121,17 +121,17 @@
     </script>
 
     <!-- 지도 마커 -->
-    <div class="map_marker">
+    <!--<div class="map_marker">
         <div class="point_img flt_1"></div>
-    </div>
+    </div>-->
 
     <!-- 지도 마커 장소명 -->
-    <div class="map_marker_title">
+    <!--<div class="map_marker_title">
         <span>한마음 약수터</span>
-    </div>
+    </div>-->
 
     <!-- 팝업1 : 약수터만 사용 -->
-    <div class="mapPopUp" style="top:20%;left:20%;">
+    <!--<div class="mapPopUp" style="top:20%;left:20%;">
         <div class="place_title">
             <div class="flt_icon flt_1">약수터</div>
             <span class="able">음용가능</span>
@@ -149,7 +149,7 @@
                 </ul>
             </div>
         </div>
-    </div>
+    </div>-->
 
     <!-- 팝업2 : 약수터 제외 나머지 시설 사용 -->
     <div class="mapPopUp" style="top:20%;left:60%;">
@@ -404,6 +404,17 @@
     var markerList = [];
     // 버튼 상태 저장 (초기 상태: false)
     var isLayerActive = false;
+
+    var currentInfoWindow ; // 현재 열린 InfoWindow를 저장하는 변수
+
+    function closeInfoWindow() {
+        console.log('close')
+        console.log(currentInfoWindow)
+        if (currentInfoWindow) {
+            currentInfoWindow.close();
+            currentInfoWindow = null; // 변수 초기화
+        }
+    }
     // 약수터 데이터를 받아와서 좌표 변환 적용
     function drawMNSPLayer() {
         var sigunNm = $(".mapSelect").val();
@@ -446,17 +457,26 @@
                     for (var i = 0; i < transformedData.length; i++) {
                         (function(i) { // ✅ **즉시 실행 함수 (클로저) 사용**
                             var position = new naver.maps.LatLng(transformedData[i].latitude, transformedData[i].longitude);
-
+                            var img;
+                            if(transformedData[i].inspctRs==='검출'){
+                                img= '/img/sally.png';
+                            }else{
+                                img ='/common/images/ico_marker_1.svg'
+                            }
                             var marker = new naver.maps.Marker({
                                 position: position,
                                 map: map,
                                 title: transformedData[i].fcltyNm,
                                 icon: {
                                     content: [
-                                        '<div class="map_marker_title" style="position: absolute; z-index: 10; top: 0; left: 0;">',
+                                        /*'<div class="map_marker_title" style="position: absolute; z-index: 10; top: 0; left: 0;">',
                                             '<img src="/common/images/ico_marker_1.svg" alt="마커 아이콘" style="width: 24px; height: 37px;">',
                                             '<span></span>',
-                                        '</div>'
+                                        '</div>'*/
+                                        '<div className="map_marker">',
+                                        '        <div className="point_img flt_1"></div>',
+                                        '<img src="' + img + '" alt="마커 아이콘" style="width: 24px; height: 37px;">',
+                                        '    </div>',
                                     ].join(''),
                                     size: new naver.maps.Size(38, 58),
                                     anchor: new naver.maps.Point(19, 58),
@@ -464,17 +484,31 @@
                                 draggable: false
                             });
 
+                            var isDrinkable = transformedData[i].inspctRs === "불검출"; // 음용 가능 여부 확인
+
                             // ✅ **InfoWindow 내용을 각 마커에 맞게 생성**
                             var contentString = [
-                                '<div class="iw_inner">',
-                                '   <h3>' + transformedData[i].fcltyNm + '</h3>',
-                                '   <p>주소: ' + transformedData[i].adres + '<br />',
-                                '       <img src="/img/sally.png" width="55" height="55" alt="' + transformedData[i].fcltyNm + '" class="thumb" /><br />',
-                                '       수질 검사 결과: ' + transformedData[i].inspctRs + '<br />',
-                                '       <a href="http://www.seoul.go.kr" target="_blank">자세히 보기</a>',
-                                '   </p>',
-                                '</div>'
+                                '<div class="mapPopUp" style="top:20%;left:20%;">',
+                                  '    <div class="place_title">',
+                                  '        <div class="flt_icon flt_1">약수터</div>',
+                                  '        <span class="' + (isDrinkable ? "able" : "disable") + '">' + (isDrinkable ? "음용가능" : "음용불가") + '</span>',
+                                  '        <a href="#!" class="btn_close" onclick="closeInfoWindow()"></a>',
+                                  '    </div>',
+                                  '    <div class="place_con">',
+                                  '        <div class="img" style="background-image: url(\'/common/images/sample_img.jpg\');"></div>',
+                                  '        <div>',
+                                  '            <p class="place_name">' + transformedData[i].fcltyNm + '</p>',
+                                  '            <ul class="place_info">',
+                                  '                <li>검사일 : <span>' + (transformedData[i].inspctDt || "정보 없음") + '</span></li>',
+                                  '                <li>주소 : <span>' + transformedData[i].adres + '</span></li>',
+                                  '                <li>담당부서 : <span>' + (transformedData[i].inspctEngn || "정보 없음") + '</span></li>',
+                                  '                <li>연락처 : <span>' + (transformedData[i].contact || "정보 없음") + '</span></li>',
+                                  '            </ul>',
+                                  '        </div>',
+                                  '    </div>',
+                                  '</div>'
                             ].join('');
+
 
                             var infowindow = new naver.maps.InfoWindow({
                                 content: contentString
@@ -483,9 +517,12 @@
                             // ✅ **각 마커에 개별적인 InfoWindow 이벤트 추가**
                             naver.maps.Event.addListener(marker, "click", function () {
                                 if (infowindow.getMap()) {
+                                    console.log('close')
                                     infowindow.close();
                                 } else {
+                                    console.log('open')
                                     infowindow.open(map, marker);
+                                    currentInfoWindow= infowindow;
                                 }
                             });
 
@@ -509,6 +546,49 @@
         }
         markerList = []; // 배열 초기화
     }
+
+    function drawWATERFCLTSLayer(markerNm){
+        var sigunNm = 'all';
+
+        var hydrKndType = '분수';
+        switch (markerNm) {
+            case "FOUNTAIN":
+                hydrKndType = "분수";
+                break;
+            case "MOORAGE":
+                hydrKndType = "계류시설";
+                break;
+            case "WATERFLOW":
+                hydrKndType = "벽천";
+                break;
+            case "COMBINATION":
+                hydrKndType = "조합놀이대";
+                break;
+        }
+        var param = 'ctzn_selectDrawMapData_' + hydrKndType + '.json';
+        var searchKeyword = '';
+        var listd = [];
+        $.ajax({
+            url: url + path + param,
+            dataType: 'json',
+            data: {sigunNm: ''},
+            success: function (geojson) {
+                console.log("원본 데이터:", geojson.list);
+                var transformedData = geojson.list;
+                if (map) {
+                    for (var i = 0; i < transformedData.length; i++) {
+
+                    }
+
+                }
+                else{
+                    console.error("지도 객체가 초기화되지 않았습니다.");
+                }
+
+            }
+        });
+    }
+
 
 
     // 위치 버튼 클릭 이벤트 추가
@@ -537,7 +617,7 @@
             isLayerActive = true;
         }
     });
-
+    $('#RIVER_PROVINCE').on('click', drowRiverProvince);
     //지우기
     $('#tt').on('click', removeAllDataLayer);
 
