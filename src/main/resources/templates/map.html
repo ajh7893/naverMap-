@@ -38,7 +38,7 @@
 
             <div>
                 <select class="mapSelect"> <!--시군구 선택박스-->
-                    <option value="">전체</option>
+                    <option value="all">전체</option>
                     <option value="수원시">수원시</option>
                     <option value="용인시">용인시</option>
                     <option value="고양시">고양시</option>
@@ -81,7 +81,7 @@
                     <button type="button">전체</button>
                 </li>
                 <li class="flt_1 check"><!--선택되면 .check 붙어야함-->
-                    <button type="button">약수터</button>
+                    <button type="button" id="MNSP">약수터</button>
                 </li>
                 <li class="flt_2">
                     <button type="button">분수시설</button>
@@ -101,10 +101,10 @@
                 <li class="flt_7">
                     <button type="button" id="ECRIV">생태하천</button>
                 </li>
-                <li class="flt_7">
+                <li class="flt_8">
                     <button type="button" id="RIVER_NATION">국가하천</button>
                 </li>
-                <li class="flt_7">
+                <li class="flt_9">
                     <button type="button" id="RIVER_PROVINCE">지방하천</button>
                 </li>
             </ul>
@@ -215,7 +215,7 @@
     // 지도 초기화 함수
     function initMap(lat, lng) {
         map = new naver.maps.Map('sampleMap', {
-            zoom: 12,
+            zoom: 16,
             center: new naver.maps.LatLng(lat, lng)
         });
     }
@@ -225,7 +225,7 @@
         if (map) {
             var newCenter = new naver.maps.LatLng(lat, lng);
             map.setCenter(newCenter);
-            console.log("지도가 현재 위치로 이동했습니다.");
+            //console.log("지도가 현재 위치로 이동했습니다.");
         } else {
             console.error("지도 객체가 초기화되지 않았습니다.");
         }
@@ -381,7 +381,7 @@
         (position) => {
             let latitude = position.coords.latitude; // 위도
             let longitude = position.coords.longitude; // 경도
-
+            console.log('초기화');
             // 지도 이동
             initMap(latitude, longitude);
         },
@@ -390,6 +390,125 @@
             alert("위치 정보를 가져올 수 없습니다.");
         }
     );
+
+    // Web Mercator (EPSG:3857) → WGS84 (EPSG:4326) 변환 함수
+    function webMercatorToWGS84(x, y) {
+        var lon = (x / 20037508.34) * 180;
+        var lat = (y / 20037508.34) * 180;
+        lat = (180 / Math.PI) * (2 * Math.atan(Math.exp(lat * Math.PI / 180)) - Math.PI / 2);
+        return { lat: lat, lon: lon };
+    }
+
+
+    // 마커 배열 (현재 지도에 표시된 마커 저장)
+    var markerList = [];
+    // 버튼 상태 저장 (초기 상태: false)
+    var isLayerActive = false;
+    // 약수터 데이터를 받아와서 좌표 변환 적용
+    function drawMNSPLayer() {
+        var sigunNm = $(".mapSelect").val();
+        if (sigunNm == "all") {
+            sigunNm = '';
+        }
+
+        var param = 'ctzn_excelList_sigunNm_' + sigunNm + '.json';
+
+        $.ajax({
+            url: url + path + param,
+            dataType: 'json',
+            data: { sigunNm: '' },
+            success: function (geojson) {
+                console.log("원본 데이터:", geojson);
+
+                // **기존 마커 제거**
+                clearMarkers();
+
+                // 중복 제거를 위한 맵 생성
+                var uniqueDataMap = new Map();
+
+                // 좌표 변환 적용 및 중복 제거
+                geojson.forEach(item => {
+                    if (!uniqueDataMap.has(item.fcltyNm)) {
+                        var converted = webMercatorToWGS84(parseFloat(item.x), parseFloat(item.y));
+                        uniqueDataMap.set(item.fcltyNm, {
+                            ...item,
+                            latitude: converted.lat,
+                            longitude: converted.lon
+                        });
+                    }
+                });
+
+                // 중복 제거된 데이터를 배열로 변환
+                var transformedData = Array.from(uniqueDataMap.values());
+                console.log("중복 제거된 데이터 개수:", transformedData.length);
+
+                if (map) {
+                    for (var i = 0; i < transformedData.length; i++) {
+                        (function(i) { // ✅ **즉시 실행 함수 (클로저) 사용**
+                            var position = new naver.maps.LatLng(transformedData[i].latitude, transformedData[i].longitude);
+
+                            var marker = new naver.maps.Marker({
+                                position: position,
+                                map: map,
+                                title: transformedData[i].fcltyNm,
+                                icon: {
+                                    content: [
+                                        '<div class="map_marker_title" style="position: absolute; z-index: 10; top: 0; left: 0;">',
+                                            '<img src="/common/images/ico_marker_1.svg" alt="마커 아이콘" style="width: 24px; height: 37px;">',
+                                            '<span></span>',
+                                        '</div>'
+                                    ].join(''),
+                                    size: new naver.maps.Size(38, 58),
+                                    anchor: new naver.maps.Point(19, 58),
+                                },
+                                draggable: false
+                            });
+
+                            // ✅ **InfoWindow 내용을 각 마커에 맞게 생성**
+                            var contentString = [
+                                '<div class="iw_inner">',
+                                '   <h3>' + transformedData[i].fcltyNm + '</h3>',
+                                '   <p>주소: ' + transformedData[i].adres + '<br />',
+                                '       <img src="/img/sally.png" width="55" height="55" alt="' + transformedData[i].fcltyNm + '" class="thumb" /><br />',
+                                '       수질 검사 결과: ' + transformedData[i].inspctRs + '<br />',
+                                '       <a href="http://www.seoul.go.kr" target="_blank">자세히 보기</a>',
+                                '   </p>',
+                                '</div>'
+                            ].join('');
+
+                            var infowindow = new naver.maps.InfoWindow({
+                                content: contentString
+                            });
+
+                            // ✅ **각 마커에 개별적인 InfoWindow 이벤트 추가**
+                            naver.maps.Event.addListener(marker, "click", function () {
+                                if (infowindow.getMap()) {
+                                    infowindow.close();
+                                } else {
+                                    infowindow.open(map, marker);
+                                }
+                            });
+
+                            // 마커 리스트에 추가
+                            markerList.push(marker);
+                        })(i); // ✅ 즉시 실행 함수 (IIFE) 적용
+                    }
+                } else {
+                    console.error("지도 객체가 초기화되지 않았습니다.");
+                }
+            }
+        });
+
+
+    }
+
+    // **마커 제거 함수**
+    function clearMarkers() {
+        for (var i = 0; i < markerList.length; i++) {
+            markerList[i].setMap(null);
+        }
+        markerList = []; // 배열 초기화
+    }
 
 
     // 위치 버튼 클릭 이벤트 추가
@@ -403,6 +522,21 @@
 
     //지방 하천
     $('#RIVER_PROVINCE').on('click', drowRiverProvince);
+
+    // 약수터
+    $('#MNSP').on('click', function () {
+        if (isLayerActive) {
+            // ✅ **초기화 (마커 및 선택 상태 제거)**
+            clearMarkers();
+            $(this).closest('li').removeClass('check'); // `.check` 클래스 제거
+            isLayerActive = false;
+        } else {
+            // ✅ **지도에 마커 추가**
+            drawMNSPLayer();
+            $(this).closest('li').addClass('check'); // `.check` 클래스 추가
+            isLayerActive = true;
+        }
+    });
 
     //지우기
     $('#tt').on('click', removeAllDataLayer);
