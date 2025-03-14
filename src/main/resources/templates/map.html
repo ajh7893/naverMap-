@@ -80,7 +80,7 @@
                 <li class="flt_all">
                     <button type="button">전체</button>
                 </li>
-                <li class="flt_1 check"><!--선택되면 .check 붙어야함-->
+                <li class="flt_1"><!--선택되면 .check 붙어야함-->
                     <button type="button" id="MNSP">약수터</button>
                 </li>
                 <li class="flt_2">
@@ -95,6 +95,7 @@
                 <li class="flt_5">
                     <button type="button" onclick="drawWATERFCLTSLayer('COMBINATION')">조합놀이대</button>
                 </li>
+
                 <li class="flt_6">
                     <button type="button" id="tt">물놀이장</button>
                 </li>
@@ -152,7 +153,7 @@
     </div>-->
 
     <!-- 팝업2 : 약수터 제외 나머지 시설 사용 -->
-    <div class="mapPopUp" style="top:20%;left:60%;">
+    <!--<div class="mapPopUp" style="top:20%;left:60%;">
         <div class="place_title">
             <div class="flt_icon flt_2">분수시설</div>
             <span class="disable">운영중단</span>
@@ -170,7 +171,7 @@
                 </ul>
             </div>
         </div>
-    </div>
+    </div>-->
 
     <!-- 지도 영역 -->
     <div id="sampleMap" class="map"></div>
@@ -325,7 +326,6 @@
     //지방하천
     function drowRiverProvince() {
         var param = 'works_RIVER_PROVINCE.json';
-
         if (isRiverProvinceVisivle) {
             // 이미 추가된 레이어가 있으면 삭제
             clearRiverProvince();
@@ -547,47 +547,136 @@
         markerList = []; // 배열 초기화
     }
 
-    function drawWATERFCLTSLayer(markerNm){
-        var sigunNm = 'all';
+    var activeLayers = {}; // 현재 활성화된 레이어를 추적할 객체
 
+    function drawWATERFCLTSLayer(markerNm) {
+        // 이미 해당 레이어가 있으면 삭제하고 종료
+        if (activeLayers[markerNm]) {
+            removeLayer(markerNm);
+            return;
+        }
+
+        var img;
         var hydrKndType = '분수';
+
         switch (markerNm) {
             case "FOUNTAIN":
+                img = '/common/images/ico_marker_2.svg';
                 hydrKndType = "분수";
                 break;
             case "MOORAGE":
+                img = '/common/images/ico_marker_3.svg';
                 hydrKndType = "계류시설";
                 break;
             case "WATERFLOW":
+                img = '/common/images/ico_marker_4.svg';
                 hydrKndType = "벽천";
                 break;
             case "COMBINATION":
+                img = '/common/images/ico_marker_5.svg';
                 hydrKndType = "조합놀이대";
                 break;
         }
+
         var param = 'ctzn_selectDrawMapData_' + hydrKndType + '.json';
-        var searchKeyword = '';
-        var listd = [];
+
         $.ajax({
             url: url + path + param,
             dataType: 'json',
-            data: {sigunNm: ''},
+            data: { sigunNm: '' },
             success: function (geojson) {
                 console.log("원본 데이터:", geojson.list);
-                var transformedData = geojson.list;
-                if (map) {
-                    for (var i = 0; i < transformedData.length; i++) {
+                var transformedData = geojson.list.map(item => {
+                    var converted = webMercatorToWGS84(parseFloat(item.x), parseFloat(item.y));
+                    return {
+                        ...item,
+                        latitude: converted.lat,
+                        longitude: converted.lon
+                    };
+                });
 
+                if (map) {
+                    var markerList = []; // 새롭게 추가될 마커 리스트
+
+                    for (var i = 0; i < transformedData.length; i++) {
+                        (function (i) {
+                            var position = new naver.maps.LatLng(transformedData[i].latitude, transformedData[i].longitude);
+                            var marker = new naver.maps.Marker({
+                                position: position,
+                                map: map,
+                                title: transformedData[i].fcltyNm,
+                                icon: {
+                                    content: [
+                                        '<div className="map_marker">',
+                                        '    <div className="point_img flt_1"></div>',
+                                        '<img src="' + img + '" alt="마커 아이콘" style="width: 24px; height: 37px;">',
+                                        '</div>',
+                                    ].join(''),
+                                    size: new naver.maps.Size(38, 58),
+                                    anchor: new naver.maps.Point(19, 58),
+                                },
+                                draggable: false
+                            });
+
+                            var contentString = [
+                                '<div class="mapPopUp" style="top:20%;left:20%;">',
+                                '    <div class="place_title">',
+                                '        <div class="flt_icon flt_1">' + hydrKndType + '</div>',
+                                '        <span class="able">' + hydrKndType + '</span>',
+                                '        <a href="#!" class="btn_close" onclick="closeInfoWindow()"></a>',
+                                '    </div>',
+                                '    <div class="place_con">',
+                                '        <div class="img" style="background-image: url(\'/common/images/sample_img.jpg\');"></div>',
+                                '        <div>',
+                                '            <p class="place_name">' + transformedData[i].fcltyNm + '</p>',
+                                '            <ul class="place_info">',
+                                '                <li>검사일 : <span>' + (transformedData[i].inspctDt || "정보 없음") + '</span></li>',
+                                '                <li>주소 : <span>' + transformedData[i].adres + '</span></li>',
+                                '                <li>담당부서 : <span>' + (transformedData[i].inspctEngn || "정보 없음") + '</span></li>',
+                                '                <li>연락처 : <span>' + (transformedData[i].contact || "정보 없음") + '</span></li>',
+                                '            </ul>',
+                                '        </div>',
+                                '    </div>',
+                                '</div>'
+                            ].join('');
+
+                            var infowindow = new naver.maps.InfoWindow({
+                                content: contentString
+                            });
+
+                            naver.maps.Event.addListener(marker, "click", function () {
+                                if (infowindow.getMap()) {
+                                    console.log('close');
+                                    infowindow.close();
+                                } else {
+                                    console.log('open');
+                                    infowindow.open(map, marker);
+                                    currentInfoWindow = infowindow;
+                                }
+                            });
+
+                            markerList.push(marker); // 마커 리스트에 추가
+                        })(i);
                     }
 
-                }
-                else{
+                    // 새롭게 추가한 마커 리스트를 저장
+                    activeLayers[markerNm] = markerList;
+                } else {
                     console.error("지도 객체가 초기화되지 않았습니다.");
                 }
-
             }
         });
     }
+
+    // ✅ 특정 레이어 삭제 함수
+    function removeLayer(markerNm) {
+        if (activeLayers[markerNm]) {
+            activeLayers[markerNm].forEach(marker => marker.setMap(null)); // 지도에서 마커 제거
+            delete activeLayers[markerNm]; // 활성 레이어 목록에서 삭제
+            console.log(markerNm + " 레이어 제거 완료");
+        }
+    }
+
 
 
 
@@ -617,7 +706,6 @@
             isLayerActive = true;
         }
     });
-    $('#RIVER_PROVINCE').on('click', drowRiverProvince);
     //지우기
     $('#tt').on('click', removeAllDataLayer);
 
