@@ -104,6 +104,9 @@
                 <li class="flt_7">
                     <button type="button" id="RIVER_NATION">국가하천</button>
                 </li>
+                <li class="flt_7">
+                    <button type="button" id="RIVER_PROVINCE">지방하천</button>
+                </li>
             </ul>
         </div>
     </div>
@@ -113,11 +116,7 @@
         });
 
         $('.filter_group ul li button').on('click', function () {
-            // 모든 li에서 check 클래스 제거
-            $('.filter_group ul li').removeClass('check');
-
-            // 클릭한 버튼의 부모 li에 check 클래스 추가
-            $(this).parent().addClass('check');
+            $(this).parent().toggleClass('check'); // check 클래스 토글
         });
     </script>
 
@@ -182,11 +181,14 @@
 
     var map; // 전역 변수로 선언하여 재사용 가능하게 설정
 
-    var isLayerVisible = false; // GeoJSON 표시 여부 확인용 변수
-    var riverNationFeatures = []; // 추가된 features를 저장할 배열
+    var isRiverNationVisivle = false; // GeoJSON 표시 여부 확인용 변수
+    var riverNationLayer; // 국가하천 레이어 저장 변수
 
     var isEcrivVisible = false; // 생태하천 레이어 표시 여부 변수
     var ecrivLayer; // 생태하천 레이어 저장 변수
+
+    var isRiverProvinceVisivle =false;  // 지방하천 레이어 표시 여부 변수
+    var riverProvinceLayer; // 지방하천 레이어 저장 변수
 
     var url = 'http://localhost'
     var path = '/data/'
@@ -277,10 +279,10 @@
     function drowRiverNation() {
         var param = 'works_RIVER_NATION.json';
 
-        if (isLayerVisible) {
+        if (isRiverNationVisivle) {
             // 이미 추가된 레이어가 있으면 삭제
             clearRiverNation();
-            isLayerVisible = false;
+            isRiverNationVisivle = false;
         } else {
             // GeoJSON 데이터를 가져와서 지도에 추가
             $.ajax({
@@ -289,6 +291,7 @@
                 success: function (geojson) {
                     riverNationLayer = new naver.maps.Data();
                     riverNationLayer.addGeoJson(geojson);
+                    //console.log(geojson);
                     riverNationLayer.setMap(map); // 지도에 추가
 
                     riverNationLayer.setStyle(function (feature) {
@@ -298,13 +301,14 @@
                         }
 
                         return {
-                            fillColor: color,
+                            fillColor: 'black',
                             strokeColor: color,
+                            fillWeight: 5,
                             strokeWeight: 5
                         };
                     });
 
-                    isLayerVisible = true; // 상태 업데이트
+                    isRiverNationVisivle = true; // 상태 업데이트
                 }
             });
         }
@@ -318,28 +322,50 @@
         }
     }
 
+    //지방하천
+    function drowRiverProvince() {
+        var param = 'works_RIVER_PROVINCE.json';
 
-    // 데이터 레이어 생성
-    function startDataLayer(geojson) {
+        if (isRiverProvinceVisivle) {
+            // 이미 추가된 레이어가 있으면 삭제
+            clearRiverProvince();
+            isRiverProvinceVisivle = false;
+        } else {
+            // GeoJSON 데이터를 가져와서 지도에 추가
+            $.ajax({
+                url: url + path + param,
+                dataType: 'json',
+                success: function (geojson) {
+                    riverProvinceLayer = new naver.maps.Data();
+                    riverProvinceLayer.addGeoJson(geojson);
+                    //console.log(geojson);
+                    riverProvinceLayer.setMap(map); // 지도에 추가
 
+                    riverProvinceLayer.setStyle(function (feature) {
+                        var color = 'red';
+                        if (feature.getProperty('isColorful')) {
+                            color = feature.getProperty('color');
+                        }
 
-        map.data.addGeoJson(geojson);
+                        return {
+                            fillColor: color,
+                            strokeColor: color,
+                            strokeWeight: 5
+                        };
+                    });
 
-        map.data.setStyle(function (feature) {
-            var color = 'blue';
-            //console.log(feature)
-            if (feature.getProperty('isColorful')) {
-                color = feature.getProperty('color');
-                console.log(color);
-            }
+                    isRiverProvinceVisivle = true; // 상태 업데이트
+                }
+            });
+        }
+    }
 
-            return {
-                fillColor: color,
-                strokeColor: color,
-                strokeWeight: 5,
-                icon: null
-            };
-        });
+    // 지도에서 국가하천 레이어 제거
+    function clearRiverProvince() {
+        if (riverProvinceLayer) {
+            riverProvinceLayer.setMap(null); // 지도에서 제거
+            riverProvinceLayer = null; // 메모리 정리
+        }
     }
 
     // 데이터 레이어 삭제 함수
@@ -374,6 +400,9 @@
 
     //국가 하천
     $('#RIVER_NATION').on('click', drowRiverNation);
+
+    //지방 하천
+    $('#RIVER_PROVINCE').on('click', drowRiverProvince);
 
     //지우기
     $('#tt').on('click', removeAllDataLayer);
