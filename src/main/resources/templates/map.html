@@ -455,14 +455,14 @@
 
                 if (map) {
                     for (var i = 0; i < transformedData.length; i++) {
-                        (function(i) { // ✅ **즉시 실행 함수 (클로저) 사용**
+                        (function(i) { //  **즉시 실행 함수 (클로저) 사용**
                             var position = new naver.maps.LatLng(transformedData[i].latitude, transformedData[i].longitude);
                             var img;
-                            if(transformedData[i].inspctRs==='검출'){
-                                img= '/img/sally.png';
-                            }else{
+                            //if(transformedData[i].inspctRs==='검출'){
+                            //    img= '/img/sally.png';
+                            //}else{
                                 img ='/common/images/ico_marker_1.svg'
-                            }
+                            //}
                             var marker = new naver.maps.Marker({
                                 position: position,
                                 map: map,
@@ -486,7 +486,7 @@
 
                             var isDrinkable = transformedData[i].inspctRs === "불검출"; // 음용 가능 여부 확인
 
-                            // ✅ **InfoWindow 내용을 각 마커에 맞게 생성**
+                            //  **InfoWindow 내용을 각 마커에 맞게 생성**
                             var contentString = [
                                 '<div class="mapPopUp" style="top:20%;left:20%;">',
                                   '    <div class="place_title">',
@@ -514,7 +514,7 @@
                                 content: contentString
                             });
 
-                            // ✅ **각 마커에 개별적인 InfoWindow 이벤트 추가**
+                            // **각 마커에 개별적인 InfoWindow 이벤트 추가**
                             naver.maps.Event.addListener(marker, "click", function () {
                                 if (infowindow.getMap()) {
                                     console.log('close')
@@ -528,7 +528,7 @@
 
                             // 마커 리스트에 추가
                             markerList.push(marker);
-                        })(i); // ✅ 즉시 실행 함수 (IIFE) 적용
+                        })(i); // 즉시 실행 함수 (IIFE) 적용
                     }
                 } else {
                     console.error("지도 객체가 초기화되지 않았습니다.");
@@ -668,7 +668,7 @@
         });
     }
 
-    // ✅ 특정 레이어 삭제 함수
+    // 특정 레이어 삭제 함수
     function removeLayer(markerNm) {
         if (activeLayers[markerNm]) {
             activeLayers[markerNm].forEach(marker => marker.setMap(null)); // 지도에서 마커 제거
@@ -695,12 +695,12 @@
     // 약수터
     $('#MNSP').on('click', function () {
         if (isLayerActive) {
-            // ✅ **초기화 (마커 및 선택 상태 제거)**
+            // **초기화 (마커 및 선택 상태 제거)**
             clearMarkers();
             $(this).closest('li').removeClass('check'); // `.check` 클래스 제거
             isLayerActive = false;
         } else {
-            // ✅ **지도에 마커 추가**
+            // **지도에 마커 추가**
             drawMNSPLayer();
             $(this).closest('li').addClass('check'); // `.check` 클래스 추가
             isLayerActive = true;
