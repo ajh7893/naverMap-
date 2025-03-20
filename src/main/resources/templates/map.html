@@ -37,7 +37,7 @@
             </button>
 
             <div>
-                <select class="mapSelect"> <!--시군구 선택박스-->
+                <select class="mapSelect" onchange="moveToLocation(this.value)">
                     <option value="all">전체</option>
                     <option value="수원시">수원시</option>
                     <option value="용인시">용인시</option>
@@ -677,7 +677,58 @@
         }
     }
 
+    // 시/군/구 중심 좌표 데이터
+    var cityCoordinates = {
+        "수원시": {lat: 37.2636, lon: 127.0286},
+        "용인시": {lat: 37.2411, lon: 127.1775},
+        "고양시": {lat: 37.6584, lon: 126.8326},
+        "화성시": {lat: 37.1995, lon: 126.8312},
+        "성남시": {lat: 37.4200, lon: 127.1267},
+        "부천시": {lat: 37.5035, lon: 126.7660},
+        "남양주시": {lat: 37.6359, lon: 127.2165},
+        "안산시": {lat: 37.3219, lon: 126.8309},
+        "평택시": {lat: 36.9921, lon: 127.1126},
+        "안양시": {lat: 37.3943, lon: 126.9568},
+        "시흥시": {lat: 37.3801, lon: 126.8022},
+        "파주시": {lat: 37.7599, lon: 126.7793},
+        "김포시": {lat: 37.6173, lon: 126.7153},
+        "의정부시": {lat: 37.7381, lon: 127.0338},
+        "광주시": {lat: 37.4171, lon: 127.2553},
+        "하남시": {lat: 37.5393, lon: 127.2149},
+        "광명시": {lat: 37.4785, lon: 126.8643},
+        "군포시": {lat: 37.3615, lon: 126.9356},
+        "양주시": {lat: 37.7852, lon: 127.0454},
+        "오산시": {lat: 37.1454, lon: 127.0664},
+        "이천시": {lat: 37.2726, lon: 127.4350},
+        "안성시": {lat: 37.0079, lon: 127.2796},
+        "구리시": {lat: 37.5942, lon: 127.1294},
+        "의왕시": {lat: 37.3446, lon: 126.9685},
+        "포천시": {lat: 37.8943, lon: 127.2000},
+        "양평군": {lat: 37.4914, lon: 127.4872},
+        "여주시": {lat: 37.2958, lon: 127.6350},
+        "동두천시": {lat: 37.9032, lon: 127.0601},
+        "과천시": {lat: 37.4292, lon: 126.9871},
+        "가평군": {lat: 37.8315, lon: 127.5097},
+        "연천군": {lat: 38.0968, lon: 127.0752}
+    };
 
+    function moveToLocation(selectedCity) {
+        if (selectedCity === "all") {
+            var seoulCityHall = new naver.maps.LatLng(37.5665, 126.9780); // 서울시청 좌표
+            map.setCenter(seoulCityHall);
+            map.setZoom(10); // 줌 레벨 10 설정
+            return;
+        }
+
+        var location = cityCoordinates[selectedCity];
+        if (location) {
+            var newCenter = new naver.maps.LatLng(location.lat, location.lon);
+            map.setCenter(newCenter);
+            console.log(selectedCity + "로 이동: ", location);
+        } else {
+            console.error("해당 지역 좌표가 존재하지 않습니다.");
+        }
+    }
 
 
     // 위치 버튼 클릭 이벤트 추가
