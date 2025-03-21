@@ -13,22 +13,20 @@ $(document).ready(function () {
     $(".gnb_bg").removeClass("active");
   });
 
-<<<<<<< .mine
-||||||| .r565
     //상단 검색 토글버튼
     $("#topSearchBtn").click(function(){
       $(this).toggleClass("active");
       $("#searchArea").toggleClass("active");
       $(".mask").toggleClass("active");
     });
-=======
+
     //상단 검색 토글버튼
     $("#topSearchBtn").click(function(){
       $(this).toggleClass("active");
       $("#searchArea").toggleClass("active");
       //$(".mask").toggleClass("active");
     });
->>>>>>> .r569
+
 
   //상단 검색 토글버튼
   $("#topSearchBtn").click(function () {
