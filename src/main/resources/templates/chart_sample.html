@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ApexCharts with Axios Example</title>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script src="common/js/apexcharts.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <style>
+      .charts-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 20px;
+        padding: 20px;
+      }
+
+      .chart {
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        padding: 10px;
+      }
+
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f7fa;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="charts-container">
+      <div id="chart-bar" class="chart"></div>
+      <div id="chart-line" class="chart"></div>
+      <div id="chart-donut" class="chart"></div>
+      <div id="chart-area" class="chart"></div>
+      <div id="chart-mixed" class="chart"></div>
+    </div>
+
+    <script>
+      // Axios로 데이터 가져오기 예시
+      axios
+        .get("https://jsonplaceholder.typicode.com/posts")
+        .then((response) => {
+          console.log(response);
+          const data = response.data.slice(0, 5).map((item) => item.id);
+          console.log(data);
+
+          // 막대 차트
+          new ApexCharts(document.querySelector("#chart-bar"), {
+            chart: { type: "bar", height: 300 },
+            series: [{ name: "API 데이터", data }],
+            xaxis: { categories: ["A", "B", "C", "D", "E"] },
+          }).render();
+        });
+
+      // 꺾은선 차트 옵션 예시
+      new ApexCharts(document.querySelector("#chart-line"), {
+        chart: { type: "line", height: 300, toolbar: { show: true } },
+        stroke: { curve: "smooth" },
+        series: [{ name: "방문자 수", data: [15, 30, 25, 35, 45] }],
+        xaxis: { categories: ["1월", "2월", "3월", "4월", "5월"] },
+      }).render();
+
+      // 도넛 차트
+      new ApexCharts(document.querySelector("#chart-donut"), {
+        chart: { type: "donut", height: 300 },
+        series: [44, 55, 13, 33],
+        labels: ["사과", "바나나", "체리", "포도"],
+        legend: { position: "bottom" },
+      }).render();
+
+      // 영역 차트
+      new ApexCharts(document.querySelector("#chart-area"), {
+        chart: { type: "area", height: 300 },
+        series: [{ name: "판매량", data: [31, 40, 28, 51, 42, 85, 77] }],
+        xaxis: { categories: ["월", "화", "수", "목", "금", "토", "일"] },
+        dataLabels: { enabled: false },
+      }).render();
+
+      // 혼합 차트
+      new ApexCharts(document.querySelector("#chart-mixed"), {
+        chart: { height: 300, type: "line" },
+        series: [
+          { name: "매출(선)", type: "line", data: [30, 40, 35, 50, 49] },
+          { name: "순이익(막대)", type: "column", data: [20, 29, 37, 36, 44] },
+        ],
+        stroke: { width: [4, 0] },
+        xaxis: { categories: ["1분기", "2분기", "3분기", "4분기", "연말"] },
+        markers: { size: 5 },
+      }).render();
+    </script>
+  </body>
+</html>

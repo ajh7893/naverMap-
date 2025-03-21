@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+
+<html lang="ko" class="">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>경기도 물정보시스템</title>
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta
+      name="description"
+      content="경기도 우리집 수돗물, 안심 물놀이 시설, 우리동네 약수터, 아름다운 물길, 수질, 수량, 기상, 통계 제공"
+    />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+    />
+
+    <link
+      rel="shortcut icon"
+      href="common/images/favicon.ico"
+      type="image/x-icon"
+    />
+
+    <!-- common -->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="common/plugin/bootstrap/bootstrap.css"
+    />
+    <link rel="stylesheet" type="text/css" href="common/css/default.css" />
+    <script src="common/js/jquery-1.12.4.min.js"></script>
+    <script src="common/js/jquery-ui.js"></script>
+    <script src="common/js/customScript.js"></script>
+
+    <!-- apex chart lib -->
+    <script src="common/js/apexchart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <!-- plugin -->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="common/plugin/slick/slick.css"
+    />
+    <script src="common/plugin/slick/slick.min.js"></script>
+
+    <!-- design -->
+    <link rel="stylesheet" type="text/css" href="common/css/layout.css" />
+    <link rel="stylesheet" type="text/css" href="common/css/theme.css" />
+  </head>
+
+  <body>
+    <div id="wrapper">
+      <div class="mask"></div>
+      <div class="gnb_bg"></div>
+      <header id="header">
+        <div class="container" style="position: relative">
+          <button id="mobileMenuBtn" class="mobile_menu_btn"></button>
+          <h1>
+            <a href="#!" class="logo"
+              ><img src="/common/images/logo.png" alt="경기도물정보시스템"
+            /></a>
+          </h1>
+          <nav id="nav">
+            <ul>
+              <li class="depth1">
+                <a href="#!">생활 속 물정보</a>
+                <div class="subnav">
+                  <ul>
+                    <li class="depth2">
+                      <a href="#!">우리집 수돗물</a>
+                      <ul>
+                        <li class="depth3"><a href="#!">상수도 보급률</a></li>
+                        <li class="depth3"><a href="#!">급수인구 현황</a></li>
+                        <li class="depth3"><a href="#!">상수도 요금현황</a></li>
+                        <li class="depth3"><a href="#!">정수시설 현황</a></li>
+                        <li class="depth3">
+                          <a href="#!">(정수)수질검사자료-정수장</a>
+                        </li>
+                        <li class="depth3">
+                          <a href="#!">(정수)수질검사자료-소규모</a>
+                        </li>
+                        <li class="depth3"><a href="#!">취수시설 현황</a></li>
+                        <li class="depth3">
+                          <a href="#!">(원수)수질검사자료-취수장</a>
+                        </li>
+                      </ul>
+                    </li>
+                    <li class="depth2"><a href="#!">우리동네 약수터</a></li>
+                    <li class="depth2"><a href="#!">물놀이형 수경시설</a></li>
+                    <li class="depth2"><a href="#!">아름다운 물길</a></li>
+                  </ul>
+                </div>
+              </li>
+              <li class="depth1">
+                <a href="#!">실시간 물정보</a>
+                <div class="subnav">
+                  <ul>
+                    <li class="depth2"><a href="#!">주요하천 수질현황</a></li>
+                    <li class="depth2">
+                      <a href="#!">수질</a>
+                      <ul>
+                        <li class="depth3"><a href="#!">하천</a></li>
+                        <li class="depth3"><a href="#!">호소</a></li>
+                        <li class="depth3"><a href="#!">농업용수</a></li>
+                        <li class="depth3"><a href="#!">공단배수</a></li>
+                        <li class="depth3"><a href="#!">도시관류</a></li>
+                      </ul>
+                    </li>
+                    <li class="depth2">
+                      <a href="#!">수량</a>
+                      <ul>
+                        <li class="depth3"><a href="#!">강우량</a></li>
+                        <li class="depth3"><a href="#!">수위</a></li>
+                        <li class="depth3"><a href="#!">유량</a></li>
+                        <li class="depth3"><a href="#!">댐수위</a></li>
+                        <li class="depth3"><a href="#!">저수지</a></li>
+                      </ul>
+                    </li>
+                    <li class="depth2"><a href="#!">기상</a></li>
+                  </ul>
+                </div>
+              </li>
+              <li class="depth1">
+                <a href="#!">도민참여 정보</a>
+                <div class="subnav">
+                  <ul>
+                    <li class="depth2">
+                      <a href="#!">노후 수도관 개량지원</a>
+                    </li>
+                    <li class="depth2">
+                      <a href="#!">수돗물 수질검사 신청</a>
+                    </li>
+                    <li class="depth2">
+                      <a href="#!">지역 민간단체 활동지원</a>
+                      <ul>
+                        <li class="depth3">
+                          <a href="#!">물환경 거버넌스 운영</a>
+                        </li>
+                        <li class="depth3">
+                          <a href="#!">미래세대 물환경 교육</a>
+                        </li>
+                        <li class="depth3">
+                          <a href="#!">팔당수계 하천정화활동</a>
+                        </li>
+                      </ul>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+              <li class="depth1">
+                <a href="#!">팔당전망대</a>
+                <div class="subnav">
+                  <ul>
+                    <li class="depth2"><a href="#!">팔당전망대 운영안내</a></li>
+                    <li class="depth2"><a href="#!">단체 관람 신청</a></li>
+                    <li class="depth2"><a href="#!">팔당호 역사 관광지</a></li>
+                    <li class="depth2"><a href="#!">찾아오시는 길</a></li>
+                  </ul>
+                </div>
+              </li>
+              <li class="depth1">
+                <a href="#!">자료마당</a>
+                <div class="subnav">
+                  <ul>
+                    <li class="depth2"><a href="#!">공지사항</a></li>
+                    <li class="depth2">
+                      <a href="#!">환경자료</a>
+                      <ul>
+                        <li class="depth3"><a href="#!">환경 용어</a></li>
+                        <li class="depth3"><a href="#!">환경 상식</a></li>
+                        <li class="depth3">
+                          <a href="#!">우리동네 환경단체</a>
+                        </li>
+                      </ul>
+                    </li>
+                    <li class="depth2">
+                      <a href="#!">경기도 물 통계</a>
+                      <ul>
+                        <li class="depth3"><a href="#!">하천</a></li>
+                        <li class="depth3"><a href="#!">상수도</a></li>
+                        <li class="depth3"><a href="#!">하수도</a></li>
+                        <li class="depth3"><a href="#!">분뇨처리시설</a></li>
+                      </ul>
+                    </li>
+                    <li class="depth2"><a href="#!">수자원백서</a></li>
+                    <li class="depth2"><a href="#!">보건환경연구원자료</a></li>
+                  </ul>
+                </div>
+              </li>
+              <li class="depth1">
+                <a href="#!">지도서비스</a>
+                <div class="subnav"></div>
+              </li>
+            </ul>
+          </nav>
+          <button id="topSearchBtn" class="search_btn"></button>
+        </div>
+      </header>
+
+      <!-- 모바일 메뉴 -->
+      <div id="mobileNav" class="mobile_menu">
+        <ul>
+          <li class="depth1 on">
+            <a href="#!">생활 속 물정보</a>
+            <div class="subnav">
+              <ul>
+                <li class="depth2 drops on">
+                  <a href="#!">우리집 수돗물</a>
+                  <ul>
+                    <li class="depth3"><a href="#!">상수도 보급률</a></li>
+                    <li class="depth3"><a href="#!">급수인구 현황</a></li>
+                    <li class="depth3"><a href="#!">상수도 요금현황</a></li>
+                    <li class="depth3"><a href="#!">정수시설 현황</a></li>
+                    <li class="depth3">
+                      <a href="#!">(정수)수질검사자료-정수장</a>
+                    </li>
+                    <li class="depth3">
+                      <a href="#!">(정수)수질검사자료-소규모</a>
+                    </li>
+                    <li class="depth3"><a href="#!">취수시설 현황</a></li>
+                    <li class="depth3">
+                      <a href="#!">(원수)수질검사자료-취수장</a>
+                    </li>
+                  </ul>
+                </li>
+                <li class="depth2"><a href="#!">우리동네 약수터</a></li>
+                <li class="depth2"><a href="#!">물놀이형 수경시설</a></li>
+                <li class="depth2"><a href="#!">아름다운 물길</a></li>
+              </ul>
+            </div>
+          </li>
+          <li class="depth1">
+            <a href="#!">실시간 물정보</a>
+            <div class="subnav">
+              <ul>
+                <li class="depth2"><a href="#!">주요하천 수질현황</a></li>
+                <li class="depth2">
+                  <a href="#!">수질</a>
+                  <ul>
+                    <li class="depth3"><a href="#!">하천</a></li>
+                    <li class="depth3"><a href="#!">호소</a></li>
+                    <li class="depth3"><a href="#!">농업용수</a></li>
+                    <li class="depth3"><a href="#!">공단배수</a></li>
+                    <li class="depth3"><a href="#!">도시관류</a></li>
+                  </ul>
+                </li>
+                <li class="depth2">
+                  <a href="#!">수량</a>
+                  <ul>
+                    <li class="depth3"><a href="#!">강우량</a></li>
+                    <li class="depth3"><a href="#!">수위</a></li>
+                    <li class="depth3"><a href="#!">유량</a></li>
+                    <li class="depth3"><a href="#!">댐수위</a></li>
+                    <li class="depth3"><a href="#!">저수지</a></li>
+                  </ul>
+                </li>
+                <li class="depth2"><a href="#!">기상</a></li>
+              </ul>
+            </div>
+          </li>
+          <li class="depth1">
+            <a href="#!">도민참여 정보</a>
+            <div class="subnav">
+              <ul>
+                <li class="depth2"><a href="#!">노후 수도관 개량지원</a></li>
+                <li class="depth2"><a href="#!">수돗물 수질검사 신청</a></li>
+                <li class="depth2">
+                  <a href="#!">지역 민간단체 활동지원</a>
+                  <ul>
+                    <li class="depth3">
+                      <a href="#!">물환경 거버넌스 운영</a>
+                    </li>
+                    <li class="depth3">
+                      <a href="#!">미래세대 물환경 교육</a>
+                    </li>
+                    <li class="depth3">
+                      <a href="#!">팔당수계 하천정화활동</a>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+          </li>
+          <li class="depth1">
+            <a href="#!">팔당전망대</a>
+            <div class="subnav">
+              <ul>
+                <li class="depth2"><a href="#!">팔당전망대 운영안내</a></li>
+                <li class="depth2"><a href="#!">단체 관람 신청</a></li>
+                <li class="depth2"><a href="#!">팔당호 역사 관광지</a></li>
+                <li class="depth2"><a href="#!">찾아오시는 길</a></li>
+              </ul>
+            </div>
+          </li>
+          <li class="depth1">
+            <a href="#!">자료마당</a>
+            <div class="subnav">
+              <ul>
+                <li class="depth2"><a href="#!">공지사항</a></li>
+                <li class="depth2">
+                  <a href="#!">환경자료</a>
+                  <ul>
+                    <li class="depth3"><a href="#!">환경 용어</a></li>
+                    <li class="depth3"><a href="#!">환경 상식</a></li>
+                    <li class="depth3"><a href="#!">우리동네 환경단체</a></li>
+                  </ul>
+                </li>
+                <li class="depth2">
+                  <a href="#!">경기도 물 통계</a>
+                  <ul>
+                    <li class="depth3"><a href="#!">하천</a></li>
+                    <li class="depth3"><a href="#!">상수도</a></li>
+                    <li class="depth3"><a href="#!">하수도</a></li>
+                    <li class="depth3"><a href="#!">분뇨처리시설</a></li>
+                  </ul>
+                </li>
+                <li class="depth2"><a href="#!">수자원백서</a></li>
+                <li class="depth2"><a href="#!">보건환경연구원자료</a></li>
+              </ul>
+            </div>
+          </li>
+          <li class="depth1">
+            <a href="#!">지도서비스</a>
+            <div class="subnav"></div>
+          </li>
+        </ul>
+      </div>
+      <!-- //모바일 메뉴 -->
+
+      <!-- 상단 검색 영역 -->
+      <div id="searchArea" class="">
+        <div class="search_inner">
+          <div class="search_box">
+            <input
+              type="text"
+              class=""
+              name="waterSearchText"
+              id="waterSearchText"
+              placeholder="검색어를 입력해 주세요"
+              value=""
+            />
+            <button type="submit" class="searchButton">
+              <i class="tpg-search"></i>
+            </button>
+          </div>
+          <div class="search_detail_wrap">
+            <div>
+              <span class="search_detail_label">검색기간</span>
+              <div id="calendar" class="search_detail_calendar mt5">
+                <div class="">
+                  <input
+                    type="date"
+                    name="waterSearchStartDate"
+                    id="waterSearchStartDate"
+                    class="input mr10"
+                    value=""
+                  />
+                  <input
+                    type="date"
+                    name="waterSearchEndDate"
+                    id="waterSearchEndDate"
+                    class="input"
+                    value=""
+                  />
+                </div>
+                <div class="scbtwrap">
+                  <button
+                    type="button"
+                    class="scbtnn active"
+                    onclick="fn_doTopWeek();"
+                  >
+                    1주
+                  </button>
+                  <span>/</span>
+                  <button
+                    type="button"
+                    class="scbtnn"
+                    onclick="fn_doTopMonth();"
+                  >
+                    1개월
+                  </button>
+                  <span>/</span>
+                  <button
+                    type="button"
+                    class="scbtnn"
+                    onclick="fn_doTopYear();"
+                  >
+                    1년
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="mt30">
+              <span class="search_detail_label">검색방법</span>
+              <div class="mt5">
+                <input
+                  type="text"
+                  name="waterSearchOptBadText"
+                  id="waterSearchOptBadText"
+                  class="input textexpt"
+                  value=""
+                />
+                <label for="waterSearchOptBadChk" class="ml10">
+                  <input
+                    type="checkbox"
+                    name="waterSearchOptBadChk"
+                    id="waterSearchOptBadChk"
+                    class="chkbb2"
+                    value="Y"
+                  />
+                  제외되는 단어
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- //상단 검색 영역 -->
+
+      <div class="container">
+        <div id="sub_contents">
+          <aside id="side_nav">
+            <div class="page_label"><h3>생활 속 물정보</h3></div>
+            <nav class="lnb">
+              <ul>
+                <li class="depth2 drops on">
+                  <a href="#!"><span>우리집 수돗물</span></a>
+                  <ul class="on">
+                    <li class="depth3 on">
+                      <a href="#!"><span>상수도 보급률</span></a>
+                    </li>
+                    <li class="depth3">
+                      <a href="#!"><span>급수인구 현황</span></a>
+                    </li>
+                    <li class="depth3">
+                      <a href="#!"><span>상수도 요금현황</span></a>
+                    </li>
+                    <li class="depth3">
+                      <a href="#!"><span>정수시설 현황</span></a>
+                    </li>
+                    <li class="depth3">
+                      <a href="#!"><span>(정수)수질검사자료-정수장</span></a>
+                    </li>
+                    <li class="depth3">
+                      <a href="#!"><span>(정수)수질검사자료-소규모</span></a>
+                    </li>
+                    <li class="depth3">
+                      <a href="#!"><span>취수시설 현황</span></a>
+                    </li>
+                    <li class="depth3">
+                      <a href="#!"><span>(원수)수질검사자료-취수장</span></a>
+                    </li>
+                  </ul>
+                </li>
+                <li class="depth2">
+                  <a href="#!"><span>우리동네 약수터</span></a>
+                </li>
+                <li class="depth2">
+                  <a href="#!"><span>물놀이형 수경시설</span></a>
+                </li>
+                <li class="depth2">
+                  <a href="#!"><span>아름다운 물길</span></a>
+                </li>
+              </ul>
+            </nav>
+          </aside>
+
+          <div class="sub_contents">
+            <div class="sub_header">
+              <h4>상수도 보급률</h4>
+              <ol class="breadcrumb">
+                <li class="home">
+                  <a href="#!"><span class="sr-only">홈으로</span></a>
+                </li>
+                <li><a href="#!">생활 속 물정보</a></li>
+                <li><a href="#!">상수도 보급률</a></li>
+              </ol>
+            </div>
+
+            <!-- contents -->
+            <div class="contents">
+              <!-- 검색 박스 -->
+              <div class="search_group">
+                <!-- <span>연도</span> -->
+                <select class="waterSelect">
+                  <!--연도 선택박스-->
+                  <!-- <option value="">--연도--</option> -->
+                  <option value="2022">2022</option>
+                  <option value="2021">2021</option>
+                  <option value="2020">2020</option>
+                  <option value="2019">2019</option>
+                  <option value="2018">2018</option>
+                  <option value="2017">2017</option>
+                  <option value="2016">2016</option>
+                  <option value="2015">2015</option>
+                  <option value="2014">2014</option>
+                </select>
+                <button type="button" class="">검색</button>
+              </div>
+
+              <!-- 지도영역 -->
+              <div class="contents_map_wrap mt15">
+                <div class="contents_map"></div>
+              </div>
+
+              <!-- 차트 -->
+              <div class="mt40">
+                <div class="d-flex justify-content-between mb10">
+                  <h5 class="h5cTit">차트</h5>
+                  <div class="button_group">
+                    <ul class="chart_add_">
+                      <li><a href="#!" title="막대그래프로 보기"></a></li>
+                      <li><a href="#!" title="선 그래프로 보기"></a></li>
+                    </ul>
+                    <button
+                      class="btn_ico_download"
+                      type="button"
+                      title="이미지로 저장하기"
+                    ></button>
+                  </div>
+                </div>
+                <div class="con_line_box" id="chart-bar">차트영역</div>
+              </div>
+
+              <script>
+                // Axios로 데이터 가져오기 예시
+                axios
+                  .get("https://jsonplaceholder.typicode.com/posts")
+                  .then((response) => {
+                    console.log(response);
+                    const data = response.data
+                      .slice(0, 5)
+                      .map((item) => item.id);
+                    console.log(data);
+
+                    // 막대 차트
+                    new ApexCharts(document.querySelector("#chart-bar"), {
+                      chart: { type: "bar", height: 300 },
+                      series: [{ name: "API 데이터", data }],
+                      xaxis: { categories: ["A", "B", "C", "D", "E"] },
+                    }).render();
+                  });
+              </script>
+              <!-- 검색결과 -->
+              <div class="mt40">
+                <div class="d-flex justify-content-between mb10">
+                  <h5 class="h5cTit">검색결과</h5>
+                  <div class="button_group">
+                    <ul class="chart_add">
+                      <li><a href="#!" title="막대그래프로 보기"></a></li>
+                      <li><a href="#!" title="선 그래프로 보기"></a></li>
+                    </ul>
+                    <button
+                      class="btn_ico_download"
+                      type="button"
+                      title="엑셀 다운받기"
+                    ></button>
+                  </div>
+                </div>
+                <div class="content_tbl">
+                  <table class="tbl type2 responsive">
+                    <colgroup>
+                      <col style="width: 10%" />
+                      <col />
+                      <col />
+                      <col />
+                    </colgroup>
+                    <thead>
+                      <tr>
+                        <th>지자체명</th>
+                        <th>
+                          총인구 (A)(명)<br />(행정구역내
+                          주민등록인구(등록외국인포함))
+                        </th>
+                        <th>급수인구 계 (B)(명)<br />(지방 및 광역상수도)</th>
+                        <th>지방 및 광역상수도 보급률(%)<br />(B/A*100)</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td class="text-center">경기도</td>
+                        <td class="text-center">13,972,297</td>
+                        <td class="text-center">13,972,297</td>
+                        <td class="text-center">98.7</td>
+                      </tr>
+                      <tr>
+                        <td class="text-center">경기도</td>
+                        <td class="text-center">13,972,297</td>
+                        <td class="text-center">13,972,297</td>
+                        <td class="text-center">98.7</td>
+                      </tr>
+                      <tr>
+                        <td class="text-center">경기도</td>
+                        <td class="text-center">13,972,297</td>
+                        <td class="text-center">13,972,297</td>
+                        <td class="text-center">98.7</td>
+                      </tr>
+                      <tr>
+                        <td class="text-center">경기도</td>
+                        <td class="text-center">13,972,297</td>
+                        <td class="text-center">13,972,297</td>
+                        <td class="text-center">98.7</td>
+                      </tr>
+                      <tr>
+                        <td class="text-center">경기도</td>
+                        <td class="text-center">13,972,297</td>
+                        <td class="text-center">13,972,297</td>
+                        <td class="text-center">98.7</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <nav class="text-center mt20 mb20 paging paging-list">
+                    <ul class="pagination justify-content-center mt-4 mb-4">
+                      <li class="active">
+                        <a href="#1" title="현재페이지">1</a>
+                      </li>
+                      <li><a href="#!">2</a></li>
+                      <li><a href="#!">3</a></li>
+                      <li><a href="#!">4</a></li>
+                      <li><a href="#!">5</a></li>
+                      <li><a href="#!">6</a></li>
+                      <li><a href="#!">7</a></li>
+                      <li><a href="#!">8</a></li>
+                      <li><a href="#!">9</a></li>
+                      <li>
+                        <a href="#!" arial-label="Next" title="다음"
+                          ><span aria-hidden="true">&gt;</span></a
+                        >
+                      </li>
+                      <li>
+                        <a href="#!" aria-label="Next" title="마지막"
+                          ><span aria-hidden="true">&gt;&gt;</span></a
+                        >
+                      </li>
+                    </ul>
+                  </nav>
+                </div>
+              </div>
+
+              <!-- 담당자 정보 -->
+              <div class="manager">
+                <p><span>부서명</span>상하수과</p>
+                <p><span>전화번호</span>031-8008-6990</p>
+              </div>
+              <!-- //담당자 정보 -->
+            </div>
+            <!-- //contents -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
