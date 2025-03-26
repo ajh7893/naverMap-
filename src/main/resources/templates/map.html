@@ -394,10 +394,13 @@
 
     // Web Mercator (EPSG:3857) → WGS84 (EPSG:4326) 변환 함수
     function webMercatorToWGS84(x, y) {
-        var lon = (x / 20037508.34) * 180;
-        var lat = (y / 20037508.34) * 180;
+        var R = 6378137;
+
+        var lon = (x / R) * (180 / Math.PI);
+        var lat = (y / R) * (180 / Math.PI);
         lat = (180 / Math.PI) * (2 * Math.atan(Math.exp(lat * Math.PI / 180)) - Math.PI / 2);
-        return { lat: lat, lon: lon };
+
+        return { lat, lon };
     }
 
 
@@ -489,7 +492,7 @@
 
                             //  **InfoWindow 내용을 각 마커에 맞게 생성**
                             var contentString = [
-                                '<div class="mapPopUp" style="top:20%;left:20%;">',
+                                '<div class="mapPopUp" style="top:0%;left:0%;">',
                                   '    <div class="place_title">',
                                   '        <div class="flt_icon flt_1">약수터</div>',
                                   '        <span class="' + (isDrinkable ? "able" : "disable") + '">' + (isDrinkable ? "음용가능" : "음용불가") + '</span>',
@@ -512,7 +515,11 @@
 
 
                             var infowindow = new naver.maps.InfoWindow({
-                                content: contentString
+                                content: contentString,
+                                backgroundColor: null,
+                                borderColor: null,
+                                borderWidth: null,
+                                disableAnchor: true
                             });
 
                             // **각 마커에 개별적인 InfoWindow 이벤트 추가**
@@ -620,7 +627,7 @@
                             });
 
                             var contentString = [
-                                '<div class="mapPopUp" style="top:20%;left:20%;">',
+                                '<div class="mapPopUp" style="top:0%;left:0%;">',
                                 '    <div class="place_title">',
                                 '        <div class="flt_icon flt_1">' + hydrKndType + '</div>',
                                 '        <span class="able">' + hydrKndType + '</span>',
@@ -642,7 +649,11 @@
                             ].join('');
 
                             var infowindow = new naver.maps.InfoWindow({
-                                content: contentString
+                                content: contentString,
+                                backgroundColor: null,
+                                borderColor: null,
+                                borderWidth: null,
+                                disableAnchor: true //네이버지도 마커 말풍선 옵션
                             });
 
                             naver.maps.Event.addListener(marker, "click", function () {

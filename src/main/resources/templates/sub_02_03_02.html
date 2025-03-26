@@ -19,6 +19,10 @@
 	<script src="common/js/jquery-1.12.4.min.js"></script>
 	<script src="common/js/jquery-ui.js"></script>
 	<script src="common/js/customScript.js"></script>
+	
+	<!-- apex chart lib -->
+	<script src="common/js/apexchart.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
 	<!-- plugin -->
 	<link rel="stylesheet" type="text/css" href="common/plugin/slick/slick.css">
@@ -302,38 +306,58 @@
 		</div>
 		<!-- //상단 검색 영역 -->
 
-		<div class="main_wrap">
-			<div class="container">
-				<div class="section1">
-					<!-- 메인 슬라이드 배너 -->
-					<div class="main_slide_wrap">
-						<div class="main_slide">
-							<div class="slide">
-								<a href="#!"><img src="/common/images/banner1.jpg" alt=""/></a>
-							</div>
-							<div class="slide">
-								<a href="#!"><img src="/common/images/banner1.jpg" alt=""/></a>
-							</div>
-							<div class="slide">
-								<a href="#!"><img src="/common/images/banner1.jpg" alt=""/></a>
-							</div>
-							<div class="slide">
-								<a href="#!"><img src="/common/images/banner1.jpg" alt=""/></a>
-							</div>
-						</div>
-						<div class="custom_paging"></div>
-						<div class="slide_controler">
-							<button class="btn_pause"></button>
-						</div>
+		
+		<div class="container">
+			<div id="sub_contents">
+				<aside id="side_nav">
+					<div class="page_label"><h3>실시간 물정보</h3></div>
+					<nav class="lnb">
+						<ul>
+							<li class="depth2"><a href="#!"><span>주요하천 수질현황황</span></a></li>
+							<li class="depth2 drops"><a href="#!"><span>수질</span></a>
+								<ul class="">
+									<li class="depth3"><a href="#!"><span>하천</span></a></li>
+									<li class="depth3"><a href="#!"><span>호소</span></a></li>
+									<li class="depth3"><a href="#!"><span>농업용수</span></a></li>
+									<li class="depth3"><a href="#!"><span>공단배수</span></a></li>
+									<li class="depth3"><a href="#!"><span>도시관류</span></a></li>
+								</ul>
+							</li>
+							<li class="depth2 drops on"><a href="#!"><span>수량</span></a>
+                                <ul class="on">
+									<li class="depth3"><a href="#!"><span>강우량</span></a></li>
+									<li class="depth3 on"><a href="#!"><span>수위</span></a></li>
+									<li class="depth3"><a href="#!"><span>유량</span></a></li>
+									<li class="depth3"><a href="#!"><span>댐수위</span></a></li>
+									<li class="depth3"><a href="#!"><span>저수지</span></a></li>
+								</ul>
+                            </li>
+							<li class="depth2"><a href="#!"><span>기상</span></a></li>
+						</ul>
+					</nav>
+				</aside>
+
+				<div class="sub_contents">
+					<div class="sub_header">
+						<h4>수위</h4>
+						<ol class="breadcrumb">
+							<li class="home"><a href="#!"><span class="sr-only">홈으로</span></a></li>
+							<li><a href="#!">실시간 물정보</a></li>
+							<li><a href="#!">수량</a></li>
+							<li><a href="#!">수위</a></li>
+						</ol>
 					</div>
 
-					<!-- 생활 속 물정보 -->
-					<div class="waterInLife">
-						<h4 class="section_title">생활 속 물정보</h4>
-						<div class="water_search">
-							<div>
-								<select class="waterSelect"> <!--시군구 선택박스-->
-									<option value="">전체</option>
+					<!-- contents -->
+					<div class="contents">
+
+                        <!-- 검색 박스 -->
+						<div class="search_group">
+							<div class="se_city">
+								<label for="searchArea2">위치</label>
+								<select class="waterSelect" name="searchArea2"> <!--시군구 선택박스-->
+									<option value="">지역검색</option>
+									<option value="all">전체</option>
 									<option value="수원시">수원시</option>
 									<option value="용인시">용인시</option>
 									<option value="고양시">고양시</option>
@@ -367,246 +391,215 @@
 									<option value="연천군">연천군</option>
 								</select>
 							</div>
-							<div>
-								<button class="btn_location" type="button"><span class="sr-only">현위치</span></button>
-								<button class="btn_map" type="button"><span class="sr-only">지도보기</span></button>
+							<div class="se_word">
+								<label for="searchWord2">관측소명</label>
+								<input type="text" name="searchWord2" id="searchWord2" placeholder="관측소명을 입력해주세요." value="">
+								<button type="button" class="">검색</button>
 							</div>
 						</div>
 
-						<div class="water_sch_result">
-							<div class="item">
-								<div>
-									<div class="icon"><img src="/common/images/ico_flt_1_w.svg" alt=""/></div>
-									<span>우리동네 약수터</span>
-								</div>
-								<p>259</p>
-								<button type="button">바로가기</button>
-							</div>
-							<div class="item">
-								<div>
-									<div class="icon"><img src="/common/images/ico_flt_5_w.svg" alt=""/></div>
-									<span>안심 물놀이시설</span>
-								</div>
-								<p>10</p>
-								<button type="button">바로가기</button>
-							</div>
-							<div class="item">
-								<div>
-									<div class="icon"><img src="/common/images/ico_flt_3_w.svg" alt=""/></div>
-									<span>아름다운 물길</span>
-								</div>
-								<p>3</p>
-								<button type="button">바로가기</button>
-							</div>
-						</div>
+                        <div class="contents_half mt30">
+                            <div>
+                                <h5 class="h5cTit mb10">지도</h5>
+                                <div class="contents_map_wrap">
+                                    <div class="contents_map"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="d-flex justify-content-between mb10">
+                                    <h5 class="h5cTit">차트</h5>
+                                    <button class="btn_ico_download" type="button" title="이미지로 저장하기"></button>
+                                </div>
+                                <div class="con_line_box" id="chart-bar"></div>
+                            </div>
+                        </div>
+                        <script>
+							// Axios로 데이터 가져오기 예시
+							axios
+							  .get("https://jsonplaceholder.typicode.com/posts")
+							  .then((response) => {
+								console.log(response);
+								const data = response.data
+								  .slice(0, 5)
+								  .map((item) => item.id);
+								console.log(data);
+			
+								// 막대 차트
+								new ApexCharts(document.querySelector("#chart-bar"), {
+								  chart: { type: "bar", height: 300 },
+								  series: [{ name: "API 데이터", data }],
+								  xaxis: { categories: ["A", "B", "C", "D", "E"] },
+								}).render();
+							  });
+						  </script>
+						
+                        <!-- 검색결과 -->
+                        <div class="mt40">
+                            <div class="d-flex justify-content-between mb10">
+                                <div class="total">
+                                    <h5 class="h5cTit">수위 관측소 검색결과</h5>
+                                    <span><em>총 93건</em>을 찾았습니다.</span>
+                                </div>
+                                <button class="btn_ico_download" type="button" title="엑셀 다운받기"></button>
+                            </div>
+                            <div class="content_tbl table-responsive">
+                                <table class="tbl type2 text-center" summary="정보를 제공합니다." style="table-layout: fixed;">
+                                    <caption>정보</caption>
+                                    <colgroup>
+                                        <col style="width: 8%;">
+                                        <col>
+                                        <col>
+                                        <col style="width: 25%;">
+                                        <col>
+                                        <col>
+                                        <col>
+                                        <col>
+                                    </colgroup>
+                                    <thead>
+                                        <tr>
+                                            <th>순번</th>
+                                            <th>관측소명</th>
+                                            <th>위치</th>
+                                            <th>세부위치</th>
+                                            <th>관리기관</th>
+                                            <th>설치일자</th>
+                                            <th>영점표고</th>
+                                            <th>측정결과</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>1</td>
+                                            <td>고안</td>
+                                            <td>남양주시 와부읍</td>
+                                            <td>능내리</td>
+                                            <td>국토해양부</td>
+                                            <td>1914-11-01</td>
+                                            <td>10.000</td>
+                                            <td><button type="button" class="btn btn-sm btn-secondary">결과보기</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td>2</td>
+                                            <td>고안</td>
+                                            <td>남양주시 와부읍</td>
+                                            <td>능내리</td>
+                                            <td>국토해양부</td>
+                                            <td>1914-11-01</td>
+                                            <td>10.000</td>
+                                            <td><button type="button" class="btn btn-sm btn-secondary">결과보기</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td>3</td>
+                                            <td>고안</td>
+                                            <td>남양주시 와부읍</td>
+                                            <td>능내리</td>
+                                            <td>국토해양부</td>
+                                            <td>1914-11-01</td>
+                                            <td>10.000</td>
+                                            <td><button type="button" class="btn btn-sm btn-secondary">결과보기</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td>4</td>
+                                            <td>고안</td>
+                                            <td>남양주시 와부읍</td>
+                                            <td>능내리</td>
+                                            <td>국토해양부</td>
+                                            <td>1914-11-01</td>
+                                            <td>10.000</td>
+                                            <td><button type="button" class="btn btn-sm btn-secondary">결과보기</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td>5</td>
+                                            <td>고안</td>
+                                            <td>남양주시 와부읍</td>
+                                            <td>능내리</td>
+                                            <td>국토해양부</td>
+                                            <td>1914-11-01</td>
+                                            <td>10.000</td>
+                                            <td><button type="button" class="btn btn-sm btn-secondary">결과보기</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td>6</td>
+                                            <td>고안</td>
+                                            <td>남양주시 와부읍</td>
+                                            <td>능내리</td>
+                                            <td>국토해양부</td>
+                                            <td>1914-11-01</td>
+                                            <td>10.000</td>
+                                            <td><button type="button" class="btn btn-sm btn-secondary">결과보기</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td>7</td>
+                                            <td>고안</td>
+                                            <td>남양주시 와부읍</td>
+                                            <td>능내리</td>
+                                            <td>국토해양부</td>
+                                            <td>1914-11-01</td>
+                                            <td>10.000</td>
+                                            <td><button type="button" class="btn btn-sm btn-secondary">결과보기</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td>8</td>
+                                            <td>고안</td>
+                                            <td>남양주시 와부읍</td>
+                                            <td>능내리</td>
+                                            <td>국토해양부</td>
+                                            <td>1914-11-01</td>
+                                            <td>10.000</td>
+                                            <td><button type="button" class="btn btn-sm btn-secondary">결과보기</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td>9</td>
+                                            <td>고안</td>
+                                            <td>남양주시 와부읍</td>
+                                            <td>능내리</td>
+                                            <td>국토해양부</td>
+                                            <td>1914-11-01</td>
+                                            <td>10.000</td>
+                                            <td><button type="button" class="btn btn-sm btn-secondary">결과보기</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td>10</td>
+                                            <td>고안</td>
+                                            <td>남양주시 와부읍</td>
+                                            <td>능내리</td>
+                                            <td>국토해양부</td>
+                                            <td>1914-11-01</td>
+                                            <td>10.000</td>
+                                            <td><button type="button" class="btn btn-sm btn-secondary">결과보기</button></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <nav class="text-center mt20 mb20">
+                                    <ul class="pagination">
+                                        <li class="pageBtn page_first"><a href="#!" arial-label="prev" title="처음"><span aria-hidden="true"></span></a></li>
+                                        <li class="pageBtn page_prev"><a href="#!" aria-label="prev" title="이전"><span aria-hidden="true"></span></a></li>
+                                        <li class="on"><a href="#1" title="현재페이지">1</a></li>
+                                        <li><a href="#!">2</a></li>
+                                        <li><a href="#!">3</a></li>
+                                        <li><a href="#!">4</a></li>
+                                        <li><a href="#!">5</a></li>
+                                        <li><a href="#!">6</a></li>
+                                        <li><a href="#!">7</a></li>
+                                        <li><a href="#!">8</a></li>
+                                        <li><a href="#!">9</a></li>
+                                        <li><a href="#!">10</a></li>
+                                        <li class="pageBtn page_next"><a href="#!" arial-label="Next" title="다음"><span aria-hidden="true"></span></a></li>
+                                        <li class="pageBtn page_last"><a href="#!" aria-label="Next" title="마지막"><span aria-hidden="true"></span></a></li>
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+
+
+						<!-- 담당자 정보 -->
+						
+						<!-- //담당자 정보 -->
 					</div>
+					<!-- //contents -->
 
-					<!-- 수돗물 현황 -->
-					<div class="water_info">
-						<div class="water_search">
-							<div class="text"><strong>광주시</strong>의 수돗물 현황입니다.</div>
-							<div>
-								<select class="waterSelect"> <!--시군구 선택박스-->
-									<option value="">전체</option>
-									<option value="수원시">수원시</option>
-									<option value="용인시">용인시</option>
-									<option value="고양시">고양시</option>
-									<option value="화성시">화성시</option>
-									<option value="성남시">성남시</option>
-									<option value="부천시">부천시</option>
-									<option value="남양주시">남양주시</option>
-									<option value="안산시">안산시</option>
-									<option value="평택시">평택시</option>
-									<option value="안양시">안양시</option>
-									<option value="시흥시">시흥시</option>
-									<option value="파주시">파주시</option>
-									<option value="김포시">김포시</option>
-									<option value="의정부시">의정부시</option>
-									<option value="광주시">광주시</option>
-									<option value="하남시">하남시</option>
-									<option value="광명시">광명시</option>
-									<option value="군포시">군포시</option>
-									<option value="양주시">양주시</option>
-									<option value="오산시">오산시</option>
-									<option value="이천시">이천시</option>
-									<option value="안성시">안성시</option>
-									<option value="구리시">구리시</option>
-									<option value="의왕시">의왕시</option>
-									<option value="포천시">포천시</option>
-									<option value="양평군">양평군</option>
-									<option value="여주시">여주시</option>
-									<option value="동두천시">동두천시</option>
-									<option value="과천시">과천시</option>
-									<option value="가평군">가평군</option>
-									<option value="연천군">연천군</option>
-								</select>
-								<button class="btn" type="button">바로가기</button>
-							</div>
-							<button class="btn_location" type="button"><span class="sr-only">현위치</span></button>
-						</div>
-						<div class="water_infoBox">
-							<div class="water_price">
-								<div class="left">
-									<span class="water_badge">2022년 기준</span>
-									<p><span>수돗물 요금</span>가정용</p>
-									<div class="price"><span>512</span>원/m³</div>
-								</div>
-								<div class="right">
-									<span class="water_badge">2024년 2월</span>
-									<div class="waterData">
-										<div class="st">
-											<div class="icon"></div>
-											<p>광주1정수장</p>
-										</div>
-										<div class="dashed"></div>
-										<div class="fi">
-											<div class="icon"></div>
-											<p>광주시</p>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="water_state">
-								<div class="item">
-									<div>
-										<span class="state_badge">일반세균</span>
-										<span class="pl35">0.000</span>
-										CFU/mL
-									</div>
-									<em>※ 기준치 100 이하</em>
-								</div>
-								<div class="item">
-									<div>
-										<span class="state_badge">잔류염소</span>
-										<span class="pl35">0.000</span>
-										mg/L
-									</div>
-									<em>※ 기준치 100 이하</em>
-								</div>
-								<div class="item">
-									<div>
-										<span class="state_badge">염소이온</span>
-										<span class="pl35">0.000</span>
-										mg/L
-									</div>
-									<em>※ 기준치 100 이하</em>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-
-				<div class="section2 mt50">
-					<!-- 자주 찾는 서비스 -->
-					<div class="quick_link_wrap">
-						<h4 class="section_title">자주찾는 서비스</h4>
-						<div class="quick_link1">
-							<a href="#!" class="item">
-								<span class="bg">우리집 수돗물</span>
-							</a>
-							<a href="#!" class="item">
-								<span class="bg">안심 물놀이 시설</span>
-							</a>
-							<a href="#!" class="item">
-								<span class="bg">우리동네 약수터</span>
-							</a>
-							<a href="#!" class="item">
-								<span class="bg">아름다운 물길</span>
-							</a>
-						</div>
-
-						<div class="quick_link2">
-							<a href="#!" class="item">
-								<div>
-									<div class="ico"></div>
-									<span>수질</span>
-								</div>
-							</a>
-							<a href="#!" class="item">
-								<div>
-									<div class="ico"></div>
-									<span>수질</span>
-								</div>
-							</a>
-							<a href="#!" class="item">
-								<div>
-									<div class="ico"></div>
-									<span>수질</span>
-								</div>
-							</a>
-							<a href="#!" class="item">
-								<div>
-									<div class="ico"></div>
-									<span>수질</span>
-								</div>
-							</a>
-							<a href="#!" class="item">
-								<div>
-									<div class="ico"></div>
-									<span>수질</span>
-								</div>
-							</a>
-						</div>
-					</div>
-
-					<!-- 공지사항 섹션 -->
-					<div class="notice_wrap">
-						<div class="notice">
-							<h4 class="section_title">공지사항</h4>
-							<ul>
-								<li>
-									<a href="#!">
-										<div class="ico"></div>
-										<p>경기도 지하수 방치공 찾기운동 안내</p>
-										<span class="date">2024-10-02</span>
-									</a>
-								</li>
-								<li>
-									<a href="#!">
-										<div class="ico"></div>
-										<p>경기도 지하수 방치공 찾기운동 안내</p>
-										<span class="date">2024-10-02</span>
-									</a>
-								</li>
-								<li>
-									<a href="#!">
-										<div class="ico"></div>
-										<p>경기도 지하수 방치공 찾기운동 안내</p>
-										<span class="date">2024-10-02</span>
-									</a>
-								</li>
-							</ul>
-							<a href="#!" class="notice_more_btn"><span class="hidden">공지사항 더보기</span></a>
-						</div>
-
-						<div class="notice major_river">
-							<h4 class="section_title">주요하천 수질현황</h4>
-							<ul>
-								<li>
-									<a href="#!">
-										<div class="ico"></div>
-										<p>경기도 지하수 방치공 찾기운동 안내</p>
-										<span class="date">2024-10-02</span>
-									</a>
-								</li>
-								<li>
-									<a href="#!">
-										<div class="ico"></div>
-										<p>경기도 지하수 방치공 찾기운동 안내</p>
-										<span class="date">2024-10-02</span>
-									</a>
-								</li>
-								<li>
-									<a href="#!">
-										<div class="ico"></div>
-										<p>경기도 지하수 방치공 찾기운동 안내</p>
-										<span class="date">2024-10-02</span>
-									</a>
-								</li>
-							</ul>
-							<a href="#!" class="notice_more_btn"><span class="hidden">주요하천 수질현황 더보기</span></a>
-						</div>
-					</div>
+					<!-- Modal -->
+					<!-- //Modal -->
 				</div>
 			</div>
 		</div>

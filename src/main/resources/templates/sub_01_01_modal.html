@@ -19,6 +19,10 @@
 	<script src="common/js/jquery-1.12.4.min.js"></script>
 	<script src="common/js/jquery-ui.js"></script>
 	<script src="common/js/customScript.js"></script>
+	
+	<!-- apex chart lib -->
+	<script src="common/js/apexchart.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
 	<!-- plugin -->
 	<link rel="stylesheet" type="text/css" href="common/plugin/slick/slick.css">
@@ -30,7 +34,7 @@
 
 </head>
 
-<body>
+<body class="fixed">
 	<div id="wrapper">
 		<div class="mask "></div>
 		<div class="gnb_bg"></div>
@@ -302,311 +306,290 @@
 		</div>
 		<!-- //상단 검색 영역 -->
 
-		<div class="main_wrap">
-			<div class="container">
-				<div class="section1">
-					<!-- 메인 슬라이드 배너 -->
-					<div class="main_slide_wrap">
-						<div class="main_slide">
-							<div class="slide">
-								<a href="#!"><img src="/common/images/banner1.jpg" alt=""/></a>
-							</div>
-							<div class="slide">
-								<a href="#!"><img src="/common/images/banner1.jpg" alt=""/></a>
-							</div>
-							<div class="slide">
-								<a href="#!"><img src="/common/images/banner1.jpg" alt=""/></a>
-							</div>
-							<div class="slide">
-								<a href="#!"><img src="/common/images/banner1.jpg" alt=""/></a>
-							</div>
-						</div>
-						<div class="custom_paging"></div>
-						<div class="slide_controler">
-							<button class="btn_pause"></button>
-						</div>
+		
+		<div class="container">
+			<div id="sub_contents">
+				<aside id="side_nav">
+					<div class="page_label"><h3>생활 속 물정보</h3></div>
+					<nav class="lnb">
+						<ul>
+							<li class="depth2 drops on"><a href="#!"><span>우리집 수돗물</span></a>
+								<ul class="on">
+									<li class="depth3"><a href="#!"><span>상수도 보급률</span></a></li>
+									<li class="depth3"><a href="#!"><span>급수인구 현황</span></a></li>
+									<li class="depth3"><a href="#!"><span>상수도 요금현황</span></a></li>
+									<li class="depth3"><a href="#!"><span>정수시설 현황</span></a></li>
+									<li class="depth3"><a href="#!"><span>(정수)수질검사자료-정수장</span></a></li>
+									<li class="depth3"><a href="#!"><span>(정수)수질검사자료-소규모</span></a></li>
+									<li class="depth3"><a href="#!"><span>취수시설 현황</span></a></li>
+									<li class="depth3"><a href="#!"><span>(원수)수질검사자료-취수장</span></a></li>
+								</ul>
+							</li>
+							<li class="depth2"><a href="#!"><span>우리동네 약수터</span></a></li>
+							<li class="depth2"><a href="#!"><span>물놀이형 수경시설</span></a></li>
+							<li class="depth2"><a href="#!"><span>아름다운 물길</span></a></li>
+						</ul>
+					</nav>
+				</aside>
+
+				<div class="sub_contents">
+					<div class="sub_header">
+						<h4>우리집 수돗물</h4>
+						<ol class="breadcrumb">
+							<li class="home"><a href="#!"><span class="sr-only">홈으로</span></a></li>
+							<li><a href="#!">생활 속 물정보</a></li>
+							<li><a href="#!">우리집 수돗물</a></li>
+						</ol>
 					</div>
 
-					<!-- 생활 속 물정보 -->
-					<div class="waterInLife">
-						<h4 class="section_title">생활 속 물정보</h4>
-						<div class="water_search">
-							<div>
-								<select class="waterSelect"> <!--시군구 선택박스-->
-									<option value="">전체</option>
-									<option value="수원시">수원시</option>
-									<option value="용인시">용인시</option>
-									<option value="고양시">고양시</option>
-									<option value="화성시">화성시</option>
-									<option value="성남시">성남시</option>
-									<option value="부천시">부천시</option>
-									<option value="남양주시">남양주시</option>
-									<option value="안산시">안산시</option>
-									<option value="평택시">평택시</option>
-									<option value="안양시">안양시</option>
-									<option value="시흥시">시흥시</option>
-									<option value="파주시">파주시</option>
-									<option value="김포시">김포시</option>
-									<option value="의정부시">의정부시</option>
-									<option value="광주시">광주시</option>
-									<option value="하남시">하남시</option>
-									<option value="광명시">광명시</option>
-									<option value="군포시">군포시</option>
-									<option value="양주시">양주시</option>
-									<option value="오산시">오산시</option>
-									<option value="이천시">이천시</option>
-									<option value="안성시">안성시</option>
-									<option value="구리시">구리시</option>
-									<option value="의왕시">의왕시</option>
-									<option value="포천시">포천시</option>
-									<option value="양평군">양평군</option>
-									<option value="여주시">여주시</option>
-									<option value="동두천시">동두천시</option>
-									<option value="과천시">과천시</option>
-									<option value="가평군">가평군</option>
-									<option value="연천군">연천군</option>
-								</select>
-							</div>
-							<div>
-								<button class="btn_location" type="button"><span class="sr-only">현위치</span></button>
-								<button class="btn_map" type="button"><span class="sr-only">지도보기</span></button>
-							</div>
-						</div>
-
-						<div class="water_sch_result">
-							<div class="item">
-								<div>
-									<div class="icon"><img src="/common/images/ico_flt_1_w.svg" alt=""/></div>
-									<span>우리동네 약수터</span>
-								</div>
-								<p>259</p>
-								<button type="button">바로가기</button>
-							</div>
-							<div class="item">
-								<div>
-									<div class="icon"><img src="/common/images/ico_flt_5_w.svg" alt=""/></div>
-									<span>안심 물놀이시설</span>
-								</div>
-								<p>10</p>
-								<button type="button">바로가기</button>
-							</div>
-							<div class="item">
-								<div>
-									<div class="icon"><img src="/common/images/ico_flt_3_w.svg" alt=""/></div>
-									<span>아름다운 물길</span>
-								</div>
-								<p>3</p>
-								<button type="button">바로가기</button>
-							</div>
-						</div>
-					</div>
-
-					<!-- 수돗물 현황 -->
-					<div class="water_info">
-						<div class="water_search">
-							<div class="text"><strong>광주시</strong>의 수돗물 현황입니다.</div>
-							<div>
-								<select class="waterSelect"> <!--시군구 선택박스-->
-									<option value="">전체</option>
-									<option value="수원시">수원시</option>
-									<option value="용인시">용인시</option>
-									<option value="고양시">고양시</option>
-									<option value="화성시">화성시</option>
-									<option value="성남시">성남시</option>
-									<option value="부천시">부천시</option>
-									<option value="남양주시">남양주시</option>
-									<option value="안산시">안산시</option>
-									<option value="평택시">평택시</option>
-									<option value="안양시">안양시</option>
-									<option value="시흥시">시흥시</option>
-									<option value="파주시">파주시</option>
-									<option value="김포시">김포시</option>
-									<option value="의정부시">의정부시</option>
-									<option value="광주시">광주시</option>
-									<option value="하남시">하남시</option>
-									<option value="광명시">광명시</option>
-									<option value="군포시">군포시</option>
-									<option value="양주시">양주시</option>
-									<option value="오산시">오산시</option>
-									<option value="이천시">이천시</option>
-									<option value="안성시">안성시</option>
-									<option value="구리시">구리시</option>
-									<option value="의왕시">의왕시</option>
-									<option value="포천시">포천시</option>
-									<option value="양평군">양평군</option>
-									<option value="여주시">여주시</option>
-									<option value="동두천시">동두천시</option>
-									<option value="과천시">과천시</option>
-									<option value="가평군">가평군</option>
-									<option value="연천군">연천군</option>
-								</select>
-								<button class="btn" type="button">바로가기</button>
-							</div>
-							<button class="btn_location" type="button"><span class="sr-only">현위치</span></button>
-						</div>
-						<div class="water_infoBox">
-							<div class="water_price">
-								<div class="left">
-									<span class="water_badge">2022년 기준</span>
-									<p><span>수돗물 요금</span>가정용</p>
-									<div class="price"><span>512</span>원/m³</div>
-								</div>
-								<div class="right">
-									<span class="water_badge">2024년 2월</span>
-									<div class="waterData">
-										<div class="st">
-											<div class="icon"></div>
-											<p>광주1정수장</p>
-										</div>
-										<div class="dashed"></div>
-										<div class="fi">
-											<div class="icon"></div>
-											<p>광주시</p>
-										</div>
+					<!-- contents -->
+					<div class="contents">
+						<div class="ourWater">
+							<div class="">
+								<div class="title bg_blue">수돗물 요금 (가정용)</div>
+								<div class="ourWaterCon">
+									<div class="left">
+										<div class="icon"><img src="/common/images/ico_3.png" alt="" /></div>
+										<p>512<span>원/m³</span></p>
+									</div>
+									<div class="right">
+										<table class="tbl">
+											<colgroup>
+												<col style="width:50%">
+												<col style="width:50%">
+											</colgroup>
+											<thead>
+												<tr>
+													<th>분류</th>
+													<th>평균 요금 (원/m³)</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<th>최고</th>
+													<td class="text-center">955</td>
+												</tr>
+												<tr>
+													<th>평균</th>
+													<td class="text-center">564</td>
+												</tr>
+												<tr>
+													<th>최저</th>
+													<td class="text-center">282</td>
+												</tr>
+											</tbody>
+										</table>
 									</div>
 								</div>
 							</div>
-							<div class="water_state">
-								<div class="item">
-									<div>
-										<span class="state_badge">일반세균</span>
-										<span class="pl35">0.000</span>
-										CFU/mL
+							<div class="">
+								<div class="title bg_green">상수도 보급률</div>
+								<div class="ourWaterCon">
+									<div class="left">
+										<div class="icon"><img src="/common/images/ico_4.png" alt="" /></div>
+										<p>96<span>%</span></p>
 									</div>
-									<em>※ 기준치 100 이하</em>
-								</div>
-								<div class="item">
-									<div>
-										<span class="state_badge">잔류염소</span>
-										<span class="pl35">0.000</span>
-										mg/L
+									<div class="right">
+										<table class="tbl">
+											<colgroup>
+												<col style="width:50%">
+												<col style="width:50%">
+											</colgroup>
+											<thead>
+												<tr>
+													<th>분류</th>
+													<th>보급률(%)</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<th>최고</th>
+													<td class="text-center">100</td>
+												</tr>
+												<tr>
+													<th>평균</th>
+													<td class="text-center">96</td>
+												</tr>
+												<tr>
+													<th>최저</th>
+													<td class="text-center">77</td>
+												</tr>
+											</tbody>
+										</table>
 									</div>
-									<em>※ 기준치 100 이하</em>
-								</div>
-								<div class="item">
-									<div>
-										<span class="state_badge">염소이온</span>
-										<span class="pl35">0.000</span>
-										mg/L
-									</div>
-									<em>※ 기준치 100 이하</em>
 								</div>
 							</div>
 						</div>
-					</div>
-				</div>
 
-				<div class="section2 mt50">
-					<!-- 자주 찾는 서비스 -->
-					<div class="quick_link_wrap">
-						<h4 class="section_title">자주찾는 서비스</h4>
-						<div class="quick_link1">
-							<a href="#!" class="item">
-								<span class="bg">우리집 수돗물</span>
-							</a>
-							<a href="#!" class="item">
-								<span class="bg">안심 물놀이 시설</span>
-							</a>
-							<a href="#!" class="item">
-								<span class="bg">우리동네 약수터</span>
-							</a>
-							<a href="#!" class="item">
-								<span class="bg">아름다운 물길</span>
-							</a>
+						<div class="water_region_info mt40">
+							<div class="title">
+								<h5 class="h5Tit">내지역 물정보 <strong>(가평군)</strong></h5>
+								<div class="region_select">
+									<span>경기도</span>
+									<select class="form_select"> <!--시군구 선택박스-->
+										<option value="">전체</option>
+										<option value="수원시">수원시</option>
+										<option value="용인시">용인시</option>
+										<option value="고양시">고양시</option>
+										<option value="화성시">화성시</option>
+										<option value="성남시">성남시</option>
+										<option value="부천시">부천시</option>
+										<option value="남양주시">남양주시</option>
+										<option value="안산시">안산시</option>
+										<option value="평택시">평택시</option>
+										<option value="안양시">안양시</option>
+										<option value="시흥시">시흥시</option>
+										<option value="파주시">파주시</option>
+										<option value="김포시">김포시</option>
+										<option value="의정부시">의정부시</option>
+										<option value="광주시">광주시</option>
+										<option value="하남시">하남시</option>
+										<option value="광명시">광명시</option>
+										<option value="군포시">군포시</option>
+										<option value="양주시">양주시</option>
+										<option value="오산시">오산시</option>
+										<option value="이천시">이천시</option>
+										<option value="안성시">안성시</option>
+										<option value="구리시">구리시</option>
+										<option value="의왕시">의왕시</option>
+										<option value="포천시">포천시</option>
+										<option value="양평군">양평군</option>
+										<option value="여주시">여주시</option>
+										<option value="동두천시">동두천시</option>
+										<option value="과천시">과천시</option>
+										<option value="가평군">가평군</option>
+										<option value="연천군">연천군</option>
+									</select>
+								</div>
+							</div>
+							<div class="con_box">
+								<div class="waterData">
+									<div class="st">
+										<a href="#" class="icon"><img src="/common/images/ico_1.png" alt="" /></a>
+										<p><span>가평통합</span>정수장</p>
+									</div>
+									<div class="dashed"></div>
+									<div class="fi">
+										<a href="#!" class="icon"><img src="/common/images/ico_2.png" alt="" /></a>
+										<p>가평군</p>
+									</div>
+								</div>
+							</div>
+							<div class="mt35">
+								<p class="tr">※ 2020년 11월</p>
+								<table class="tbl">
+									<colgroup>
+										<col style="width:33.3%;">
+										<col style="width:33.3%;">
+										<col style="width:33.3%;">
+									</colgroup>
+									<thead>
+										<tr>
+											<th>일반 세균 (기준: 100)</th>
+											<th>잔류염소 (기준: 0.1~4)</th>
+											<th>염소이온 (기준: 500)</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td class="text-center">0.000 CFU/mL</td>
+											<td class="text-center">0.312 mg/L</td>
+											<td class="text-center">0.000 mg/L</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
 						</div>
 
-						<div class="quick_link2">
-							<a href="#!" class="item">
-								<div>
-									<div class="ico"></div>
-									<span>수질</span>
+						<div class="mt40">
+							<h5 class="h5Tit"><span>가평군</span>의 <strong>가평통합 정수장</strong>의 급수 구역입니다.</h5>
+							<div class="contents_map_wrap">
+								<div class="contents_map"></div>
+								<div class="contents_map_tail">
+									<p class="txt_alert">실제 데이터와 일부 다를 수 있습니다.</p>
 								</div>
-							</a>
-							<a href="#!" class="item">
-								<div>
-									<div class="ico"></div>
-									<span>수질</span>
-								</div>
-							</a>
-							<a href="#!" class="item">
-								<div>
-									<div class="ico"></div>
-									<span>수질</span>
-								</div>
-							</a>
-							<a href="#!" class="item">
-								<div>
-									<div class="ico"></div>
-									<span>수질</span>
-								</div>
-							</a>
-							<a href="#!" class="item">
-								<div>
-									<div class="ico"></div>
-									<span>수질</span>
-								</div>
-							</a>
+							</div>
 						</div>
-					</div>
 
-					<!-- 공지사항 섹션 -->
-					<div class="notice_wrap">
-						<div class="notice">
-							<h4 class="section_title">공지사항</h4>
-							<ul>
-								<li>
-									<a href="#!">
-										<div class="ico"></div>
-										<p>경기도 지하수 방치공 찾기운동 안내</p>
-										<span class="date">2024-10-02</span>
-									</a>
-								</li>
-								<li>
-									<a href="#!">
-										<div class="ico"></div>
-										<p>경기도 지하수 방치공 찾기운동 안내</p>
-										<span class="date">2024-10-02</span>
-									</a>
-								</li>
-								<li>
-									<a href="#!">
-										<div class="ico"></div>
-										<p>경기도 지하수 방치공 찾기운동 안내</p>
-										<span class="date">2024-10-02</span>
-									</a>
-								</li>
+						<div class="mt40">
+							<ul class="tab_menu mb30" role="tablist">
+								<li role="presentation" class="tab_item active"><a href="#tabCon1"><span>보급률</span></a></li>
+								<li role="presentation" class="tab_item"><a href="#tabCon2"><span>수도요금</span></a></li>
+								<li role="presentation" class="tab_item"><a href="#tabCon3"><span>수돗물 생산량</span></a></li>
 							</ul>
-							<a href="#!" class="notice_more_btn"><span class="hidden">공지사항 더보기</span></a>
+							<div class="tab_con_wrap">
+								<div id="tabCon1" class="tab_con active">
+									<div class="d-flex justify-content-between">
+										<h6 class="h6Tit">시군구별 보급률</h6>
+										<button class="btn_ico_download" type="button" title="이미지로 저장하기"></button>
+									</div>
+									<div class="con_line_box">차트영역</div>
+								</div>
+								<div id="tabCon2" class="tab_con">
+									<div class="d-flex justify-content-between">
+										<h6 class="h6Tit">시군구별 수도요금</h6>
+										<button class="btn_ico_download" type="button" title="이미지로 저장하기"></button>
+									</div>
+									<div class="con_line_box">차트영역</div>
+								</div>
+								<div id="tabCon3" class="tab_con">
+									<div class="d-flex justify-content-between">
+										<h6 class="h6Tit">시군구별 수돗물 생산량</h6>
+										<button class="btn_ico_download" type="button" title="이미지로 저장하기"></button>
+									</div>
+									<div class="con_line_box">차트영역</div>
+								</div>
+							</div>
 						</div>
 
-						<div class="notice major_river">
-							<h4 class="section_title">주요하천 수질현황</h4>
-							<ul>
-								<li>
-									<a href="#!">
-										<div class="ico"></div>
-										<p>경기도 지하수 방치공 찾기운동 안내</p>
-										<span class="date">2024-10-02</span>
-									</a>
-								</li>
-								<li>
-									<a href="#!">
-										<div class="ico"></div>
-										<p>경기도 지하수 방치공 찾기운동 안내</p>
-										<span class="date">2024-10-02</span>
-									</a>
-								</li>
-								<li>
-									<a href="#!">
-										<div class="ico"></div>
-										<p>경기도 지하수 방치공 찾기운동 안내</p>
-										<span class="date">2024-10-02</span>
-									</a>
-								</li>
-							</ul>
-							<a href="#!" class="notice_more_btn"><span class="hidden">주요하천 수질현황 더보기</span></a>
+						<!-- 담당자 정보 -->
+						<div class="manager">
+							<p><span>부서명</span>상하수과</p>
+							<p><span>전화번호</span>031-8008-6990</p>
+						</div>
+						<!-- //담당자 정보 -->
+					</div>
+					<!-- //contents -->
+
+					<!-- Modal -->
+					<!-- 
+						모달이 열릴때 body에 클래스 fixed 가 붙어야 합니다. 
+					 	body.fixed는 overflow가 hidden 되어 
+						스크롤을 없애는 역할입니다.
+					-->
+					<div class="modal" id="subModal" style="display: block;">
+						<div class="modalPopup">
+							<div class="modalPopup_header">
+								<span>상세정보</span>
+								<a href="#!" class="btnpClose"><img src="./common/images/ico_close_w.svg" alt="닫기"></a>
+							</div>
+							<div class="modalPopup_contents">
+								
+								<h6 class="popCtitle">세부 내용 타이틀</h6>
+								<table id="" class="tbl type2 text-center" summary="">
+									<caption>정보</caption>
+									<colgroup>
+										<col style="width: 30%">
+										<col style="width: 15%">
+										<col style="width: 15%">
+										<col style="width: 20%">
+										<col style="width: 20%">
+									</colgroup>
+									<thead>
+										<tr>
+											<th>분류</th>
+											<th>수질 기준</th>
+											<th>단위</th>
+											<th>측정값</th>
+											<th>기준초과여부</th>
+										</tr>
+									</thead>
+									<tbody id="detailResult"><tr><td scope="col">일반세균</td><td scope="col">100</td><td scope="col">CFU/mL</td><td scope="col">0.000</td><td><span style="color: #1f4f80;">적합</span></td></tr><tr><td scope="col">총대장균군</td><td scope="col">0</td><td scope="col">MPN</td><td scope="col">불검출</td><td><span style="color: #1f4f80;">적합</span></td></tr><tr><td scope="col">대장균/분원성대장균군</td><td scope="col">0</td><td scope="col">MPN</td><td scope="col">불검출</td><td><span style="color: #1f4f80;">적합</span></td></tr><tr><td scope="col">암모니아성질소</td><td scope="col">0.5</td><td scope="col">mg/L</td><td scope="col">0.000</td><td><span style="color: #1f4f80;">적합</span></td></tr><tr><td scope="col">동</td><td scope="col">1</td><td scope="col">mg/L</td><td scope="col">0.000</td><td><span style="color: #1f4f80;">적합</span></td></tr><tr><td scope="col">아연</td><td scope="col">3</td><td scope="col">mg/L</td><td scope="col">0.000</td><td><span style="color: #1f4f80;">적합</span></td></tr><tr><td scope="col">염소이온</td><td scope="col">250</td><td scope="col">mg/L</td><td scope="col">0.000</td><td><span style="color: #1f4f80;">적합</span></td></tr><tr><td scope="col">철</td><td scope="col">0.3</td><td scope="col">mg/L</td><td scope="col">0.000</td><td><span style="color: #1f4f80;">적합</span></td></tr><tr><td scope="col">망간</td><td scope="col">0.05</td><td scope="col">mg/L</td><td scope="col">0.000</td><td><span style="color: #1f4f80;">적합</span></td></tr><tr><td scope="col">잔류염소</td><td scope="col">0.1~4</td><td scope="col">mg/L</td><td scope="col">0.650</td><td><span style="color: #1f4f80;">적합</span></td></tr></tbody>
+								</table>
+							</div>
 						</div>
 					</div>
+					<!-- //Modal -->
 				</div>
 			</div>
 		</div>

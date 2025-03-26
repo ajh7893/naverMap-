@@ -19,6 +19,10 @@
 	<script src="common/js/jquery-1.12.4.min.js"></script>
 	<script src="common/js/jquery-ui.js"></script>
 	<script src="common/js/customScript.js"></script>
+	
+	<!-- apex chart lib -->
+	<script src="common/js/apexchart.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
 	<!-- plugin -->
 	<link rel="stylesheet" type="text/css" href="common/plugin/slick/slick.css">
@@ -38,7 +42,7 @@
 			<div class="container" style="position: relative;">
 				<button id="mobileMenuBtn" class="mobile_menu_btn"></button>
 				<h1>
-					<a href="#!" class="logo"><img src="/common/images/logo.png" alt="경기도물정보시스템"/></a>
+					<a href="#!" class="logo"><img src="./common/images/logo.png" alt="경기도물정보시스템"/></a>
 				</h1>
 				<nav id="nav">
 					<ul>
@@ -302,6 +306,7 @@
 		</div>
 		<!-- //상단 검색 영역 -->
 
+		
 		<div class="container">
 			<div id="sub_contents">
 				<aside id="side_nav">
@@ -460,7 +465,7 @@
 							<div class="con_box">
 								<div class="waterData">
 									<div class="st">
-										<a href="#!" class="icon"><img src="/common/images/ico_1.png" alt="" /></a>
+										<a href="#" class="icon"><img src="/common/images/ico_1.png" alt="" /></a>
 										<p><span>가평통합</span>정수장</p>
 									</div>
 									<div class="dashed"></div>
@@ -545,6 +550,20 @@
 						<!-- //담당자 정보 -->
 					</div>
 					<!-- //contents -->
+
+					<!-- Modal -->
+					<div class="modal" id="subModal">
+						<div class="popup">
+							<p class="pop_top">
+								상세정보<a href="#!" class="btnpClose"><img src="/html/iwmis/images/btn_close.png" alt="닫기"></a>
+							</p>
+							<div class="p_cont">
+								
+								
+							</div>
+						</div>
+					</div>
+					<!-- //Modal -->
 				</div>
 			</div>
 		</div>
