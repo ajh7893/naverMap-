@@ -37,6 +37,8 @@
     <!-- apex chart lib -->
     <script src="/common/js/apexchart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <!-- 네이버  지도 -->
+    <!-- <script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?govClientId=tzo0erifbf"></script>-->
     <script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=ebw9oxmgrs"></script>
     <!-- plugin -->
     <link
@@ -507,25 +509,31 @@
               </div>
               <script>
 
+                // 지역 GeoJSON 데이터를 담을 배열과 로딩 개수를 추적할 변수 선언
                 var regionGeoJson = [],
                     loadCount = 0;
 
+                // 네이버 지도 객체 생성
                 var map = new naver.maps.Map(document.getElementById('sampleMap'), {
-                    zoom: 7,
-                    mapTypeId: 'normal',
-                    center: new naver.maps.LatLng(36.4203004, 128.317960)
+                    zoom: 7, // 초기 확대 레벨
+                    mapTypeId: 'normal', // 일반 지도 타입
+                    center: new naver.maps.LatLng(36.4203004, 128.317960) // 지도 중심 좌표 (대한민국 중부)
                 });
 
+                // 지도 초기화가 완료되었을 때 단 한 번 실행되는 콜백 함수 등록
                 naver.maps.Event.once(map, 'init', function () {
-                    var keyword = '01'; // i = 1일 때
+                    var keyword = '01'; // 키워드 설정 (현재는 사용되지 않음)
 
+                    // GeoJSON 파일 비동기 로드 (경기도 지역)
+                    //https://water.gg.go.kr/geoserver/GWMS_works/ows?service=WFS&version=1.1.0&request=GetFeature&typeName=GWMS_works:SIGUNGU&outputFormat=application/json&SRSNAME=EPSG:4326
                     $.ajax({
-                        url: 'http://localhost/data/경기도.json',
+                        url: 'http://localhost/data/경기도.json', // 지역별 GeoJSON 파일 경로 https://water.gg.go.kr/geoserver/GWMS_works/ows?service=WFS&version=1.1.0&request=GetFeature&typeName=GWMS_works:SIGUNGU&outputFormat=application/json&SRSNAME=EPSG:4326
                         success: function(geojson) {
-                            regionGeoJson[0] = geojson;
-                            console.log(regionGeoJson);
+                            regionGeoJson[0] = geojson; // 데이터 저장
+                            console.log(regionGeoJson); // 디버깅용 출력
                             loadCount++;
 
+                            // 모든 데이터를 다 불러왔을 때만 지도에 레이어 표시 시작
                             if (loadCount === 1) {
                                 startDataLayer();
                             }
@@ -533,56 +541,80 @@
                     });
                 });
 
-
+                // 지도 위에 나타날 툴팁(div 엘리먼트) 생성
                 var tooltip = $('<div style="position:absolute;z-index:1000;padding:5px 10px;background-color:#fff;border:solid 2px #000;font-size:14px;pointer-events:none;display:none;"></div>');
 
+                // 툴팁을 지도 floatPane(레이어 중 하나)에 추가
                 tooltip.appendTo(map.getPanes().floatPane);
 
+                // GeoJSON 데이터를 지도에 스타일링해서 뿌려주는 함수
                 function startDataLayer() {
+                    // feature별로 스타일 지정
                     map.data.setStyle(function(feature) {
+                        var regionName = feature.getProperty('SIGUNGU_NM');
+
+
+
+
                         var styleOptions = {
-                            fillColor: '#ff0000',
-                            fillOpacity: 0.0001,
-                            strokeColor: '#ff0000',
-                            strokeWeight: 2,
-                            strokeOpacity: 0.4
+                            fillColor: '#ff0000',     // 기본 빨간색 채우기
+                            fillOpacity: 0.0001,      // 거의 투명
+                            strokeColor: '#ff0000',   // 테두리 색
+                            strokeWeight: 2,          // 테두리 두께
+                            strokeOpacity: 0.4        // 테두리 투명도
                         };
 
+                      // 가평군일 때만 빨간색으로 꽉 채우기
+                      if (regionName === '가평군') {
+                        styleOptions.fillOpacity = 0.6;
+                      }
+                        // focus 속성이 true인 경우 강조 스타일 적용
                         if (feature.getProperty('focus')) {
                             styleOptions.fillOpacity = 0.6;
-                            styleOptions.fillColor = '#0f0';
+                            styleOptions.fillColor = '#0f0';     // 초록색 강조
                             styleOptions.strokeColor = '#0f0';
                             styleOptions.strokeWeight = 4;
                             styleOptions.strokeOpacity = 1;
                         }
+                      // 특정 지역만 색을 채우기
+                      if (feature.getProperty('fill') === true) {
+                        styleOptions.fillOpacity = 0.5; // 꽉 채우기
+                      }
 
                         return styleOptions;
                     });
 
+                    // 불러온 GeoJSON 데이터를 지도에 추가
                     regionGeoJson.forEach(function(geojson) {
                         map.data.addGeoJson(geojson);
                     });
 
+                    // feature 클릭 시 강조/비강조 토글
                     map.data.addListener('click', function(e) {
                         var feature = e.feature;
 
                         if (feature.getProperty('focus') !== true) {
-                            feature.setProperty('focus', true);
+                            feature.setProperty('focus', true);  // 강조
                         } else {
-                            feature.setProperty('focus', false);
+                            feature.setProperty('focus', false); // 비강조
                         }
                     });
 
+                    // 마우스를 feature 위에 올렸을 때 툴팁 표시 + 임시 스타일 강조
                     map.data.addListener('mouseover', function(e) {
                         var feature = e.feature,
-                            regionName = feature.getProperty('adm_nm');
-                        console.log(feature)
+                            regionName = feature.getProperty('SIGUNGU_NM'); // 지역명 속성 추출
+
+                        //console.log(feature); // feature 객체 확인
+
+                        // 툴팁 위치 및 텍스트 설정
                         tooltip.css({
                             display: '',
                             left: e.offset.x,
                             top: e.offset.y
-                        }).text(regionName);
+                        }).text(regionName+'안녕하세요');
 
+                        // 마우스 오버 시 임시 스타일 적용
                         map.data.overrideStyle(feature, {
                             fillOpacity: 0.6,
                             strokeWeight: 4,
@@ -590,11 +622,13 @@
                         });
                     });
 
+                    // 마우스가 feature를 벗어났을 때 툴팁 숨기고 원래 스타일로 복구
                     map.data.addListener('mouseout', function(e) {
                         tooltip.hide().empty();
                         map.data.revertStyle();
                     });
                 }
+
 
 
               </script>

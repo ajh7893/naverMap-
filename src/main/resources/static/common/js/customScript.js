@@ -1,78 +1,31 @@
 $(document).ready(function () {
-    //GNB 임시 스크립트
+    // GNB 임시 스크립트
     $("#nav").on("mouseenter focus", function () {
-        $("#nav").addClass("active");
-        $(".mask").addClass("active");
-        $(".gnb_bg").addClass("active");
-      });
-    
+        $("#nav, .mask, .gnb_bg").addClass("active");
+    });
+
     $("#nav").on("mouseleave", function () {
-        $("#nav").removeClass("active");
-        $(".mask").removeClass("active");
-        $(".gnb_bg").removeClass("active");
+        $("#nav, .mask, .gnb_bg").removeClass("active");
     });
 
-  //상단 검색 토글버튼
-  $("#topSearchBtn").click(function () {
-    $(this).toggleClass("active");
-    $("#searchArea").toggleClass("active");
-    $(".mask").toggleClass("active");
-  });
-
-    //상단 검색 토글버튼
-    $("#topSearchBtn").click(function(){
-      $(this).toggleClass("active");
-      $("#searchArea").toggleClass("active");
-      $(".mask").toggleClass("active");
+    // 상단 검색 토글 버튼
+    $("#topSearchBtn").click(function () {
+        $(this).toggleClass("active");
+        $("#searchArea, .mask").toggleClass("active");
     });
 
-    //상단 검색 토글버튼
-    $("#topSearchBtn").click(function(){
-      $(this).toggleClass("active");
-      $("#searchArea").toggleClass("active");
-      //$(".mask").toggleClass("active");
+    // 모바일 메뉴 토글 버튼
+    $("#mobileMenuBtn").click(function () {
+        $(this).toggleClass("active");
+        $("body").toggleClass("fixed");
+        $("#mobileNav").toggleClass("active");
     });
 
-    //상단 검색 토글버튼
-    $("#topSearchBtn").click(function(){
-      $(this).toggleClass("active");
-      $("#searchArea").toggleClass("active");
-      //$(".mask").toggleClass("active");
-    });
+    // 메인 슬라이드
+    var $status = $('.custom_paging');
+    var $slickElement = $('.main_slide');
 
-  //상단 검색 토글버튼
-  $("#topSearchBtn").click(function () {
-    $(this).toggleClass("active");
-    $("#searchArea").toggleClass("active");
-    //$(".mask").toggleClass("active");
-  });
-
-  //상단 검색 토글버튼
-  $("#topSearchBtn").click(function () {
-    $(this).toggleClass("active");
-    $("#searchArea").toggleClass("active");
-    $(".mask").toggleClass("active");
-
-  //상단 검색 토글버튼
-  $("#topSearchBtn").click(function () {
-    $(this).toggleClass("active");
-    $("#searchArea").toggleClass("active");
-    $(".mask").toggleClass("active");
-
-
-    //모바일 메뉴 토글버튼
-    $("#mobileMenuBtn").click(function(){
-      $(this).toggleClass("active");
-      $("body").toggleClass("fixed");
-      $("#mobileNav").toggleClass("active");
-
-  });
-	
-    //메인 슬라이드
-    var $status = $('.custom_paging'); //paging 이 들어갈 div 혹은 p 혹은 어떠한 영역
-    var $slickElement = $('.main_slide'); //slide가 되어야하는 div
-
-    $slickElement.on('init reInit afterChange', function(event, slick, currentSlide, nextSlide){
+    $slickElement.on('init reInit afterChange', function (event, slick, currentSlide) {
         var i = (currentSlide ? currentSlide : 0) + 1;
         $status.text(i + ' / ' + slick.slideCount);
     });
@@ -83,100 +36,46 @@ $(document).ready(function () {
         autoplay: true,
         autoplaySpeed: 5000,
         dots: false,
-    })
-
-  //메인 슬라이드
-  var $status = $(".custom_paging"); //paging 이 들어갈 div 혹은 p 혹은 어떠한 영역
-  var $slickElement = $(".main_slide"); //slide가 되어야하는 div
-
-  //메인 슬라이드
-  var $status = $('.custom_paging'); //paging 이 들어갈 div 혹은 p 혹은 어떠한 영역
-  var $slickElement = $('.main_slide'); //slide가 되어야하는 div
-
-   // 메인 슬라이드 일시정지 기능
-    $(document).on("click", ".btn_pause", function(){
-        $(".main_slide").slick("slickPause");
-        $(this).removeClass("btn_pause").addClass("btn_play");
-        $(this).parent().attr("title", "재생");
     });
 
-  $slickElement.on(
-    "init reInit afterChange",
-    function (event, slick, currentSlide, nextSlide) {
-      var i = (currentSlide ? currentSlide : 0) + 1;
-      $status.text(i + " / " + slick.slideCount);
-    }
-  );
+    // 메인 슬라이드 일시정지/재생 버튼
+    $(document).on("click", ".btn_pause", function () {
+        $(".main_slide").slick("slickPause");
+        $(this).removeClass("btn_pause").addClass("btn_play").parent().attr("title", "재생");
+    });
 
-  $slickElement.on('init reInit afterChange', function (event, slick, currentSlide, nextSlide) {
-    var i = (currentSlide ? currentSlide : 0) + 1;
-    $status.text(i + ' / ' + slick.slideCount);
-  });
-
-
-
-  $slickElement.slick({
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    autoplay: true,
-    autoplaySpeed: 5000,
-    dots: false,
-  });
-
-  $slickElement.slick({
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    autoplay: true,
-    autoplaySpeed: 5000,
-    dots: false,
-  })
-
-    // 메인 슬라이드 재생 기능
-    $(document).on("click", ".btn_play", function(){
+    $(document).on("click", ".btn_play", function () {
         $(".main_slide").slick("slickPlay");
-        $(this).removeClass("btn_play").addClass("btn_pause");
-        $(this).parent().attr("title", "일시정지");
+        $(this).removeClass("btn_play").addClass("btn_pause").parent().attr("title", "일시정지");
     });
 
     // 팝업 슬라이드
     var $popStatus = $('.pop_custom_paging');
     var $popSlickElement = $('.popSlider');
 
-
-    $popSlickElement.on('init reInit afterChange', function(event, slick, currentSlide, nextSlide){
+    $popSlickElement.on('init reInit afterChange', function (event, slick, currentSlide) {
         var i = (currentSlide ? currentSlide : 0) + 1;
         $popStatus.text(i + ' / ' + slick.slideCount);
     });
-
 
     $popSlickElement.slick({
         slidesToShow: 1,
         slidesToScroll: 1,
         autoplay: false,
         dots: false,
-    })
+    });
 
-
-    // 탭
+    // 탭 기능
     var tabItem = document.querySelectorAll(".tab_item");
     var tabContent = document.querySelectorAll(".tab_con");
 
     tabItem.forEach((item, index) => {
-      item.addEventListener("click", (e) => {
-      e.preventDefault(); // a
-      
-      tabContent.forEach((content) => {
-        content.classList.remove("active");
-      });
-
-      tabItem.forEach((content) => {
-        content.classList.remove("active");
-      });
-
-      tabItem[index].classList.add("active");
-        tabContent[index].classList.add("active");
-      });
+        item.addEventListener("click", (e) => {
+            e.preventDefault();
+            tabItem.forEach(el => el.classList.remove("active"));
+            tabContent.forEach(el => el.classList.remove("active"));
+            item.classList.add("active");
+            tabContent[index].classList.add("active");
+        });
     });
-    
-
 });

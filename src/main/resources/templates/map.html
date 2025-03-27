@@ -79,7 +79,7 @@
             <a href="#!" class="filter_m_btn"><span></span></a>
             <ul class="">
                 <li class="flt_all">
-                    <button type="button">전체</button>
+                    <button type="button" id="selectAll">전체</button>
                 </li>
                 <li class="flt_1"><!--선택되면 .check 붙어야함-->
                     <button type="button" id="MNSP">약수터</button>
@@ -97,16 +97,16 @@
                     <button type="button" onclick="drawWATERFCLTSLayer('COMBINATION')">조합놀이대</button>
                 </li>
 
-                <li class="flt_6">
-                    <button type="button" id="tt">물놀이장</button>
-                </li>
-                <li class="flt_7">
+<!--                <li class="flt_6">-->
+<!--                    <button type="button" id="tt">물놀이장</button>-->
+<!--                </li>-->
+                <li class="flt_7 noIco">
                     <button type="button" id="ECRIV">생태하천</button>
                 </li>
-                <li class="flt_8">
+                <li class="flt_8 noIco">
                     <button type="button" id="RIVER_NATION">국가하천</button>
                 </li>
-                <li class="flt_9">
+                <li class="flt_9 noIco">
                     <button type="button" id="RIVER_PROVINCE">지방하천</button>
                 </li>
             </ul>
@@ -243,7 +243,7 @@
         } else {
             // GeoJSON 데이터를 가져와서 지도에 추가
             $.ajax({
-                url: url + path + param,
+                url: url + path + param, //https://water.gg.go.kr/geoserver/GWMS_works/ows?service=WFS&version=1.1.0&request=GetFeature&typeName=GWMS_works:ECRIV&outputFormat=application/json&SRSNAME=EPSG:4326
                 dataType: 'json',
                 success: function (geojson) {
                     ecrivLayer = new naver.maps.Data();
@@ -288,7 +288,7 @@
         } else {
             // GeoJSON 데이터를 가져와서 지도에 추가
             $.ajax({
-                url: url + path + param,
+                url: url + path + param,  //https://water.gg.go.kr/geoserver/GWMS_works/ows?service=WFS&version=1.1.0&request=GetFeature&typeName=GWMS_works:RIVER_NATION&outputFormat=application/json&SRSNAME=EPSG:4326
                 dataType: 'json',
                 success: function (geojson) {
                     riverNationLayer = new naver.maps.Data();
@@ -334,7 +334,7 @@
         } else {
             // GeoJSON 데이터를 가져와서 지도에 추가
             $.ajax({
-                url: url + path + param,
+                url: url + path + param, //https://water.gg.go.kr/geoserver/GWMS_works/ows?service=WFS&version=1.1.0&request=GetFeature&typeName=GWMS_works:RIVER_PROVINCE&outputFormat=application/json&SRSNAME=EPSG:4326
                 dataType: 'json',
                 success: function (geojson) {
                     riverProvinceLayer = new naver.maps.Data();
@@ -407,7 +407,9 @@
     // 마커 배열 (현재 지도에 표시된 마커 저장)
     var markerList = [];
     // 버튼 상태 저장 (초기 상태: false)
-    var isLayerActive = false;
+    var isLayerActive = false;      // 약수터 상태
+    var isAllSelected = false;      // 전체 선택 상태
+
 
     var currentInfoWindow ; // 현재 열린 InfoWindow를 저장하는 변수
 
@@ -429,7 +431,7 @@
         var param = 'ctzn_excelList_sigunNm_' + sigunNm + '.json';
 
         $.ajax({
-            url: url + path + param,
+            url: url + path + param,  //https://water.gg.go.kr/ctzn/excelList.do?sigunNm=%EC%88%98%EC%9B%90%EC%8B%9C 수원시
             dataType: 'json',
             data: { sigunNm: '' },
             success: function (geojson) {
@@ -589,7 +591,7 @@
         var param = 'ctzn_selectDrawMapData_' + hydrKndType + '.json';
 
         $.ajax({
-            url: url + path + param,
+            url: url + path + param,  //https://water.gg.go.kr/ctzn/selectDrawMapData.do?sigunNm=all&hydrKndType=%EB%B6%84%EC%88%98
             dataType: 'json',
             data: { sigunNm: '' },
             success: function (geojson) {
@@ -758,19 +760,48 @@
     // 약수터
     $('#MNSP').on('click', function () {
         if (isLayerActive) {
-            // **초기화 (마커 및 선택 상태 제거)**
             clearMarkers();
-            $(this).closest('li').removeClass('check'); // `.check` 클래스 제거
+            $(this).closest('li').removeClass('check');
             isLayerActive = false;
         } else {
-            // **지도에 마커 추가**
             drawMNSPLayer();
-            $(this).closest('li').addClass('check'); // `.check` 클래스 추가
+            $(this).closest('li').addClass('check');
             isLayerActive = true;
         }
     });
-    //지우기
-    $('#tt').on('click', removeAllDataLayer);
+    //전체 선택
+    $('#selectAll').on('click', function () {
+        if (isAllSelected) {
+            // 🔹 전체 해제
+            clearMarkers();
+            drawWATERFCLTSLayer('FOUNTAIN');
+            drawWATERFCLTSLayer('MOORAGE');
+            drawWATERFCLTSLayer('WATERFLOW');
+            drawWATERFCLTSLayer('COMBINATION');
+            drowEcriv();
+            drowRiverNation();
+            drowRiverProvince();
+
+            $('li').removeClass('check');
+            isLayerActive = false;
+            isAllSelected = false;
+        } else {
+            // 🔹 전체 선택
+            drawMNSPLayer();
+            drawWATERFCLTSLayer('FOUNTAIN');
+            drawWATERFCLTSLayer('MOORAGE');
+            drawWATERFCLTSLayer('WATERFLOW');
+            drawWATERFCLTSLayer('COMBINATION');
+            drowEcriv();
+            drowRiverNation();
+            drowRiverProvince();
+
+            $('li').addClass('check');
+            isLayerActive = true;
+            isAllSelected = true;
+        }
+    });
+
 
 </script>
 </html>
