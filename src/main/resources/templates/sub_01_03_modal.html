@@ -24,6 +24,8 @@
 	<script src="/common/js/apexchart.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
+	<!-- 네이버  지도 -->
+	<script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?govClientId=tzo0erifbf"></script>
 	<!-- plugin -->
 	<link rel="stylesheet" type="text/css" href="/common/plugin/slick/slick.css">
 	<script src="/common/plugin/slick/slick.min.js"></script>
@@ -367,7 +369,7 @@
 										<div class="hover_box"></div>
 									</div>
 									<div class="item ic_wf_03">
-										<div class="img"><img src=".common/images/ic_wf_03.jpg" alt="" /></div>
+										<div class="img"><img src="/common/images/ic_wf_03.jpg" alt="" /></div>
 										<div class="txt_box">
 											<p class="tit">벽천</p>
 											<p class="txt">수돗물, 지하수 등을 인위적으로 저장 및 순환하여 벽에서 흘러내리거나 뿜어 나오게 만든 시설</p>
@@ -465,7 +467,7 @@
                                         <col style="width: 10%;">
                                     </colgroup>
                                     <thead>
-                                        <tr>
+                                        <tr data-lat="37.3595704" data-lng="127.105399">
                                             <th>시설종류</th>
                                             <th>물놀이시설(공원)명</th>
                                             <th>위치</th>
@@ -475,7 +477,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
+                                        <tr data-lat="37.3595704" data-lng="127.105399">
                                             <td>분수</td>
                                             <td>권선 광장공원 바닥분수</td>
                                             <td>권선구 권선동 1252</td>
@@ -483,7 +485,8 @@
                                             <td>운영중단</td>
                                             <td></td>
                                         </tr>
-                                        <tr>
+										<!-- tr 에 좌표를 넣어준다.  -->
+                                        <tr data-lat="37.4324212" data-lng="127.123499">
                                             <td>분수</td>
                                             <td>권선 광장공원 바닥분수</td>
                                             <td>권선구 권선동 1252</td>
@@ -594,8 +597,70 @@
 					</div>
 					<!-- //contents -->
 
+					<script>
+					   //모달에 지도 정보 넘기기 tr
+					  // 전역 변수 선언
+					  let map = null;
+					  let marker = null;
+
+					  document.addEventListener("DOMContentLoaded", function () {
+					    const rows = document.querySelectorAll("tbody tr");
+					    const modal = document.getElementById("subModal");
+					    const closeBtn = document.querySelector(".btnpClose");
+
+					    rows.forEach(function (row) {
+					      row.addEventListener("click", function () {
+					        // 좌표 가져오기 (data-lat, data-lng 속성 사용)
+					        const lat = parseFloat(row.dataset.lat || "37.3595704");
+					        const lng = parseFloat(row.dataset.lng || "127.105399");
+					        const position = new naver.maps.LatLng(lat, lng);
+
+					        // 모달 열기
+					        modal.style.display = "block";
+
+					        // 지도 초기화 (최초 1회 생성)
+					        if (!map) {
+					          map = new naver.maps.Map("map", {
+					            center: position,
+					            zoom: 15
+					          });
+					        } else {
+					          map.setCenter(position);
+					          naver.maps.Event.trigger(map, 'resize'); // 모달 안일 경우 필요
+					        }
+
+					        // 기존 마커 제거
+					        if (marker) {
+					          marker.setMap(null);
+					        }
+
+					        // 새 마커 추가
+					        marker = new naver.maps.Marker({
+					          position: position,
+					          map: map,
+					          title: "위치",
+					          icon: {
+					            url: "/common/images/ico_marker_1.svg",
+					            size: new naver.maps.Size(24, 37),
+					            anchor: new naver.maps.Point(12, 37)
+					          }
+					        });
+					      });
+					    });
+
+					    // 닫기 버튼: 모달 숨기기
+					    closeBtn.addEventListener("click", function (e) {
+					      e.preventDefault();
+					      modal.style.display = "none";
+					    });
+					  });
+					</script>
+
+
+
+
 					<!-- Modal : 물놀이 시설 팝업 -->
-					<div class="modal" id="subModal" style="display: block;">
+					<div class="modal" id="subModal" style="display: none;">
 						<div class="modalPopup popWidth1">
 							<div class="modalPopup_header">
 								<span>권선 광장공원 바닥분수</span>
@@ -692,8 +757,9 @@
                                     </div>
                                     <div class="right">
                                         <h6 class="popCtitle">물놀이시설 보기</h6>
-                                        <div class="modal_map"></div>
+                                        <div class="modal_map" id="map"></div>
                                     </div>
+
                                 </div>
 								<div class="mt20">
                                     <h6 class="popCtitle">물놀이시설 사진</h6>
