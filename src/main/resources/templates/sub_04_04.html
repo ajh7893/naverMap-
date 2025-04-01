@@ -310,122 +310,88 @@
 		<div class="container">
 			<div id="sub_contents">
 				<aside id="side_nav">
-					<div class="page_label"><h3>실시간 물정보</h3></div>
+					<div class="page_label"><h3>팔당전망대</h3></div>
 					<nav class="lnb">
 						<ul>
-							<li class="depth2"><a href="#!"><span>주요하천 수질현황</span></a></li>
-							<li class="depth2 drops"><a href="#!"><span>수질</span></a>
-								<ul class="">
-									<li class="depth3"><a href="#!"><span>하천</span></a></li>
-									<li class="depth3"><a href="#!"><span>호소</span></a></li>
-									<li class="depth3"><a href="#!"><span>농업용수</span></a></li>
-									<li class="depth3"><a href="#!"><span>공단배수</span></a></li>
-									<li class="depth3"><a href="#!"><span>도시관류</span></a></li>
-								</ul>
-							</li>
-							<li class="depth2 drops"><a href="#!"><span>수량</span></a>
-                                <ul class="">
-									<li class="depth3"><a href="#!"><span>강우량</span></a></li>
-									<li class="depth3"><a href="#!"><span>수위</span></a></li>
-									<li class="depth3"><a href="#!"><span>유량</span></a></li>
-									<li class="depth3"><a href="#!"><span>댐수위</span></a></li>
-									<li class="depth3"><a href="#!"><span>저수지</span></a></li>
-								</ul>
-                            </li>
-							<li class="depth2 on"><a href="#!"><span>기상</span></a></li>
+							<li class="depth2"><a href="#!"><span>팔당전망대 운영안내</span></a></li>
+							<li class="depth2"><a href="https://share.gg.go.kr/facilityListO/view?instiCode=6411997&facilityId=F0001" target="_blank"><span>단체 관람 신청</span></a></li>
+							<li class="depth2"><a href="#!"><span>팔당호 역사 관광지</span></a></li>
+                            <li class="depth2 on"><a href="#!"><span>찾아오시는 길</span></a></li>
 						</ul>
 					</nav>
 				</aside>
 
 				<div class="sub_contents">
 					<div class="sub_header">
-						<h4>기상</h4>
+						<h4>찾아오시는 길</h4>
 						<ol class="breadcrumb">
 							<li class="home"><a href="#!"><span class="sr-only">홈으로</span></a></li>
-							<li><a href="#!">실시간 물정보</a></li>
-							<li><a href="#!">기상</a></li>
+							<li><a href="#!">팔당전망대</a></li>
+							<li><a href="#!">찾아오시는 길</a></li>
 						</ol>
 					</div>
 
 					<!-- contents -->
 					<div class="contents">
 
-                        <!-- 검색 박스 -->
-						<div class="search_group">
-							<div class="se_date">
-								<label for="waterSearchStartDate">기간</label>
-								<input type="date" name="waterSearchStartDate" id="waterSearchStartDate" class="input" value="">
-								<span>~</span>
-								<input type="date" name="waterSearchEndDate" id="waterSearchEndDate" class="input" value="">
-							</div>
-							<div class="se_word">
-								<label for="searchWord">지역명</label>
-                                <input type="text" name="searchWord" id="searchWord" placeholder="지역명을 입력해주세요." value="">
-								<button type="button" class="">검색</button>
-							</div>
-						</div>
-						
-                        <!-- 검색결과 -->
-                        <div class="mt40">
-                            <div class="d-flex justify-content-between mb10">
-                                <div class="total">
-                                    <h5 class="h5cTit">정보 검색결과</h5>
-									<span><em>총 0건</em>을 찾았습니다.</span>
-                                </div>
-                                <button class="btn_ico_download" type="button" title="엑셀 다운받기"></button>
-                            </div>
+						<div class="mb60">
+                            <div class="address_info">
+                                <span class="img"><img src="./common/images/address_img.png" alt="약도"/></span>
+                                <div class="add_info_con">
+                                    <h5 class="h5Tit mb20">오시는 길</h5>
+                                    <p>경기도 광주시 남종면 산수로 1692 경기도 팔당전망대<br/>TEL. 031-8008-6933</p>
+                                    <hr />
+                                    <div>
+                                        <h6 class="h6cTit">대중교통 이용시</h6>
 
-							<div class="table-responsive">
-								<table class="tbl type2 text-center" summary="정보를 제공합니다.">
-									<caption>정보</caption>
-									<colgroup>
-									</colgroup>
-									<thead>
-										<tr>
-											<th scope="col">순번</th>
-											<th scope="col">관측소명</th>
-											<th scope="col">날짜</th>
-											<th scope="col">고도<br>(M)</th>
-											<th scope="col">풍향<br>(°)</th>
-											<th scope="col">풍속<br>(m/s)</th>
-											<th scope="col">기온<br>(℃)</th>
-											<th scope="col">습도<br>(%)</th>
-											<th scope="col">현지기압<br>(hPa)</th>
-											<th scope="col">해면기압<br>(hPa)</th>
-											<th scope="col">시간누적<br>강수량<br>(mm)</th>
-											<th scope="col">일누적<br>강수량<br>(mm)</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr>
-											<td colspan="12">검색 결과가 없습니다.</td>
-										</tr>
-									</tbody>
-								</table>
-								<nav class="text-center mt20 mb20">
-                                    <ul class="pagination">
-                                        <li class="pageBtn page_first"><a href="#!" arial-label="prev" title="처음"><span aria-hidden="true"></span></a></li>
-                                        <li class="pageBtn page_prev"><a href="#!" aria-label="prev" title="이전"><span aria-hidden="true"></span></a></li>
-                                        <li class="on"><a href="#1" title="현재페이지">1</a></li>
-                                        <li><a href="#!">2</a></li>
-                                        <li><a href="#!">3</a></li>
-                                        <li><a href="#!">4</a></li>
-                                        <li><a href="#!">5</a></li>
-                                        <li><a href="#!">6</a></li>
-                                        <li><a href="#!">7</a></li>
-                                        <li><a href="#!">8</a></li>
-                                        <li><a href="#!">9</a></li>
-                                        <li><a href="#!">10</a></li>
-                                        <li class="pageBtn page_next"><a href="#!" arial-label="Next" title="다음"><span aria-hidden="true"></span></a></li>
-                                        <li class="pageBtn page_last"><a href="#!" aria-label="Next" title="마지막"><span aria-hidden="true"></span></a></li>
-                                    </ul>
-                                </nav>
-							</div>
+                                        <p class="title"><span>01</span><strong class="text-water">서울</strong>에서 오시는 길</p>
+                                        <div class="con_box">
+                                            <ul class="ul_list">
+                                                <li>서울 → 퇴촌 동서울터미널기점(13-2번) – 천호동 – 신장(하남) – 번천 – 퇴촌</li>
+                                                <li>첫차 05:40 / 막차 22:40 (배차간격 20~25분)</li>
+                                                <li>퇴촌 → 남종면 분원리 자율순환버스 이용 : 8분 소요</li>
+                                                <li>분원리 – 07:19 / 08:22 / 10:29 / 11:22 / 15:09 / 16:22 / 17:09 / 18:22 / 21:12 / 21:51</li>
+                                            </ul>
+                                        </div>
+
+                                        <p class="title mt30"><span>02</span><strong class="text-water">광주</strong>에서 오시는 길</p>
+                                        <div class="con_box">
+                                            <ul class="ul_list">
+                                                <li>광주 → 퇴촌 광주 축협앞에서 퇴촌(남종)행 버스이용</li>
+                                                <li>배차시간 – 06:20 / 08:15 / 11:30 / 12:40 / 19:10</li>
+                                                <li>퇴촌 → 남종면 분원리 구간 동일</li>
+                                            </ul>
+                                        </div>
+
+                                        <p class="title mt30"><span>03</span><strong class="text-water">팔당역</strong>에서 오시는 길</p>
+                                        <div class="con_box">
+                                            <ul class="ul_list">
+                                                <li>팔당역에서 6번 국도 서울방향으로 200m 직진후 팔당대교를 건너서 45번 국도 광주방향으로 좌회전하여 10Km 직진</li>
+                                                <li>퇴촌방향(도마삼거리)으로 좌회전하여 2Km 직진 → 좌회전하여 5Km 직진 → 남종면 분원리 → 경기도수자원본부(팔당전망대)</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                    <div class="mt50">
+                                        <h6 class="h6cTit">자가용 이용시</h6>
+
+                                        <p class="title">네비게이션 <strong class="text-water">‘경기도수자원본부’</strong> 검색</p>
+                                        <div class="con_box">
+                                            <ul class="ul_list">
+                                                <li>경안IC 나와서 우회전 → 도마삼거리 우회전 → 퇴촌사거리 좌회전하여 직진 → 분원리 둔치 → 광동하수 처리장 앞에서 342번 지방도로 남종/분원방향 좌회전 → 경기도수자원본부</li>
+                                                <li>미사리 방면에서 오시는 경우, 45번 국도를 직진하여 (배알미대교 통과) 도마삼거리에서 우회전하여 직진</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
-
 						<!-- 담당자 정보 -->
-						
+                        <div class="manager">
+							<p><span>부서명</span>수질정책과</p>
+							<p><span>전화번호</span>031-8008-6937</p>
+						</div>
 						<!-- //담당자 정보 -->
 					</div>
 					<!-- //contents -->

@@ -310,127 +310,391 @@
 		<div class="container">
 			<div id="sub_contents">
 				<aside id="side_nav">
-					<div class="page_label"><h3>실시간 물정보</h3></div>
+					<div class="page_label"><h3>자료마당</h3></div>
 					<nav class="lnb">
 						<ul>
-							<li class="depth2"><a href="#!"><span>주요하천 수질현황</span></a></li>
-							<li class="depth2 drops"><a href="#!"><span>수질</span></a>
+							<li class="depth2"><a href="#!"><span>공지사항</span></a></li>
+							<li class="depth2 drops"><a href="#!"><span>환경자료</span></a>
 								<ul class="">
-									<li class="depth3"><a href="#!"><span>하천</span></a></li>
-									<li class="depth3"><a href="#!"><span>호소</span></a></li>
-									<li class="depth3"><a href="#!"><span>농업용수</span></a></li>
-									<li class="depth3"><a href="#!"><span>공단배수</span></a></li>
-									<li class="depth3"><a href="#!"><span>도시관류</span></a></li>
+									<li class="depth3"><a href="#!"><span>환경 용어</span></a></li>
+									<li class="depth3"><a href="#!"><span>환경 상식</span></a></li>
+									<li class="depth3"><a href="#!"><span>우리동네 환경단체</span></a></li>
 								</ul>
 							</li>
-							<li class="depth2 drops"><a href="#!"><span>수량</span></a>
-                                <ul class="">
-									<li class="depth3"><a href="#!"><span>강우량</span></a></li>
-									<li class="depth3"><a href="#!"><span>수위</span></a></li>
-									<li class="depth3"><a href="#!"><span>유량</span></a></li>
-									<li class="depth3"><a href="#!"><span>댐수위</span></a></li>
-									<li class="depth3"><a href="#!"><span>저수지</span></a></li>
+							<li class="depth2 drops on"><a href="#!"><span>경기도 물 통계</span></a>
+                                <ul class="on">
+									<li class="depth3 on"><a href="#!"><span>하천</span></a></li>
+									<li class="depth3"><a href="#!"><span>상수도</span></a></li>
+									<li class="depth3"><a href="#!"><span>하수도</span></a></li>
+									<li class="depth3"><a href="#!"><span>분뇨처리시설</span></a></li>
 								</ul>
                             </li>
-							<li class="depth2 on"><a href="#!"><span>기상</span></a></li>
+							<li class="depth2"><a href="#!"><span>수자원백서</span></a></li>
+							<li class="depth2"><a href="#!"><span>보건환경연구원자료</span></a></li>
 						</ul>
 					</nav>
 				</aside>
 
 				<div class="sub_contents">
 					<div class="sub_header">
-						<h4>기상</h4>
+						<h4>하천</h4>
 						<ol class="breadcrumb">
 							<li class="home"><a href="#!"><span class="sr-only">홈으로</span></a></li>
-							<li><a href="#!">실시간 물정보</a></li>
-							<li><a href="#!">기상</a></li>
+							<li><a href="#!">자료마당</a></li>
+							<li><a href="#!">경기도 물 통계</a></li>
+							<li><a href="#!">하천</a></li>
 						</ol>
 					</div>
 
 					<!-- contents -->
 					<div class="contents">
-
-                        <!-- 검색 박스 -->
-						<div class="search_group">
-							<div class="se_date">
-								<label for="waterSearchStartDate">기간</label>
-								<input type="date" name="waterSearchStartDate" id="waterSearchStartDate" class="input" value="">
-								<span>~</span>
-								<input type="date" name="waterSearchEndDate" id="waterSearchEndDate" class="input" value="">
-							</div>
-							<div class="se_word">
-								<label for="searchWord">지역명</label>
-                                <input type="text" name="searchWord" id="searchWord" placeholder="지역명을 입력해주세요." value="">
-								<button type="button" class="">검색</button>
-							</div>
-						</div>
 						
-                        <!-- 검색결과 -->
-                        <div class="mt40">
-                            <div class="d-flex justify-content-between mb10">
-                                <div class="total">
-                                    <h5 class="h5cTit">정보 검색결과</h5>
-									<span><em>총 0건</em>을 찾았습니다.</span>
-                                </div>
-                                <button class="btn_ico_download" type="button" title="엑셀 다운받기"></button>
+                        <div class="con_b_box mb20">
+							<div class="inner">
+                                2023년 ~ 2024년 경기도 물 통계자료 입니다.
                             </div>
+                        </div>
 
-							<div class="table-responsive">
-								<table class="tbl type2 text-center" summary="정보를 제공합니다.">
-									<caption>정보</caption>
+                        <div class="mt50">
+                            <h5 class="h5Tit">하천 현황(2023년 12월 기준)</h5>
+                            <div class="table-responsive">
+                                <table class="tbl type2 text-center">
 									<colgroup>
+										<col>
+										<col>
+										<col>
+										<col>
+										<col>
 									</colgroup>
 									<thead>
 										<tr>
-											<th scope="col">순번</th>
-											<th scope="col">관측소명</th>
-											<th scope="col">날짜</th>
-											<th scope="col">고도<br>(M)</th>
-											<th scope="col">풍향<br>(°)</th>
-											<th scope="col">풍속<br>(m/s)</th>
-											<th scope="col">기온<br>(℃)</th>
-											<th scope="col">습도<br>(%)</th>
-											<th scope="col">현지기압<br>(hPa)</th>
-											<th scope="col">해면기압<br>(hPa)</th>
-											<th scope="col">시간누적<br>강수량<br>(mm)</th>
-											<th scope="col">일누적<br>강수량<br>(mm)</th>
+											<th>구분</th>
+											<th>합계</th>
+											<th>국가하천</th>
+											<th>지방하천</th>
+											<th>소하천</th>
 										</tr>
 									</thead>
 									<tbody>
 										<tr>
-											<td colspan="12">검색 결과가 없습니다.</td>
+											<td>개소</td>
+											<td>2,502</td>
+											<td>20</td>
+											<td>498</td>
+											<td>1,984</td>
+										</tr>
+										<tr>
+											<td>연장(㎞)</td>
+											<td>6,529.4</td>
+											<td>530.19</td>
+											<td>3,015.21</td>
+											<td>2,984</td>
 										</tr>
 									</tbody>
 								</table>
-								<nav class="text-center mt20 mb20">
-                                    <ul class="pagination">
-                                        <li class="pageBtn page_first"><a href="#!" arial-label="prev" title="처음"><span aria-hidden="true"></span></a></li>
-                                        <li class="pageBtn page_prev"><a href="#!" aria-label="prev" title="이전"><span aria-hidden="true"></span></a></li>
-                                        <li class="on"><a href="#1" title="현재페이지">1</a></li>
-                                        <li><a href="#!">2</a></li>
-                                        <li><a href="#!">3</a></li>
-                                        <li><a href="#!">4</a></li>
-                                        <li><a href="#!">5</a></li>
-                                        <li><a href="#!">6</a></li>
-                                        <li><a href="#!">7</a></li>
-                                        <li><a href="#!">8</a></li>
-                                        <li><a href="#!">9</a></li>
-                                        <li><a href="#!">10</a></li>
-                                        <li class="pageBtn page_next"><a href="#!" arial-label="Next" title="다음"><span aria-hidden="true"></span></a></li>
-                                        <li class="pageBtn page_last"><a href="#!" aria-label="Next" title="마지막"><span aria-hidden="true"></span></a></li>
-                                    </ul>
-                                </nav>
-							</div>
+                            </div>
                         </div>
 
+						<div class="mt50">
+                            <h6 class="h6Tit">국가하천 : 20개소 / 530.19㎞</h6>
+                            <div class="table-responsive">
+                                <table class="tbl type2 text-center" summary="정보를 제공합니다.">
+                                    <caption>정보</caption>
+                                    <colgroup>
+                                        <col width="8%">
+                                        <col width="8%">
+                                        <col width="4%">
+                                        <col width="4%">
+                                        <col width="10%">
+                                        <col width="4%">
+                                        <col width="4%">
+                                        <col width="10%">
+                                    </colgroup>
+                                    <thead>
+                                        <tr>
+                                            <th scope="col" rowspan="2">하천명</th>
+                                            <th scope="col" rowspan="2">하천연장<br>(㎞)</th>
+                                            <th scope="col" colspan="3">시점</th>
+                                            <th scope="col" colspan="3">종점</th>
+                                        </tr>
+                                        <tr>
+                                            <th scope="col">시군</th>
+                                            <th scope="col">읍면동</th>
+                                            <th scope="col">경계</th>
+                                            <th scope="col">시군</th>
+                                            <th scope="col">읍면동</th>
+                                            <th scope="col">경계</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="result">
+                                        <tr>
+                                            <td>한강</td>
+                                            <td>131.96</td>
+                                            <td>여주</td>
+                                            <td>점동 </td>
+                                            <td>경기.강원,충북도계</td>
+                                            <td>김포</td>
+                                            <td>월곳</td>
+                                            <td>용강리 유도 31m 산정부터<br>남북으로 그은 직선</td>
+                                        </tr>
+                                        <tr>
+                                            <td>섬강</td> 
+                                            <td>4.98</td>
+                                            <td>여주</td> 
+                                            <td>점동</td>
+                                            <td>경기.강원도계</td>
+                                            <td>여주</td>
+                                            <td>강천</td> 
+                                            <td>한강(국가)합류점</td>
+                                        </tr>
+                                        <tr>
+                                            <td>청미천</td>
+                                            <td>24.64</td>
+                                            <td>이천</td>
+                                            <td>장호원</td>
+                                            <td>응천(지방)합류점</td>
+                                            <td>여주</td>
+                                            <td>점동</td>
+                                            <td>한강(국가)합류점</td>
+                                        </tr>
+                                        <tr>
+                                            <td>복하천</td>
+                                            <td>19.80</td>
+                                            <td>이천</td>
+                                            <td>호법</td>
+                                            <td>원두천(지방)합류점</td>
+                                            <td>여주</td>
+                                            <td>흥천</td>
+                                            <td>한강(국가)합류점</td>
+                                        </tr>
+                                        <tr>
+                                            <td>북한강</td>
+                                            <td>54.29</td>
+                                            <td>가평</td>
+                                            <td>가평</td>
+                                            <td>경기,강원도계</td>
+                                            <td>양평</td>
+                                            <td>양서</td>
+                                            <td>한강(국가)합류점</td>
+                                        </tr>
+                                        
+                                        <tr>
+                                            <td>홍천강</td>
+                                            <td>5.42</td>
+                                            <td>가평 </td>
+                                            <td>설악 </td>
+                                            <td>경기,강원도계</td>
+                                            <td>가평 </td>
+                                            <td>설악 </td>
+                                            <td>북한강(국가)합류점</td>
+                                        </tr>
+                                        <tr>
+                                            <td>경안천</td>
+                                            <td>20.83</td>
+                                            <td>광주 </td>
+                                            <td>오포 </td>
+                                            <td>용인시 모현면 경계</td>
+                                            <td>광주 </td>
+                                            <td>남종 </td>
+                                            <td>한강(국가)합류점</td>
+                                        </tr>
+                                        <tr>
+                                            <td>중랑천 </td>
+                                            <td>1.15</td>
+                                            <td>의정부 </td>
+                                            <td>장암  </td>
+                                            <td>시도경계선의 최북단에 위치한<br>점에서 동서로 그은 직선</td>
+                                            <td>의정부</td>
+                                            <td>장암</td>
+                                            <td>서울,경기도계</td>
+                                        </tr>
+                                        <tr>
+                                            <td>안양천</td>
+                                             <td> 11.50</td> 
+                                             <td> 안양</td> 
+                                             <td> 안양</td> 
+                                             <td> 경부본선철교</td> 
+                                             <td> 광명</td> 
+                                             <td> 철산</td> 
+                                             <td>서울,경기도계</td> 
+                                        </tr>
+                                        
+                                        <tr>
+                                            <td>목감천</td>
+                                             <td> 12.26</td> 
+                                             <td> 시흥광명</td> 
+                                             <td> 논곡가학</td> 
+                                             <td> 농교천(소하천)합류점</td> 
+                                             <td> 광명</td> 
+                                             <td> 옥길</td> 
+                                             <td>서울,경기도계</td> 
+                                        </tr>
+                                        
+                                        <tr>
+                                            <td>굴포천</td>
+                                             <td> 8.93</td> 
+                                             <td> 부천</td> 
+                                             <td> 중동</td> 
+                                             <td> 인천,경기도계</td> 
+                                             <td> 김포</td> 
+                                             <td> 고촌</td> 
+                                             <td>한강(국가)합류점</td> 
+                                        </tr>
+                                        <tr>
+                                            <td>공릉천</td>
+                                            <td>16.05</td> 
+                                            <td>파주<br>고양</td>
+                                            <td>조리지영,내유</td> 
+                                            <td>조리면, 지영동, 내유동경계</td> 
+                                            <td>파주</td> 
+                                            <td>교하</td> 
+                                            <td>한강(국가)합류점</td>
+                                        </tr>
+                                        <tr>
+                                            <td>임진강</td>
+                                            <td>91.10</td> 
+                                            <td>연천 </td>
+                                            <td>왕징</td> 
+                                            <td>휴전선 </td> 
+                                            <td>파주</td> 
+                                            <td>탄현 </td> 
+                                            <td>한강(국가)합류점</td>
+                                        </tr>
+                                        
+                                        <tr>
+                                            <td>신천</td>
+                                            <td>26.34</td> 
+                                            <td>양주 </td>
+                                            <td>남</td> 
+                                            <td>입암천(지방)합류점 </td> 
+                                            <td>연천 </td> 
+                                            <td>청산면 </td> 
+                                            <td>한탄강(지방)합류점</td>
+                                        </tr>
+                                        
+                                        <tr>
+                                            <td>문산천</td>
+                                            <td>11.60</td> 
+                                            <td>파주 </td>
+                                            <td>파주 </td> 
+                                            <td>파주읍,광탄면,월롱면의 경계 </td> 
+                                            <td>파주 </td> 
+                                            <td>문산 </td> 
+                                            <td>임진강(국가)합류점</td>
+                                        </tr>
+                                        <tr>
+                                            <td>안성천</td>
+                                            <td>37.46</td>
+                                            <td>안성</td>
+                                            <td>공도</td>
+                                            <td>한천(지방)합류점</td>
+                                            <td>평택</td>
+                                            <td>현덕</td>
+                                            <td>아산만방조제의외곽선</td>
+                                        </tr>
+                                        <tr>
+                                            <td>진위천</td>
+                                            <td>17.87</td>
+                                            <td>평택</td>
+                                            <td>서탄</td>
+                                            <td>오산천(국가)합류점</td>
+                                            <td>평택</td>
+                                            <td>오성<br>고덕</td>
+                                            <td>안성천(국가)합류점</td>
+                                        </tr>
+                                        <tr>
+                                            <td>오산천</td>
+                                            <td>15.03</td>
+                                            <td>용인</td>
+                                            <td>기흥</td>
+                                            <td>화성시동탄면의경계</td>
+                                            <td>평택</td>
+                                            <td>서탄</td>
+                                            <td>진위천(국가,지방경계)합류점</td>
+                                        </tr>
+                                        <tr>
+                                            <td>황구<br>지천</td>
+                                            <td>16.30</td>
+                                            <td>수원</td>
+                                            <td>대황교</td>
+                                            <td>원천리천(지방)합류점</td>
+                                            <td>평택</td>
+                                            <td>서탄</td>
+                                            <td>진위천(국가)합류점</td>
+                                        </tr>
+                                        <tr>
+                                            <td>아라천</td>
+                                            <td>2.68</td>
+                                            <td>김포</td>
+                                            <td>고촌</td>
+                                            <td>경기,서울도계</td>
+                                            <td>김포</td>
+                                            <td>고촌</td>
+                                            <td>경기,인천도계</td>
+                                        </tr>
+                                        
+                                    </tbody>	
+                                </table>
+                            </div>
+                        </div>
+
+						<div class="mt50">
+                            <h6 class="h6Tit">지방하천 : 498개소/ 3,015㎞</h6>
+                            <div class="table-responsive">
+                                <table class="tbl type2 text-center">
+									<colgroup>
+										<col>
+										<col>
+									</colgroup>
+									<thead>
+										<tr>
+											<th>구분</th>
+											<th>분포 (498개소)</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td>한강(387)</td>
+											<td>임진강 (83), 북한강(57), 경안천 (38), 청미천(30), 복하천(18), 공릉천(17), 안양천(13), 중랑천(9), 섬강(6) 등</td>
+										</tr>
+										<tr>
+											<td>안성천(79)</td>
+											<td>진위천(43), 황구지천(12), 오산천(14) 등</td>
+										</tr>
+										<tr>
+											<td>기타(32)</td>
+											<td>반월천(3), 발안천(3), 동화천(6) 등</td>
+										</tr>
+									</tbody>
+								</table>
+                            </div>
+                        </div>
+
+                        <div class="mt50">
+                            <h6 class="h6Tit">소하천 : 1,991개소 / 2,981㎞</h6>
+                        </div>
 
 						<!-- 담당자 정보 -->
-						
+						<div class="manager">
+							<p><span>부서명</span>상하수과</p>
+							<p><span>전화번호</span>031-8008-6990</p>
+						</div>
 						<!-- //담당자 정보 -->
 					</div>
 					<!-- //contents -->
 
 					<!-- Modal -->
+					<div class="modal" id="subModal">
+						<div class="popup">
+							<p class="pop_top">
+								상세정보<a href="#!" class="btnpClose"><img src="/html/iwmis/images/btn_close.png" alt="닫기"></a>
+							</p>
+							<div class="p_cont">
+								
+								
+							</div>
+						</div>
+					</div>
 					<!-- //Modal -->
 				</div>
 			</div>

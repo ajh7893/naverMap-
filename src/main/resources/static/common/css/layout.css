@@ -154,3 +154,35 @@ body.fixed {overflow: hidden;-webkit-overflow-scrolling: touch;}
 @media (max-width: 767px) {
     .pagination li {padding: 0 3px;}
 }
+
+
+
+
+/* bbs - list 화면 */
+.bbs_total strong {color:#0051a4;}
+
+.new_tag {display: inline;padding:1px 5px; margin-left: 5px; background: #e74c3c;color: #ffffff;font-size: 11px;border-radius: 3px;}
+
+
+/* bbs - view 화면 */
+.board_default_form {border-top: 2px solid #333333;}
+.board_default_form .board_header {border-bottom: 1px solid #dddddd;}
+.board_default_form .board_header h5 {padding: 20px 10px;border-bottom: 1px dashed #dddddd;}
+.board_default_form .board_header dl {padding: 10px;}
+.board_default_form .board_header dl dt,
+.board_default_form .board_header dl dd {display: inline-block;vertical-align: middle;}
+.board_default_form .board_header dl dd {position: relative; padding-left: 10px;padding-right: 20px;margin-right: 15px;color: #666;}
+.board_default_form .board_header dl dd::after {content: "";position: absolute;top: 4px;right: 0;width: 1px;height: 15px;background-color: #ababab;}
+.board_default_form .board_header dl dd:last-child::after {background-color: transparent;}
+
+.board_default_form .board_content {padding: 20px 10px;min-height: 10em;}
+
+.board_default_form .board_file {padding: 10px;border-top: 1px solid #dddddd;border-bottom: 1px solid #dddddd;}
+.board_default_form .board_file dt,
+.board_default_form .board_file dd {display: inline-block;vertical-align: top;}
+.board_default_form .board_file dd {padding-left: 10px;}
+.board_default_form .board_file ul li {padding-bottom: 10px;}
+.board_default_form .board_file ul li:last-child {padding: 0;}
+.board_default_form .board_file ul li a {color: #666;}
+
+.board_default_form .board_btn_group {margin-top: 30px; text-align: right;}

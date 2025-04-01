@@ -310,122 +310,185 @@
 		<div class="container">
 			<div id="sub_contents">
 				<aside id="side_nav">
-					<div class="page_label"><h3>실시간 물정보</h3></div>
+					<div class="page_label"><h3>상세검색</h3></div>
 					<nav class="lnb">
 						<ul>
-							<li class="depth2"><a href="#!"><span>주요하천 수질현황</span></a></li>
-							<li class="depth2 drops"><a href="#!"><span>수질</span></a>
-								<ul class="">
-									<li class="depth3"><a href="#!"><span>하천</span></a></li>
-									<li class="depth3"><a href="#!"><span>호소</span></a></li>
-									<li class="depth3"><a href="#!"><span>농업용수</span></a></li>
-									<li class="depth3"><a href="#!"><span>공단배수</span></a></li>
-									<li class="depth3"><a href="#!"><span>도시관류</span></a></li>
-								</ul>
-							</li>
-							<li class="depth2 drops"><a href="#!"><span>수량</span></a>
-                                <ul class="">
-									<li class="depth3"><a href="#!"><span>강우량</span></a></li>
-									<li class="depth3"><a href="#!"><span>수위</span></a></li>
-									<li class="depth3"><a href="#!"><span>유량</span></a></li>
-									<li class="depth3"><a href="#!"><span>댐수위</span></a></li>
-									<li class="depth3"><a href="#!"><span>저수지</span></a></li>
-								</ul>
-                            </li>
-							<li class="depth2 on"><a href="#!"><span>기상</span></a></li>
+							<li class="depth2 on"><a href="#!"><span>상세검색</span></a></li>
 						</ul>
 					</nav>
 				</aside>
 
 				<div class="sub_contents">
 					<div class="sub_header">
-						<h4>기상</h4>
+						<h4>상세검색</h4>
 						<ol class="breadcrumb">
 							<li class="home"><a href="#!"><span class="sr-only">홈으로</span></a></li>
-							<li><a href="#!">실시간 물정보</a></li>
-							<li><a href="#!">기상</a></li>
+							<li><a href="#!">상세검색</a></li>
 						</ol>
 					</div>
 
 					<!-- contents -->
 					<div class="contents">
 
-                        <!-- 검색 박스 -->
-						<div class="search_group">
-							<div class="se_date">
-								<label for="waterSearchStartDate">기간</label>
-								<input type="date" name="waterSearchStartDate" id="waterSearchStartDate" class="input" value="">
-								<span>~</span>
-								<input type="date" name="waterSearchEndDate" id="waterSearchEndDate" class="input" value="">
-							</div>
-							<div class="se_word">
-								<label for="searchWord">지역명</label>
-                                <input type="text" name="searchWord" id="searchWord" placeholder="지역명을 입력해주세요." value="">
-								<button type="button" class="">검색</button>
-							</div>
-						</div>
-						
-                        <!-- 검색결과 -->
-                        <div class="mt40">
-                            <div class="d-flex justify-content-between mb10">
-                                <div class="total">
-                                    <h5 class="h5cTit">정보 검색결과</h5>
-									<span><em>총 0건</em>을 찾았습니다.</span>
+						<div class="total_search">
+                            <div class="inner">
+                                <div class="total_search_bar">
+                                    <input type="text" class="" name="tatalSearchText" id="tatalSearchText" placeholder="검색어를 입력해 주세요" value="">
+                                    <button type="submit" class=""></button>
                                 </div>
-                                <button class="btn_ico_download" type="button" title="엑셀 다운받기"></button>
-                            </div>
+                                <div class="total_recommend">
+                                    <div class="title">인기 검색어</div>
+                                    <div class="recommend_con">
+                                        <a href="#!">화성시</a>
+                                        <a href="#!">경도</a>
+                                        <a href="#!">약수터</a>
+                                        <a href="#!">파주</a>
+                                        <a href="#!">용인시</a>
+                                        <a href="#!">시흥시</a>
+                                        <a href="#!">하천</a>
+                                        <a href="#!">물놀이</a>
+                                        <a href="#!">광명시</a>
+                                        <a href="#!">한강</a>
+                                    </div>
+                                </div>
 
-							<div class="table-responsive">
-								<table class="tbl type2 text-center" summary="정보를 제공합니다.">
-									<caption>정보</caption>
-									<colgroup>
-									</colgroup>
-									<thead>
-										<tr>
-											<th scope="col">순번</th>
-											<th scope="col">관측소명</th>
-											<th scope="col">날짜</th>
-											<th scope="col">고도<br>(M)</th>
-											<th scope="col">풍향<br>(°)</th>
-											<th scope="col">풍속<br>(m/s)</th>
-											<th scope="col">기온<br>(℃)</th>
-											<th scope="col">습도<br>(%)</th>
-											<th scope="col">현지기압<br>(hPa)</th>
-											<th scope="col">해면기압<br>(hPa)</th>
-											<th scope="col">시간누적<br>강수량<br>(mm)</th>
-											<th scope="col">일누적<br>강수량<br>(mm)</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr>
-											<td colspan="12">검색 결과가 없습니다.</td>
-										</tr>
-									</tbody>
-								</table>
-								<nav class="text-center mt20 mb20">
-                                    <ul class="pagination">
-                                        <li class="pageBtn page_first"><a href="#!" arial-label="prev" title="처음"><span aria-hidden="true"></span></a></li>
-                                        <li class="pageBtn page_prev"><a href="#!" aria-label="prev" title="이전"><span aria-hidden="true"></span></a></li>
-                                        <li class="on"><a href="#1" title="현재페이지">1</a></li>
-                                        <li><a href="#!">2</a></li>
-                                        <li><a href="#!">3</a></li>
-                                        <li><a href="#!">4</a></li>
-                                        <li><a href="#!">5</a></li>
-                                        <li><a href="#!">6</a></li>
-                                        <li><a href="#!">7</a></li>
-                                        <li><a href="#!">8</a></li>
-                                        <li><a href="#!">9</a></li>
-                                        <li><a href="#!">10</a></li>
-                                        <li class="pageBtn page_next"><a href="#!" arial-label="Next" title="다음"><span aria-hidden="true"></span></a></li>
-                                        <li class="pageBtn page_last"><a href="#!" aria-label="Next" title="마지막"><span aria-hidden="true"></span></a></li>
-                                    </ul>
-                                </nav>
-							</div>
+                                <div class="search_detail_wrap">
+                                    <div>
+                                        <span class="search_detail_label">검색기간</span>
+                                        <div id="calendar" class="search_detail_calendar mt5">
+                                            <div class="">
+                                                <input type="date" name="waterSearchStartDate" id="waterSearchStartDate" class="input mr10" value="">
+                                                <input type="date" name="waterSearchEndDate" id="waterSearchEndDate" class="input" value="">
+                                            </div>
+                                            <div class="scbtwrap">
+                                                <button type="button" class="scbtnn active" onclick="fn_doTopWeek();">1주</button> 
+                                                <span>/</span>
+                                                <button type="button" class="scbtnn" onclick="fn_doTopMonth();">1개월</button>
+                                                <span>/</span>
+                                                <button type="button" class="scbtnn" onclick="fn_doTopYear();">1년</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mt30">
+                                        <span class="search_detail_label">검색방법</span>
+                                        <div class="mt5">
+                                            <input type="text" name="waterSearchOptBadText" id="waterSearchOptBadText" class="input textexpt" value="">
+                                            <label for="waterSearchOptBadChk" class="ml10">
+                                                <input type="checkbox" name="waterSearchOptBadChk" id="waterSearchOptBadChk" class="chkbb2" value="Y">
+                                                제외되는 단어
+                                            </label> 
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
+                        <div class="total_search_result">
+                            <p class="srh_result" style="">검색어 <strong class="text-water2">"도랑"</strong>에 대한 통합검색결과는 "<strong class="text-danger">11</strong>"건 입니다.</p>
+                            
+                            <div class="srh_section">
+                                <div class="d-flex justify-content-between mb10">
+                                    <div class="total">
+                                        <h5 class="srh_h5">생활 속 물정보 > 아름다운 물길</h5>
+                                        <span><em>총 5건</em>을 찾았습니다.</span>
+                                    </div>
+                                    <button class="btn_ico_more" type="button" title="엑셀 다운받기"></button>
+                                </div>
+                                <div id="table_print">
+                                    <div class="table-responsive">
+                                        <table class="tbl type2 text-center" summary="정보를 제공합니다.">
+                                            <caption>아름다운 물길</caption>
+                                            <colgroup>
+                                                <col width="10%">
+                                                <col width="10%">
+                                                <col width="15%">
+                                                <col width="35%">
+                                                <col>
+                                            </colgroup>
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">분류</th>
+                                                    <th scope="col">시군명</th>
+                                                    <th scope="col">물길명</th>
+                                                    <th scope="col">물길조성구간</th>
+                                                    <th scope="col">비고</th>						
+                                                </tr>		
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td><strong class="text-water2">도랑</strong></td>
+                                                    <td>고양시</td>
+                                                    <td>선유랑 <strong class="text-water2">도랑</strong></td>
+                                                    <td>덕양구 선유랑마을(선유동 164-4일원) ~ </td>
+                                                    <td>하천준설, 정화식물 식재, 주민편의시설 설치, 모니터링, 홍보, 교육</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><strong class="text-water2">도랑</strong></td>
+                                                    <td>고양시</td>
+                                                    <td>선유랑 <strong class="text-water2">도랑</strong></td>
+                                                    <td>덕양구 선유랑마을(선유동 164-4일원) ~ </td>
+                                                    <td>하천준설, 정화식물 식재, 주민편의시설 설치, 모니터링, 홍보, 교육</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><strong class="text-water2">도랑</strong></td>
+                                                    <td>고양시</td>
+                                                    <td>선유랑 <strong class="text-water2">도랑</strong></td>
+                                                    <td>덕양구 선유랑마을(선유동 164-4일원) ~ </td>
+                                                    <td>하천준설, 정화식물 식재, 주민편의시설 설치, 모니터링, 홍보, 교육</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><strong class="text-water2">도랑</strong></td>
+                                                    <td>고양시</td>
+                                                    <td>선유랑 <strong class="text-water2">도랑</strong></td>
+                                                    <td>덕양구 선유랑마을(선유동 164-4일원) ~ </td>
+                                                    <td>하천준설, 정화식물 식재, 주민편의시설 설치, 모니터링, 홍보, 교육</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><strong class="text-water2">도랑</strong></td>
+                                                    <td>고양시</td>
+                                                    <td>선유랑 <strong class="text-water2">도랑</strong></td>
+                                                    <td>덕양구 선유랑마을(선유동 164-4일원) ~ </td>
+                                                    <td>하천준설, 정화식물 식재, 주민편의시설 설치, 모니터링, 홍보, 교육</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="srh_section">
+                                <div class="d-flex justify-content-between mb10">
+                                    <div class="total">
+                                        <h5 class="srh_h5">게시판 검색결과</h5>
+                                        <!-- <span><em>총 5건</em>을 찾았습니다.</span> -->
+                                    </div>
+                                    <!-- <button class="btn_ico_more" type="button" title="엑셀 다운받기"></button> -->
+                                </div>
+                                <ul class="srh_list">
+                                    <li>
+                                        <div>
+                                            <div class="s-title"><a href="#!">도민과 함께 하는 도랑복원사업 홍보</a></div>
+                                            <p>도민과 함께 하는 도랑복원사업 홍보 도민과 함께 하는 도랑복원사업 홍보 도민과 함께 하는 도랑복원사업 홍보</p>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div>
+                                            <div class="s-title"><a href="#!">도민과 함께 하는 도랑복원사업 홍보</a></div>
+                                            <p>도민과 함께 하는 도랑복원사업 홍보 도민과 함께 하는 도랑복원사업 홍보 도민과 함께 하는 도랑복원사업 홍보</p>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div>
+                                            <div class="s-title"><a href="#!">도민과 함께 하는 도랑복원사업 홍보</a></div>
+                                            <p>도민과 함께 하는 도랑복원사업 홍보 도민과 함께 하는 도랑복원사업 홍보 도민과 함께 하는 도랑복원사업 홍보</p>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        
 
 						<!-- 담당자 정보 -->
-						
 						<!-- //담당자 정보 -->
 					</div>
 					<!-- //contents -->

@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+
+<html lang="ko" class="">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>경기도 물정보시스템</title>
+	<meta name="format-detection" content="telephone=no" />
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+	<meta name="description" content="경기도 우리집 수돗물, 안심 물놀이 시설, 우리동네 약수터, 아름다운 물길, 수질, 수량, 기상, 통계 제공">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	
+	<link rel="shortcut icon" href="common/images/favicon.ico" type="image/x-icon">
+
+	<!-- common -->
+	<link rel="stylesheet" type="text/css" href="common/plugin/bootstrap/bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="common/css/default.css">
+	<script src="common/js/jquery-1.12.4.min.js"></script>
+	<script src="common/js/jquery-ui.js"></script>
+	<script src="common/js/customScript.js"></script>
+	
+	<!-- apex chart lib -->
+	<script src="common/js/apexchart.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+	<!-- plugin -->
+	<link rel="stylesheet" type="text/css" href="common/plugin/slick/slick.css">
+	<script src="common/plugin/slick/slick.min.js"></script>
+	
+	<!-- design -->
+	<link rel="stylesheet" type="text/css" href="common/css/layout.css">
+	<link rel="stylesheet" type="text/css" href="common/css/theme.css">
+
+</head>
+
+<body>
+	<div id="wrapper">
+		<div class="mask "></div>
+		<div class="gnb_bg"></div>
+		<header id="header">
+			<div class="container" style="position: relative;">
+				<button id="mobileMenuBtn" class="mobile_menu_btn"></button>
+				<h1>
+					<a href="#!" class="logo"><img src="./common/images/logo.png" alt="경기도물정보시스템"/></a>
+				</h1>
+				<nav id="nav">
+					<ul>
+						<li class="depth1">
+							<a href="#!">생활 속 물정보</a>
+							<div class="subnav">
+								<ul>
+									<li class="depth2"><a href="#!">우리집 수돗물</a>
+										<ul>
+											<li class="depth3"><a href="#!">상수도 보급률</a></li>
+											<li class="depth3"><a href="#!">급수인구 현황</a></li>
+											<li class="depth3"><a href="#!">상수도 요금현황</a></li>
+											<li class="depth3"><a href="#!">정수시설 현황</a></li>
+											<li class="depth3"><a href="#!">(정수)수질검사자료-정수장</a></li>
+											<li class="depth3"><a href="#!">(정수)수질검사자료-소규모</a></li>
+											<li class="depth3"><a href="#!">취수시설 현황</a></li>
+											<li class="depth3"><a href="#!">(원수)수질검사자료-취수장</a></li>
+										</ul>
+									</li>
+									<li class="depth2"><a href="#!">우리동네 약수터</a></li>
+									<li class="depth2"><a href="#!">물놀이형 수경시설</a></li>
+									<li class="depth2"><a href="#!">아름다운 물길</a></li>
+								</ul>
+							</div>
+						</li>
+						<li class="depth1">
+							<a href="#!">실시간 물정보</a>
+							<div class="subnav">
+								<ul>
+									<li class="depth2"><a href="#!">주요하천 수질현황</a></li>
+									<li class="depth2"><a href="#!">수질</a>
+										<ul>
+											<li class="depth3"><a href="#!">하천</a></li>
+											<li class="depth3"><a href="#!">호소</a></li>
+											<li class="depth3"><a href="#!">농업용수</a></li>
+											<li class="depth3"><a href="#!">공단배수</a></li>
+											<li class="depth3"><a href="#!">도시관류</a></li>
+										</ul>
+									</li>
+									<li class="depth2"><a href="#!">수량</a>
+										<ul>
+											<li class="depth3"><a href="#!">강우량</a></li>
+											<li class="depth3"><a href="#!">수위</a></li>
+											<li class="depth3"><a href="#!">유량</a></li>
+											<li class="depth3"><a href="#!">댐수위</a></li>
+											<li class="depth3"><a href="#!">저수지</a></li>
+										</ul>
+									</li>
+									<li class="depth2"><a href="#!">기상</a></li>
+								</ul>
+							</div>
+						</li>
+						<li class="depth1">
+							<a href="#!">도민참여 정보</a>
+							<div class="subnav">
+								<ul>
+									<li class="depth2"><a href="#!">노후 수도관 개량지원</a></li>
+									<li class="depth2"><a href="#!">수돗물 수질검사 신청</a></li>
+									<li class="depth2"><a href="#!">지역 민간단체 활동지원</a>
+										<ul>
+											<li class="depth3"><a href="#!">물환경 거버넌스 운영</a></li>
+											<li class="depth3"><a href="#!">미래세대 물환경 교육</a></li>
+											<li class="depth3"><a href="#!">팔당수계 하천정화활동</a></li>
+										</ul>
+									</li>
+								</ul>
+							</div>
+						</li>
+						<li class="depth1">
+							<a href="#!">팔당전망대</a>
+							<div class="subnav">
+								<ul>
+									<li class="depth2"><a href="#!">팔당전망대 운영안내</a></li>
+									<li class="depth2"><a href="#!">단체 관람 신청</a></li>
+									<li class="depth2"><a href="#!">팔당호 역사 관광지</a></li>
+									<li class="depth2"><a href="#!">찾아오시는 길</a></li>
+								</ul>
+							</div>
+						</li>
+						<li class="depth1">
+							<a href="#!">자료마당</a>
+							<div class="subnav">
+								<ul>
+									<li class="depth2"><a href="#!">공지사항</a></li>
+									<li class="depth2"><a href="#!">환경자료</a>
+										<ul>
+											<li class="depth3"><a href="#!">환경 용어</a></li>
+											<li class="depth3"><a href="#!">환경 상식</a></li>
+											<li class="depth3"><a href="#!">우리동네 환경단체</a></li>
+										</ul>
+									</li>
+									<li class="depth2"><a href="#!">경기도 물 통계</a>
+										<ul>
+											<li class="depth3"><a href="#!">하천</a></li>
+											<li class="depth3"><a href="#!">상수도</a></li>
+											<li class="depth3"><a href="#!">하수도</a></li>
+											<li class="depth3"><a href="#!">분뇨처리시설</a></li>
+										</ul>
+									</li>
+									<li class="depth2"><a href="#!">수자원백서</a></li>
+									<li class="depth2"><a href="#!">보건환경연구원자료</a></li>
+								</ul>
+							</div>
+						</li>
+						<li class="depth1"><a href="#!">지도서비스</a>
+							<div class="subnav"></div>
+						</li>
+					</ul>
+				</nav>
+				<button id="topSearchBtn" class="search_btn"></button>
+			</div>
+		</header>
+
+		<!-- 모바일 메뉴 -->
+		<div id="mobileNav" class="mobile_menu">
+			<ul>
+				<li class="depth1 on">
+					<a href="#!">생활 속 물정보</a>
+					<div class="subnav">
+						<ul>
+							<li class="depth2 drops on"><a href="#!">우리집 수돗물</a>
+								<ul>
+									<li class="depth3"><a href="#!">상수도 보급률</a></li>
+									<li class="depth3"><a href="#!">급수인구 현황</a></li>
+									<li class="depth3"><a href="#!">상수도 요금현황</a></li>
+									<li class="depth3"><a href="#!">정수시설 현황</a></li>
+									<li class="depth3"><a href="#!">(정수)수질검사자료-정수장</a></li>
+									<li class="depth3"><a href="#!">(정수)수질검사자료-소규모</a></li>
+									<li class="depth3"><a href="#!">취수시설 현황</a></li>
+									<li class="depth3"><a href="#!">(원수)수질검사자료-취수장</a></li>
+								</ul>
+							</li>
+							<li class="depth2"><a href="#!">우리동네 약수터</a></li>
+							<li class="depth2"><a href="#!">물놀이형 수경시설</a></li>
+							<li class="depth2"><a href="#!">아름다운 물길</a></li>
+						</ul>
+					</div>
+				</li>
+				<li class="depth1">
+					<a href="#!">실시간 물정보</a>
+					<div class="subnav">
+						<ul>
+							<li class="depth2"><a href="#!">주요하천 수질현황</a></li>
+							<li class="depth2"><a href="#!">수질</a>
+								<ul>
+									<li class="depth3"><a href="#!">하천</a></li>
+									<li class="depth3"><a href="#!">호소</a></li>
+									<li class="depth3"><a href="#!">농업용수</a></li>
+									<li class="depth3"><a href="#!">공단배수</a></li>
+									<li class="depth3"><a href="#!">도시관류</a></li>
+								</ul>
+							</li>
+							<li class="depth2"><a href="#!">수량</a>
+								<ul>
+									<li class="depth3"><a href="#!">강우량</a></li>
+									<li class="depth3"><a href="#!">수위</a></li>
+									<li class="depth3"><a href="#!">유량</a></li>
+									<li class="depth3"><a href="#!">댐수위</a></li>
+									<li class="depth3"><a href="#!">저수지</a></li>
+								</ul>
+							</li>
+							<li class="depth2"><a href="#!">기상</a></li>
+						</ul>
+					</div>
+				</li>
+				<li class="depth1">
+					<a href="#!">도민참여 정보</a>
+					<div class="subnav">
+						<ul>
+							<li class="depth2"><a href="#!">노후 수도관 개량지원</a></li>
+							<li class="depth2"><a href="#!">수돗물 수질검사 신청</a></li>
+							<li class="depth2"><a href="#!">지역 민간단체 활동지원</a>
+								<ul>
+									<li class="depth3"><a href="#!">물환경 거버넌스 운영</a></li>
+									<li class="depth3"><a href="#!">미래세대 물환경 교육</a></li>
+									<li class="depth3"><a href="#!">팔당수계 하천정화활동</a></li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+				</li>
+				<li class="depth1">
+					<a href="#!">팔당전망대</a>
+					<div class="subnav">
+						<ul>
+							<li class="depth2"><a href="#!">팔당전망대 운영안내</a></li>
+							<li class="depth2"><a href="#!">단체 관람 신청</a></li>
+							<li class="depth2"><a href="#!">팔당호 역사 관광지</a></li>
+							<li class="depth2"><a href="#!">찾아오시는 길</a></li>
+						</ul>
+					</div>
+				</li>
+				<li class="depth1">
+					<a href="#!">자료마당</a>
+					<div class="subnav">
+						<ul>
+							<li class="depth2"><a href="#!">공지사항</a></li>
+							<li class="depth2"><a href="#!">환경자료</a>
+								<ul>
+									<li class="depth3"><a href="#!">환경 용어</a></li>
+									<li class="depth3"><a href="#!">환경 상식</a></li>
+									<li class="depth3"><a href="#!">우리동네 환경단체</a></li>
+								</ul>
+							</li>
+							<li class="depth2"><a href="#!">경기도 물 통계</a>
+								<ul>
+									<li class="depth3"><a href="#!">하천</a></li>
+									<li class="depth3"><a href="#!">상수도</a></li>
+									<li class="depth3"><a href="#!">하수도</a></li>
+									<li class="depth3"><a href="#!">분뇨처리시설</a></li>
+								</ul>
+							</li>
+							<li class="depth2"><a href="#!">수자원백서</a></li>
+							<li class="depth2"><a href="#!">보건환경연구원자료</a></li>
+						</ul>
+					</div>
+				</li>
+				<li class="depth1"><a href="#!">지도서비스</a>
+					<div class="subnav"></div>
+				</li>
+			</ul>
+		</div>
+		<!-- //모바일 메뉴 -->
+
+		<!-- 상단 검색 영역 -->
+		<div id="searchArea" class="">
+			<div class="search_inner">
+				<div class="search_box">
+					<input type="text" class="" name="waterSearchText" id="waterSearchText" placeholder="검색어를 입력해 주세요" value="">
+					<button type="submit" class="searchButton"><i class="tpg-search"></i></button>
+			  	</div>
+				<div class="search_detail_wrap">
+					<div>
+						<span class="search_detail_label">검색기간</span>
+						<div id="calendar" class="search_detail_calendar mt5">
+							<div class="">
+								<input type="date" name="waterSearchStartDate" id="waterSearchStartDate" class="input mr10" value="">
+								<input type="date" name="waterSearchEndDate" id="waterSearchEndDate" class="input" value="">
+							</div>
+							<div class="scbtwrap">
+								<button type="button" class="scbtnn active" onclick="fn_doTopWeek();">1주</button> 
+								<span>/</span>
+								<button type="button" class="scbtnn" onclick="fn_doTopMonth();">1개월</button>
+								<span>/</span>
+								<button type="button" class="scbtnn" onclick="fn_doTopYear();">1년</button>
+							</div>
+						</div>
+					</div>
+					<div class="mt30">
+						<span class="search_detail_label">검색방법</span>
+						<div class="mt5">
+							<input type="text" name="waterSearchOptBadText" id="waterSearchOptBadText" class="input textexpt" value="">
+							<label for="waterSearchOptBadChk" class="ml10">
+								<input type="checkbox" name="waterSearchOptBadChk" id="waterSearchOptBadChk" class="chkbb2" value="Y">
+								제외되는 단어
+							</label> 
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- //상단 검색 영역 -->
+
+		
+		<div class="container">
+			<div id="sub_contents">
+				<aside id="side_nav">
+					<div class="page_label"><h3>자료마당</h3></div>
+					<nav class="lnb">
+						<ul>
+							<li class="depth2"><a href="#!"><span>공지사항</span></a></li>
+							<li class="depth2 drops on"><a href="#!"><span>환경자료</span></a>
+								<ul class="on">
+									<li class="depth3 "><a href="#!"><span>환경 용어</span></a></li>
+									<li class="depth3"><a href="#!"><span>환경 상식</span></a></li>
+									<li class="depth3 on"><a href="#!"><span>우리동네 환경단체</span></a></li>
+								</ul>
+							</li>
+							<li class="depth2 drops "><a href="#!"><span>경기도 물 통계</span></a>
+                                <ul class="">
+									<li class="depth3"><a href="#!"><span>하천</span></a></li>
+									<li class="depth3 "><a href="#!"><span>상수도</span></a></li>
+									<li class="depth3"><a href="#!"><span>하수도</span></a></li>
+									<li class="depth3"><a href="#!"><span>분뇨처리시설</span></a></li>
+								</ul>
+                            </li>
+							<li class="depth2"><a href="#!"><span>수자원백서</span></a></li>
+							<li class="depth2"><a href="#!"><span>보건환경연구원자료</span></a></li>
+						</ul>
+					</nav>
+				</aside>
+
+				<div class="sub_contents">
+					<div class="sub_header">
+						<h4>우리동네 환경단체</h4>
+						<ol class="breadcrumb">
+							<li class="home"><a href="#!"><span class="sr-only">홈으로</span></a></li>
+							<li><a href="#!">자료마당</a></li>
+							<li><a href="#!">환경자료</a></li>
+							<li><a href="#!">우리동네 환경단체</a></li>
+						</ol>
+					</div>
+
+					<!-- contents -->
+					<div class="contents">
+						
+                        <div class="con_b_box mb20">
+							<div class="inner">※ 경기도내 등록된 비영리 민간단체에 대한 현황을 제공합니다.</div>
+                        </div>
+
+                        <div>
+                            <ul class="tab_menu mb30" role="tablist">
+								<li role="presentation" class="tab_item active"><a href="#tabCon1"><span>경기남부</span></a></li>
+								<li role="presentation" class="tab_item"><a href="#tabCon2"><span>경기북부</span></a></li>
+							</ul>
+
+                            <div class="tab_con_wrap">
+								<div id="tabCon1" class="tab_con active">
+                                    
+                                    <!-- 검색 박스 -->
+                                    <div class="search_group">
+                                        <div class="se_op">
+                                            <label for="searchArea2">검색 옵션</label>
+                                            <select class="waterSelect" name="searchArea2">
+                                                <option value="">단체명칭</option>
+                                                <option value="">등록번호</option>
+                                                <option value="">소재지</option>
+                                                <option value="">대표자</option>
+                                            </select>
+                                        </div>
+                                        <div class="se_word">
+                                            <label for="searchWord2">검색</label>
+                                            <input type="text" name="searchWord2" id="searchWord2" placeholder="" value="">
+                                            <button type="button" class="">검색</button>
+                                        </div>
+                                    </div>
+                                    <!-- //검색 박스 -->
+
+                                    <!-- 검색결과 -->
+                                    <div class="mt40">
+                                        <div class="d-flex justify-content-between mb10">
+                                            <div class="total">
+                                                <h5 class="h5cTit">비영리민간단체 등록현황(경기남부) : </h5>
+                                                <span>총 <em>198</em>개소</span>
+                                            </div>
+                                            <button class="btn_ico_download" type="button" title="엑셀 다운받기"></button>
+                                        </div>
+                                        <div class="content_tbl table-responsive">
+                                            <table class="tbl type2 text-center" summary="정보를 제공합니다.">
+                                                <caption>정보</caption>
+                                                <colgroup>
+                                                    <col style="width:7%">
+                                                    <col style="width:7%">
+                                                    <col style="width:14%">
+                                                    <col style="width:12%">
+                                                    <col style="width:auto">
+                                                    <col style="width:8%">
+                                                    <col style="width:12%">
+                                                </colgroup>
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">번호</th>
+                                                        <th scope="col">시군명</th>
+                                                        <th scope="col">등록번호</th>
+                                                        <th scope="col">단체 명칭</th>
+                                                        <th scope="col">사무소의 소재지</th>
+                                                        <th scope="col">대표자</th>
+                                                        <th scope="col">등록일</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                
+                                                
+                                                    <tr>
+                                                       <td>198</td>
+                                                       <td>수원시</td>
+                                                       <td>
+                                                       2023-1-경기도(도청)-42
+                                                       <br>
+                                                       </td>
+                                                       <td>대한환경총연맹</td>
+                                                       <td>수원시 장안구 경수대로 950, 3층 358호</td>
+                                                       <td>유성규</td>
+                                                       <td>
+                                                           2023-11-21
+                                                       </td>
+                                                   </tr>
+                                               
+                                                    <tr>
+                                                       <td>197</td>
+                                                       <td>수원시</td>
+                                                       <td>
+                                                       2019-1-경기도(도청)-20
+                                                       <br>
+                                                       </td>
+                                                       <td>수원환경교육네트워크</td>
+                                                       <td>수원시 팔달구 중부대로 12번길 18(구천동)</td>
+                                                       <td>류현상</td>
+                                                       <td>
+                                                           2019-07-19
+                                                       </td>
+                                                   </tr>
+                                               
+                                                    <tr>
+                                                       <td>196</td>
+                                                       <td>수원시</td>
+                                                       <td>
+                                                       2016-1-경기도(도청)-62
+                                                       <br>
+                                                       </td>
+                                                       <td>지구시민운동연합 경기지부</td>
+                                                       <td>수원시 팔달구 팔달문로103번길 12-20 1층(지동)</td>
+                                                       <td>박홍익</td>
+                                                       <td>
+                                                           2016-12-06
+                                                       </td>
+                                                   </tr>
+                                               
+                                                    <tr>
+                                                       <td>195</td>
+                                                       <td>수원시</td>
+                                                       <td>
+                                                       2015-1-경기도(도청)-54
+                                                       <br>
+                                                       </td>
+                                                       <td>경기도시니어환경봉사단</td>
+                                                       <td>수원시 팔달구 팔달로 115, 3층</td>
+                                                       <td>배병광</td>
+                                                       <td>
+                                                           2015-07-22
+                                                       </td>
+                                                   </tr>
+                                               
+                                                    <tr>
+                                                       <td>194</td>
+                                                       <td>수원시</td>
+                                                       <td>
+                                                       2015-1-경기도(도청)-52
+                                                       <br>
+                                                       </td>
+                                                       <td>경기도그린캠퍼스협의회</td>
+                                                       <td>수원시 팔달구 효원로 1, 2별관 305호</td>
+                                                       <td>윤동철</td>
+                                                       <td>
+                                                           2015-07-13
+                                                       </td>
+                                                   </tr>
+                                               
+                                                    <tr>
+                                                       <td>193</td>
+                                                       <td>수원시</td>
+                                                       <td>
+                                                       2014-1-경기도(도청)-26
+                                                       <br>
+                                                       </td>
+                                                       <td>(사)녹색성장 국민연합 경기지역본부</td>
+                                                       <td>수원시 팔달구 인계로 33</td>
+                                                       <td>권용득</td>
+                                                       <td>
+                                                           2014-07-15
+                                                       </td>
+                                                   </tr>
+                                               
+                                                    <tr>
+                                                       <td>192</td>
+                                                       <td>수원시</td>
+                                                       <td>
+                                                       2013-1-경기도(도청)-49
+                                                       <br>
+                                                       </td>
+                                                       <td>미래희망청년회</td>
+                                                       <td>수원시 팔달구 매교동 161 매교상가 225호</td>
+                                                       <td>이훈균</td>
+                                                       <td>
+                                                           2013-09-13
+                                                       </td>
+                                                   </tr>
+                                               
+                                                    <tr>
+                                                       <td>191</td>
+                                                       <td>수원시</td>
+                                                       <td>
+                                                       2013-1-경기도(도청)-45
+                                                       <br>
+                                                       </td>
+                                                       <td>칠보산도토리교실</td>
+                                                       <td>수원시 권선구 서수원로 607, 상가동 209호</td>
+                                                       <td>류현상 외 2인 (임종길, 이진욱)</td>
+                                                       <td>
+                                                           2013-09-06
+                                                       </td>
+                                                   </tr>
+                                               
+                                                    <tr>
+                                                       <td>190</td>
+                                                       <td>수원시</td>
+                                                       <td>
+                                                       2012-1-경기도(도청)-32
+                                                       <br>
+                                                       </td>
+                                                       <td>서호천의 친구들</td>
+                                                       <td>수원시 장안구 하율로 49-1, 1층(천천동)</td>
+                                                       <td>이성훈</td>
+                                                       <td>
+                                                           2012-06-28
+                                                       </td>
+                                                   </tr>
+                                               
+                                                    <tr>
+                                                       <td>189</td>
+                                                       <td>수원시</td>
+                                                       <td>
+                                                       2009-1-경기도(도청)-89
+                                                       <br>
+                                                       </td>
+                                                       <td>(사)경기푸른환경정비협회</td>
+                                                       <td>수원시 장안구 파장동 556-1</td>
+                                                       <td>곽배인</td>
+                                                       <td>
+                                                           2009-11-02
+                                                       </td>
+                                                   </tr>
+                                               
+                                               
+                                               
+                                                </tbody>
+                                            </table>
+                                            <nav class="text-center mt20 mb20">
+                                                <ul class="pagination">
+                                                    <li class="pageBtn page_first"><a href="#!" arial-label="prev" title="처음"><span aria-hidden="true"></span></a></li>
+                                                    <li class="pageBtn page_prev"><a href="#!" aria-label="prev" title="이전"><span aria-hidden="true"></span></a></li>
+                                                    <li class="on"><a href="#1" title="현재페이지">1</a></li>
+                                                    <li><a href="#!">2</a></li>
+                                                    <li><a href="#!">3</a></li>
+                                                    <li><a href="#!">4</a></li>
+                                                    <li><a href="#!">5</a></li>
+                                                    <li><a href="#!">6</a></li>
+                                                    <li><a href="#!">7</a></li>
+                                                    <li><a href="#!">8</a></li>
+                                                    <li><a href="#!">9</a></li>
+                                                    <li><a href="#!">10</a></li>
+                                                    <li class="pageBtn page_next"><a href="#!" arial-label="Next" title="다음"><span aria-hidden="true"></span></a></li>
+                                                    <li class="pageBtn page_last"><a href="#!" aria-label="Next" title="마지막"><span aria-hidden="true"></span></a></li>
+                                                </ul>
+                                            </nav>
+                                        </div>
+                                    </div>
+                                    <!-- //검색결과 -->
+								</div>
+								<div id="tabCon2" class="tab_con">
+                                    
+                                    <!-- 검색 박스 -->
+                                    <div class="search_group">
+                                        <div class="se_op">
+                                            <label for="searchArea2">검색 옵션</label>
+                                            <select class="waterSelect" name="searchArea2">
+                                                <option value="">단체명칭</option>
+                                                <option value="">등록번호</option>
+                                                <option value="">소재지</option>
+                                                <option value="">대표자</option>
+                                            </select>
+                                        </div>
+                                        <div class="se_word">
+                                            <label for="searchWord2">검색</label>
+                                            <input type="text" name="searchWord2" id="searchWord2" placeholder="" value="">
+                                            <button type="button" class="">검색</button>
+                                        </div>
+                                    </div>
+                                    <!-- //검색 박스 -->
+
+                                    <!-- 검색결과 -->
+                                    <div class="mt40">
+                                        <div class="d-flex justify-content-between mb10">
+                                            <div class="total">
+                                                <h5 class="h5cTit">비영리민간단체 등록현황(경기북부) : </h5>
+                                                <span>총 <em>81</em>개소</span>
+                                            </div>
+                                            <button class="btn_ico_download" type="button" title="엑셀 다운받기"></button>
+                                        </div>
+                                        <div class="content_tbl table-responsive">
+                                            <table class="tbl type2 text-center" summary="정보를 제공합니다.">
+                                                <caption>정보</caption>
+                                                <colgroup>
+                                                    <col style="width:7%">
+                                                    <col style="width:7%">
+                                                    <col style="width:14%">
+                                                    <col style="width:12%">
+                                                    <col style="width:auto">
+                                                    <col style="width:8%">
+                                                    <col style="width:12%">
+                                                </colgroup>
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">번호</th>
+                                                        <th scope="col">시군명</th>
+                                                        <th scope="col">등록번호</th>
+                                                        <th scope="col">단체 명칭</th>
+                                                        <th scope="col">사무소의 소재지</th>
+                                                        <th scope="col">대표자</th>
+                                                        <th scope="col">등록일</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                
+                                                
+                                                    <tr>
+                                                       <td>198</td>
+                                                       <td>수원시</td>
+                                                       <td>
+                                                       2023-1-경기도(도청)-42
+                                                       <br>
+                                                       </td>
+                                                       <td>대한환경총연맹</td>
+                                                       <td>수원시 장안구 경수대로 950, 3층 358호</td>
+                                                       <td>유성규</td>
+                                                       <td>
+                                                           2023-11-21
+                                                       </td>
+                                                   </tr>
+                                               
+                                                    <tr>
+                                                       <td>197</td>
+                                                       <td>수원시</td>
+                                                       <td>
+                                                       2019-1-경기도(도청)-20
+                                                       <br>
+                                                       </td>
+                                                       <td>수원환경교육네트워크</td>
+                                                       <td>수원시 팔달구 중부대로 12번길 18(구천동)</td>
+                                                       <td>류현상</td>
+                                                       <td>
+                                                           2019-07-19
+                                                       </td>
+                                                   </tr>
+                                               
+                                                    <tr>
+                                                       <td>196</td>
+                                                       <td>수원시</td>
+                                                       <td>
+                                                       2016-1-경기도(도청)-62
+                                                       <br>
+                                                       </td>
+                                                       <td>지구시민운동연합 경기지부</td>
+                                                       <td>수원시 팔달구 팔달문로103번길 12-20 1층(지동)</td>
+                                                       <td>박홍익</td>
+                                                       <td>
+                                                           2016-12-06
+                                                       </td>
+                                                   </tr>
+                                               
+                                                    <tr>
+                                                       <td>195</td>
+                                                       <td>수원시</td>
+                                                       <td>
+                                                       2015-1-경기도(도청)-54
+                                                       <br>
+                                                       </td>
+                                                       <td>경기도시니어환경봉사단</td>
+                                                       <td>수원시 팔달구 팔달로 115, 3층</td>
+                                                       <td>배병광</td>
+                                                       <td>
+                                                           2015-07-22
+                                                       </td>
+                                                   </tr>
+                                               
+                                                    <tr>
+                                                       <td>194</td>
+                                                       <td>수원시</td>
+                                                       <td>
+                                                       2015-1-경기도(도청)-52
+                                                       <br>
+                                                       </td>
+                                                       <td>경기도그린캠퍼스협의회</td>
+                                                       <td>수원시 팔달구 효원로 1, 2별관 305호</td>
+                                                       <td>윤동철</td>
+                                                       <td>
+                                                           2015-07-13
+                                                       </td>
+                                                   </tr>
+                                               
+                                                    <tr>
+                                                       <td>193</td>
+                                                       <td>수원시</td>
+                                                       <td>
+                                                       2014-1-경기도(도청)-26
+                                                       <br>
+                                                       </td>
+                                                       <td>(사)녹색성장 국민연합 경기지역본부</td>
+                                                       <td>수원시 팔달구 인계로 33</td>
+                                                       <td>권용득</td>
+                                                       <td>
+                                                           2014-07-15
+                                                       </td>
+                                                   </tr>
+                                               
+                                                    <tr>
+                                                       <td>192</td>
+                                                       <td>수원시</td>
+                                                       <td>
+                                                       2013-1-경기도(도청)-49
+                                                       <br>
+                                                       </td>
+                                                       <td>미래희망청년회</td>
+                                                       <td>수원시 팔달구 매교동 161 매교상가 225호</td>
+                                                       <td>이훈균</td>
+                                                       <td>
+                                                           2013-09-13
+                                                       </td>
+                                                   </tr>
+                                               
+                                                    <tr>
+                                                       <td>191</td>
+                                                       <td>수원시</td>
+                                                       <td>
+                                                       2013-1-경기도(도청)-45
+                                                       <br>
+                                                       </td>
+                                                       <td>칠보산도토리교실</td>
+                                                       <td>수원시 권선구 서수원로 607, 상가동 209호</td>
+                                                       <td>류현상 외 2인 (임종길, 이진욱)</td>
+                                                       <td>
+                                                           2013-09-06
+                                                       </td>
+                                                   </tr>
+                                               
+                                                    <tr>
+                                                       <td>190</td>
+                                                       <td>수원시</td>
+                                                       <td>
+                                                       2012-1-경기도(도청)-32
+                                                       <br>
+                                                       </td>
+                                                       <td>서호천의 친구들</td>
+                                                       <td>수원시 장안구 하율로 49-1, 1층(천천동)</td>
+                                                       <td>이성훈</td>
+                                                       <td>
+                                                           2012-06-28
+                                                       </td>
+                                                   </tr>
+                                               
+                                                    <tr>
+                                                       <td>189</td>
+                                                       <td>수원시</td>
+                                                       <td>
+                                                       2009-1-경기도(도청)-89
+                                                       <br>
+                                                       </td>
+                                                       <td>(사)경기푸른환경정비협회</td>
+                                                       <td>수원시 장안구 파장동 556-1</td>
+                                                       <td>곽배인</td>
+                                                       <td>
+                                                           2009-11-02
+                                                       </td>
+                                                   </tr>
+                                               
+                                               
+                                               
+                                                </tbody>
+                                            </table>
+                                            <nav class="text-center mt20 mb20">
+                                                <ul class="pagination">
+                                                    <li class="pageBtn page_first"><a href="#!" arial-label="prev" title="처음"><span aria-hidden="true"></span></a></li>
+                                                    <li class="pageBtn page_prev"><a href="#!" aria-label="prev" title="이전"><span aria-hidden="true"></span></a></li>
+                                                    <li class="on"><a href="#1" title="현재페이지">1</a></li>
+                                                    <li><a href="#!">2</a></li>
+                                                    <li><a href="#!">3</a></li>
+                                                    <li><a href="#!">4</a></li>
+                                                    <li><a href="#!">5</a></li>
+                                                    <li><a href="#!">6</a></li>
+                                                    <li><a href="#!">7</a></li>
+                                                    <li><a href="#!">8</a></li>
+                                                    <li><a href="#!">9</a></li>
+                                                    <li><a href="#!">10</a></li>
+                                                    <li class="pageBtn page_next"><a href="#!" arial-label="Next" title="다음"><span aria-hidden="true"></span></a></li>
+                                                    <li class="pageBtn page_last"><a href="#!" aria-label="Next" title="마지막"><span aria-hidden="true"></span></a></li>
+                                                </ul>
+                                            </nav>
+                                        </div>
+                                    </div>
+                                    <!-- //검색결과 -->
+								</div>
+							</div>
+                        </div>						
+
+						<!-- 담당자 정보 -->
+						<div class="manager">
+							<p><span>부서명</span>경기도수자원본부</p>
+							<p><span>전화번호</span>031-8008-6887</p>
+						</div>
+						<!-- //담당자 정보 -->
+					</div>
+					<!-- //contents -->
+
+					<!-- Modal -->
+					<!-- //Modal -->
+				</div>
+			</div>
+		</div>
+
+		<footer class="footer">
+			<div class="footer_etc">
+				<div class="container">
+					<div class="footer_inner">
+						<div>
+							<p class="f_logo">경기도 수자원본부</p>
+							<span>(우)12708 광주시 남종면 산수로 1692 / TEL 8008-6933 <Br/>COPYRIGHT© 2025 경기도수자원본부. ALL RIGHTS RESERVED.</span>
+						</div>
+						<a href="#!" class="fmy_btn">패밀리 사이트</a>
+					</div>
+				</div>
+			</div>
+			<div id="fmy_box" class="fmy_box">
+				<div>
+					<p>도 관련기관</p>
+					<ul>
+						<li><a target="_blank" href="https://www.gg.go.kr/">경기도청</a></li>
+						<li><a target="_blank" href="https://www.gg.go.kr/contents/contents.do?ciIdx=937&amp;menuId=2599">경기도 수자원본부</a></li>
+						<li><a target="_blank" href="https://www.gg.go.kr/gg_health">경기도보건환경연구원</a></li>
+						<li><a target="_blank" href="https://www.gri.re.kr/">경기연구원</a></li>
+						<li><a target="_blank" href="https://gto.or.kr/">경기관광공사</a></li>
+						<li><a target="_blank" href="http://www.gwisc.or.kr/">경기도물산업지원센터</a></li>
+						<li><a target="_blank" href="http://www.paldang.or.kr/index.php">특별대책지역수질보전협의회</a></li>
+					</ul>
+				</div>
+				<div>
+					<p>중앙관련기관</p>
+					<ul>
+						<li><a target="_blank" href="http://www.me.go.kr/">환경부</a></li>
+						<li><a target="_blank" href="http://www.molit.go.kr/">국토교통부</a></li>
+						<li><a target="_blank" href="https://www.weather.go.kr/w/index.do">기상청</a></li>
+						<li><a target="_blank" href="https://nier.go.kr/">국립환경과학원</a></li>
+						<li><a target="_blank" href="http://www.hrfco.go.kr/">홍수통제소</a></li>
+						<li><a target="_blank" href="https://www.nier.go.kr/NIER/egovHanIndex.jsp">물환경연구소</a></li>
+						<li><a target="_blank" href="https://www.ekr.or.kr">한국농어촌공사</a></li>
+						<li><a target="_blank" href="https://www.kwater.or.kr/">한국수자원공사</a></li>
+						<li><a target="_blank" href="https://www.keco.or.kr/">한국환경공단</a></li>
+						<li><a target="_blank" href="http://www.khnp.co.kr/">한국수력원자력</a></li>
+					</ul>
+				</div>
+				<div>
+					<p>물관련시스템</p>
+					<ul>
+						<li><a target="_blank" href="http://water.nier.go.kr">물환경정보시스템</a></li>
+						<li><a target="_blank" href="https://www.waternow.go.kr/web">국가상수도정보시스템</a></li>
+						<li><a target="_blank" href="https://www.hasudoinfo.or.kr/">국가하수도정보시스템</a></li>
+						<li><a target="_blank" href="https://www.gims.go.kr/">국가지하수정보센터</a></li>
+						<li><a target="_blank" href="http://www.wamis.go.kr/">국가수자원관리종합정보시스템</a></li>
+						<li><a target="_blank" href="http://floodmap.go.kr">홍수위험지도정보시스템</a></li>
+						<li><a target="_blank" href="http://rawris.ekr.or.kr/main.do">농촌용수종합정보시스템</a></li> 
+						<li><a target="_blank" href="http://sgis.nier.go.kr/">토양지하수정보시스템</a></li>
+						<li><a target="_blank" href="http://www.water.or.kr/">물정보포털(MyWater)</a></li>
+						 <li><a target="_blank" href="http://14.63.69.206:50085">팔당수계물정보시스템</a></li>
+					</ul>
+				</div>
+				<div>
+					<p>시/군 홈페이지</p>
+					<ul class="fmy_grid">
+						<li><a target="_blank" href="http://www.suwon.go.kr/">수원시</a></li>
+						<li><a target="_blank" href="https://www.yongin.go.kr/">용인시</a></li>
+						<li><a target="_blank" href="http://www.goyang.go.kr/">고양시</a></li>
+						<li><a target="_blank" href="http://www.hscity.go.kr/">화성시</a></li>
+						<li><a target="_blank" href="http://www.seongnam.go.kr/">성남시</a></li>
+						<li><a target="_blank" href="http://www.bucheon.go.kr/">부천시</a></li>
+						<li><a target="_blank" href="http://www.nyj.go.kr/">남양주시</a></li>
+						<li><a target="_blank" href="http://www.ansan.go.kr/">안산시</a></li>
+						<li><a target="_blank" href="http://www.pyeongtaek.go.kr/">평택시</a></li>
+						<li><a target="_blank" href="http://www.anyang.go.kr/">안양시</a></li>
+						<li><a target="_blank" href="http://www.siheung.go.kr/">시흥시</a></li>
+						<li><a target="_blank" href="http://www.paju.go.kr/">파주시</a></li>
+						<li><a target="_blank" href="http://www.gimpo.go.kr/">김포시</a></li>
+						<li><a target="_blank" href="https://www.ui4u.go.kr/">의정부시</a></li>
+						<li><a target="_blank" href="https://www.gjcity.go.kr/">광주시</a></li>
+						<li><a target="_blank" href="http://www.hanam.go.kr/">하남시</a></li>
+						<li><a target="_blank" href="http://www.gm.go.kr/">광명시</a></li>
+						<li><a target="_blank" href="http://www.gunpo.go.kr/">군포시</a></li>
+						<li><a target="_blank" href="http://www.yangju.go.kr/">양주시</a></li>
+						<li><a target="_blank" href="http://www.osan.go.kr/">오산시</a></li>
+						<li><a target="_blank" href="http://www.icheon.go.kr/">이천시</a></li>
+						<li><a target="_blank" href="https://www.anseong.go.kr/">안성시</a></li>
+						<li><a target="_blank" href="http://www.guri.go.kr/">구리시</a></li>
+						<li><a target="_blank" href="http://www.uiwang.go.kr/">의왕시</a></li>
+						<li><a target="_blank" href="http://www.pocheon.go.kr/">포천시</a></li>
+						<li><a target="_blank" href="http://www.yp21.go.kr/">양평군</a></li>
+						<li><a target="_blank" href="http://www.yeoju.go.kr/">여주시</a></li>
+						<li><a target="_blank" href="http://www.ddc.go.kr/">동두천시</a></li>
+						<li><a target="_blank" href="http://www.gccity.go.kr/">과천시</a></li>
+						<li><a target="_blank" href="http://www.gp.go.kr/">가평군</a></li>
+						<li><a target="_blank" href="http://www.yeoncheon.go.kr/">연천군</a></li>
+					</ul>
+				</div>
+			</div>
+			<script>
+				$('.fmy_btn').click(function() {
+					$('#fmy_box').toggleClass('open');
+				});
+			</script>
+		</footer>
+	</div>
+</body>
+
+</html>
