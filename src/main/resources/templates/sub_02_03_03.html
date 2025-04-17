@@ -2,707 +2,1059 @@
 
 <html lang="ko" class="">
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>경기도 물정보시스템</title>
-	<meta name="format-detection" content="telephone=no" />
-	<meta name="apple-mobile-web-app-capable" content="yes" />
-	<meta name="apple-mobile-web-app-status-bar-style" content="black" />
-	<meta name="description" content="경기도 우리집 수돗물, 안심 물놀이 시설, 우리동네 약수터, 아름다운 물길, 수질, 수량, 기상, 통계 제공">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-	
-	<link rel="shortcut icon" href="common/images/favicon.ico" type="image/x-icon">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>경기도 물정보시스템</title>
+    <meta name="format-detection" content="telephone=no"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+    <meta name="description" content="경기도 우리집 수돗물, 안심 물놀이 시설, 우리동네 약수터, 아름다운 물길, 수질, 수량, 기상, 통계 제공">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 
-	<!-- common -->
-	<link rel="stylesheet" type="text/css" href="common/plugin/bootstrap/bootstrap.css">
-	<link rel="stylesheet" type="text/css" href="common/css/default.css">
-	<script src="common/js/jquery-1.12.4.min.js"></script>
-	<script src="common/js/jquery-ui.js"></script>
-	<script src="common/js/customScript.js"></script>
-	
-	<!-- apex chart lib -->
-	<script src="common/js/apexchart.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <link rel="shortcut icon" href="/common/images/favicon.ico" type="image/x-icon">
 
-	<!-- plugin -->
-	<link rel="stylesheet" type="text/css" href="common/plugin/slick/slick.css">
-	<script src="common/plugin/slick/slick.min.js"></script>
-	
-	<!-- design -->
-	<link rel="stylesheet" type="text/css" href="common/css/layout.css">
-	<link rel="stylesheet" type="text/css" href="common/css/theme.css">
+    <!-- /common -->
+    <link rel="stylesheet" type="text/css" href="/common/plugin/bootstrap/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="/common/css/default.css">
+    <script src="/common/js/jquery-1.12.4.min.js"></script>
+    <script src="/common/js/jquery-ui.js"></script>
+    <script src="/common/js/customScript.js"></script>
+    <!-- 네이버  지도 -->
+    <script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?govClientId=tzo0erifbf"></script>
+
+    <!-- d3 and c3 -->
+    <link rel="stylesheet" type="text/css" href="/common/css/c3.min.css">
+    <script src="/common/js/d3.v3.min.js"></script>
+    <script src="/common/js/c3.min.js"></script>
+    <script src="/common/js/ChartCommon.js"></script>
+    <script src="/common/js/saveSvgAsPng.js"></script>
+
+    <!-- plugin -->
+    <link rel="stylesheet" type="text/css" href="/common/plugin/slick/slick.css">
+    <script src="/common/plugin/slick/slick.min.js"></script>
+
+    <!-- design -->
+    <link rel="stylesheet" type="text/css" href="/common/css/layout.css">
+    <link rel="stylesheet" type="text/css" href="/common/css/map.css">
+    <link rel="stylesheet" type="text/css" href="/common/css/theme.css">
 
 </head>
 
 <body>
-	<div id="wrapper">
-		<div class="mask "></div>
-		<div class="gnb_bg"></div>
-		<header id="header">
-			<div class="container" style="position: relative;">
-				<button id="mobileMenuBtn" class="mobile_menu_btn"></button>
-				<h1>
-					<a href="#!" class="logo"><img src="./common/images/logo.png" alt="경기도물정보시스템"/></a>
-				</h1>
-				<nav id="nav">
-					<ul>
-						<li class="depth1">
-							<a href="#!">생활 속 물정보</a>
-							<div class="subnav">
-								<ul>
-									<li class="depth2"><a href="#!">우리집 수돗물</a>
-										<ul>
-											<li class="depth3"><a href="#!">상수도 보급률</a></li>
-											<li class="depth3"><a href="#!">급수인구 현황</a></li>
-											<li class="depth3"><a href="#!">상수도 요금현황</a></li>
-											<li class="depth3"><a href="#!">정수시설 현황</a></li>
-											<li class="depth3"><a href="#!">(정수)수질검사자료-정수장</a></li>
-											<li class="depth3"><a href="#!">(정수)수질검사자료-소규모</a></li>
-											<li class="depth3"><a href="#!">취수시설 현황</a></li>
-											<li class="depth3"><a href="#!">(원수)수질검사자료-취수장</a></li>
-										</ul>
-									</li>
-									<li class="depth2"><a href="#!">우리동네 약수터</a></li>
-									<li class="depth2"><a href="#!">물놀이형 수경시설</a></li>
-									<li class="depth2"><a href="#!">아름다운 물길</a></li>
-								</ul>
-							</div>
-						</li>
-						<li class="depth1">
-							<a href="#!">실시간 물정보</a>
-							<div class="subnav">
-								<ul>
-									<li class="depth2"><a href="#!">주요하천 수질현황</a></li>
-									<li class="depth2"><a href="#!">수질</a>
-										<ul>
-											<li class="depth3"><a href="#!">하천</a></li>
-											<li class="depth3"><a href="#!">호소</a></li>
-											<li class="depth3"><a href="#!">농업용수</a></li>
-											<li class="depth3"><a href="#!">공단배수</a></li>
-											<li class="depth3"><a href="#!">도시관류</a></li>
-										</ul>
-									</li>
-									<li class="depth2"><a href="#!">수량</a>
-										<ul>
-											<li class="depth3"><a href="#!">강우량</a></li>
-											<li class="depth3"><a href="#!">수위</a></li>
-											<li class="depth3"><a href="#!">유량</a></li>
-											<li class="depth3"><a href="#!">댐수위</a></li>
-											<li class="depth3"><a href="#!">저수지</a></li>
-										</ul>
-									</li>
-									<li class="depth2"><a href="#!">기상</a></li>
-								</ul>
-							</div>
-						</li>
-						<li class="depth1">
-							<a href="#!">도민참여 정보</a>
-							<div class="subnav">
-								<ul>
-									<li class="depth2"><a href="#!">노후 수도관 개량지원</a></li>
-									<li class="depth2"><a href="#!">수돗물 수질검사 신청</a></li>
-									<li class="depth2"><a href="#!">지역 민간단체 활동지원</a>
-										<ul>
-											<li class="depth3"><a href="#!">물환경 거버넌스 운영</a></li>
-											<li class="depth3"><a href="#!">미래세대 물환경 교육</a></li>
-											<li class="depth3"><a href="#!">팔당수계 하천정화활동</a></li>
-										</ul>
-									</li>
-								</ul>
-							</div>
-						</li>
-						<li class="depth1">
-							<a href="#!">팔당전망대</a>
-							<div class="subnav">
-								<ul>
-									<li class="depth2"><a href="#!">팔당전망대 운영안내</a></li>
-									<li class="depth2"><a href="#!">단체 관람 신청</a></li>
-									<li class="depth2"><a href="#!">팔당호 역사 관광지</a></li>
-									<li class="depth2"><a href="#!">찾아오시는 길</a></li>
-								</ul>
-							</div>
-						</li>
-						<li class="depth1">
-							<a href="#!">자료마당</a>
-							<div class="subnav">
-								<ul>
-									<li class="depth2"><a href="#!">공지사항</a></li>
-									<li class="depth2"><a href="#!">환경자료</a>
-										<ul>
-											<li class="depth3"><a href="#!">환경 용어</a></li>
-											<li class="depth3"><a href="#!">환경 상식</a></li>
-											<li class="depth3"><a href="#!">우리동네 환경단체</a></li>
-										</ul>
-									</li>
-									<li class="depth2"><a href="#!">경기도 물 통계</a>
-										<ul>
-											<li class="depth3"><a href="#!">하천</a></li>
-											<li class="depth3"><a href="#!">상수도</a></li>
-											<li class="depth3"><a href="#!">하수도</a></li>
-											<li class="depth3"><a href="#!">분뇨처리시설</a></li>
-										</ul>
-									</li>
-									<li class="depth2"><a href="#!">수자원백서</a></li>
-									<li class="depth2"><a href="#!">보건환경연구원자료</a></li>
-								</ul>
-							</div>
-						</li>
-						<li class="depth1"><a href="#!">지도서비스</a>
-							<div class="subnav"></div>
-						</li>
-					</ul>
-				</nav>
-				<button id="topSearchBtn" class="search_btn"></button>
-			</div>
-		</header>
+<div id="wrapper">
+    <div class="mask "></div>
+    <div class="gnb_bg"></div>
+    <header id="header">
+        <div class="container" style="position: relative;">
+            <button id="mobileMenuBtn" class="mobile_menu_btn"></button>
+            <h1>
+                <a href="#!" class="logo"><img src="/common/images/logo.png" alt="경기도물정보시스템"/></a>
+            </h1>
+            <nav id="nav">
+                <ul>
+                    <li class="depth1">
+                        <a href="#!">생활 속 물정보</a>
+                        <div class="subnav">
+                            <ul>
+                                <li class="depth2"><a href="#!">우리집 수돗물</a>
+                                    <ul>
+                                        <li class="depth3"><a href="#!">상수도 보급률</a></li>
+                                        <li class="depth3"><a href="#!">급수인구 현황</a></li>
+                                        <li class="depth3"><a href="#!">상수도 요금현황</a></li>
+                                        <li class="depth3"><a href="#!">정수시설 현황</a></li>
+                                        <li class="depth3"><a href="#!">(정수)수질검사자료-정수장</a></li>
+                                        <li class="depth3"><a href="#!">(정수)수질검사자료-소규모</a></li>
+                                        <li class="depth3"><a href="#!">취수시설 현황</a></li>
+                                        <li class="depth3"><a href="#!">(원수)수질검사자료-취수장</a></li>
+                                    </ul>
+                                </li>
+                                <li class="depth2"><a href="#!">우리동네 약수터</a></li>
+                                <li class="depth2"><a href="#!">물놀이형 수경시설</a></li>
+                                <li class="depth2"><a href="#!">아름다운 물길</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="depth1">
+                        <a href="#!">실시간 물정보</a>
+                        <div class="subnav">
+                            <ul>
+                                <li class="depth2"><a href="#!">주요하천 수질현황</a></li>
+                                <li class="depth2"><a href="#!">수질</a>
+                                    <ul>
+                                        <li class="depth3"><a href="#!">하천</a></li>
+                                        <li class="depth3"><a href="#!">호소</a></li>
+                                        <li class="depth3"><a href="#!">농업용수</a></li>
+                                        <li class="depth3"><a href="#!">공단배수</a></li>
+                                        <li class="depth3"><a href="#!">도시관류</a></li>
+                                    </ul>
+                                </li>
+                                <li class="depth2"><a href="#!">수량</a>
+                                    <ul>
+                                        <li class="depth3"><a href="#!">강우량</a></li>
+                                        <li class="depth3"><a href="#!">수위</a></li>
+                                        <li class="depth3"><a href="#!">유량</a></li>
+                                        <li class="depth3"><a href="#!">댐수위</a></li>
+                                        <li class="depth3"><a href="#!">저수지</a></li>
+                                    </ul>
+                                </li>
+                                <li class="depth2"><a href="#!">기상</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="depth1">
+                        <a href="#!">도민참여 정보</a>
+                        <div class="subnav">
+                            <ul>
+                                <li class="depth2"><a href="#!">노후 수도관 개량지원</a></li>
+                                <li class="depth2"><a href="#!">수돗물 수질검사 신청</a></li>
+                                <li class="depth2"><a href="#!">지역 민간단체 활동지원</a>
+                                    <ul>
+                                        <li class="depth3"><a href="#!">물환경 거버넌스 운영</a></li>
+                                        <li class="depth3"><a href="#!">미래세대 물환경 교육</a></li>
+                                        <li class="depth3"><a href="#!">팔당수계 하천정화활동</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="depth1">
+                        <a href="#!">팔당전망대</a>
+                        <div class="subnav">
+                            <ul>
+                                <li class="depth2"><a href="#!">팔당전망대 운영안내</a></li>
+                                <li class="depth2"><a href="#!">단체 관람 신청</a></li>
+                                <li class="depth2"><a href="#!">팔당호 역사 관광지</a></li>
+                                <li class="depth2"><a href="#!">찾아오시는 길</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="depth1">
+                        <a href="#!">자료마당</a>
+                        <div class="subnav">
+                            <ul>
+                                <li class="depth2"><a href="#!">공지사항</a></li>
+                                <li class="depth2"><a href="#!">환경자료</a>
+                                    <ul>
+                                        <li class="depth3"><a href="#!">환경 용어</a></li>
+                                        <li class="depth3"><a href="#!">환경 상식</a></li>
+                                        <li class="depth3"><a href="#!">우리동네 환경단체</a></li>
+                                    </ul>
+                                </li>
+                                <li class="depth2"><a href="#!">경기도 물 통계</a>
+                                    <ul>
+                                        <li class="depth3"><a href="#!">하천</a></li>
+                                        <li class="depth3"><a href="#!">상수도</a></li>
+                                        <li class="depth3"><a href="#!">하수도</a></li>
+                                        <li class="depth3"><a href="#!">분뇨처리시설</a></li>
+                                    </ul>
+                                </li>
+                                <li class="depth2"><a href="#!">수자원백서</a></li>
+                                <li class="depth2"><a href="#!">보건환경연구원자료</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="depth1"><a href="#!">지도서비스</a>
+                        <div class="subnav"></div>
+                    </li>
+                </ul>
+            </nav>
+            <button id="topSearchBtn" class="search_btn"></button>
+        </div>
+    </header>
 
-		<!-- 모바일 메뉴 -->
-		<div id="mobileNav" class="mobile_menu">
-			<ul>
-				<li class="depth1 on">
-					<a href="#!">생활 속 물정보</a>
-					<div class="subnav">
-						<ul>
-							<li class="depth2 drops on"><a href="#!">우리집 수돗물</a>
-								<ul>
-									<li class="depth3"><a href="#!">상수도 보급률</a></li>
-									<li class="depth3"><a href="#!">급수인구 현황</a></li>
-									<li class="depth3"><a href="#!">상수도 요금현황</a></li>
-									<li class="depth3"><a href="#!">정수시설 현황</a></li>
-									<li class="depth3"><a href="#!">(정수)수질검사자료-정수장</a></li>
-									<li class="depth3"><a href="#!">(정수)수질검사자료-소규모</a></li>
-									<li class="depth3"><a href="#!">취수시설 현황</a></li>
-									<li class="depth3"><a href="#!">(원수)수질검사자료-취수장</a></li>
-								</ul>
-							</li>
-							<li class="depth2"><a href="#!">우리동네 약수터</a></li>
-							<li class="depth2"><a href="#!">물놀이형 수경시설</a></li>
-							<li class="depth2"><a href="#!">아름다운 물길</a></li>
-						</ul>
-					</div>
-				</li>
-				<li class="depth1">
-					<a href="#!">실시간 물정보</a>
-					<div class="subnav">
-						<ul>
-							<li class="depth2"><a href="#!">주요하천 수질현황</a></li>
-							<li class="depth2"><a href="#!">수질</a>
-								<ul>
-									<li class="depth3"><a href="#!">하천</a></li>
-									<li class="depth3"><a href="#!">호소</a></li>
-									<li class="depth3"><a href="#!">농업용수</a></li>
-									<li class="depth3"><a href="#!">공단배수</a></li>
-									<li class="depth3"><a href="#!">도시관류</a></li>
-								</ul>
-							</li>
-							<li class="depth2"><a href="#!">수량</a>
-								<ul>
-									<li class="depth3"><a href="#!">강우량</a></li>
-									<li class="depth3"><a href="#!">수위</a></li>
-									<li class="depth3"><a href="#!">유량</a></li>
-									<li class="depth3"><a href="#!">댐수위</a></li>
-									<li class="depth3"><a href="#!">저수지</a></li>
-								</ul>
-							</li>
-							<li class="depth2"><a href="#!">기상</a></li>
-						</ul>
-					</div>
-				</li>
-				<li class="depth1">
-					<a href="#!">도민참여 정보</a>
-					<div class="subnav">
-						<ul>
-							<li class="depth2"><a href="#!">노후 수도관 개량지원</a></li>
-							<li class="depth2"><a href="#!">수돗물 수질검사 신청</a></li>
-							<li class="depth2"><a href="#!">지역 민간단체 활동지원</a>
-								<ul>
-									<li class="depth3"><a href="#!">물환경 거버넌스 운영</a></li>
-									<li class="depth3"><a href="#!">미래세대 물환경 교육</a></li>
-									<li class="depth3"><a href="#!">팔당수계 하천정화활동</a></li>
-								</ul>
-							</li>
-						</ul>
-					</div>
-				</li>
-				<li class="depth1">
-					<a href="#!">팔당전망대</a>
-					<div class="subnav">
-						<ul>
-							<li class="depth2"><a href="#!">팔당전망대 운영안내</a></li>
-							<li class="depth2"><a href="#!">단체 관람 신청</a></li>
-							<li class="depth2"><a href="#!">팔당호 역사 관광지</a></li>
-							<li class="depth2"><a href="#!">찾아오시는 길</a></li>
-						</ul>
-					</div>
-				</li>
-				<li class="depth1">
-					<a href="#!">자료마당</a>
-					<div class="subnav">
-						<ul>
-							<li class="depth2"><a href="#!">공지사항</a></li>
-							<li class="depth2"><a href="#!">환경자료</a>
-								<ul>
-									<li class="depth3"><a href="#!">환경 용어</a></li>
-									<li class="depth3"><a href="#!">환경 상식</a></li>
-									<li class="depth3"><a href="#!">우리동네 환경단체</a></li>
-								</ul>
-							</li>
-							<li class="depth2"><a href="#!">경기도 물 통계</a>
-								<ul>
-									<li class="depth3"><a href="#!">하천</a></li>
-									<li class="depth3"><a href="#!">상수도</a></li>
-									<li class="depth3"><a href="#!">하수도</a></li>
-									<li class="depth3"><a href="#!">분뇨처리시설</a></li>
-								</ul>
-							</li>
-							<li class="depth2"><a href="#!">수자원백서</a></li>
-							<li class="depth2"><a href="#!">보건환경연구원자료</a></li>
-						</ul>
-					</div>
-				</li>
-				<li class="depth1"><a href="#!">지도서비스</a>
-					<div class="subnav"></div>
-				</li>
-			</ul>
-		</div>
-		<!-- //모바일 메뉴 -->
+    <!-- 모바일 메뉴 -->
+    <div id="mobileNav" class="mobile_menu">
+        <ul>
+            <li class="depth1 on">
+                <a href="#!">생활 속 물정보</a>
+                <div class="subnav">
+                    <ul>
+                        <li class="depth2 drops on"><a href="#!">우리집 수돗물</a>
+                            <ul>
+                                <li class="depth3"><a href="#!">상수도 보급률</a></li>
+                                <li class="depth3"><a href="#!">급수인구 현황</a></li>
+                                <li class="depth3"><a href="#!">상수도 요금현황</a></li>
+                                <li class="depth3"><a href="#!">정수시설 현황</a></li>
+                                <li class="depth3"><a href="#!">(정수)수질검사자료-정수장</a></li>
+                                <li class="depth3"><a href="#!">(정수)수질검사자료-소규모</a></li>
+                                <li class="depth3"><a href="#!">취수시설 현황</a></li>
+                                <li class="depth3"><a href="#!">(원수)수질검사자료-취수장</a></li>
+                            </ul>
+                        </li>
+                        <li class="depth2"><a href="#!">우리동네 약수터</a></li>
+                        <li class="depth2"><a href="#!">물놀이형 수경시설</a></li>
+                        <li class="depth2"><a href="#!">아름다운 물길</a></li>
+                    </ul>
+                </div>
+            </li>
+            <li class="depth1">
+                <a href="#!">실시간 물정보</a>
+                <div class="subnav">
+                    <ul>
+                        <li class="depth2"><a href="#!">주요하천 수질현황</a></li>
+                        <li class="depth2"><a href="#!">수질</a>
+                            <ul>
+                                <li class="depth3"><a href="#!">하천</a></li>
+                                <li class="depth3"><a href="#!">호소</a></li>
+                                <li class="depth3"><a href="#!">농업용수</a></li>
+                                <li class="depth3"><a href="#!">공단배수</a></li>
+                                <li class="depth3"><a href="#!">도시관류</a></li>
+                            </ul>
+                        </li>
+                        <li class="depth2"><a href="#!">수량</a>
+                            <ul>
+                                <li class="depth3"><a href="#!">강우량</a></li>
+                                <li class="depth3"><a href="#!">수위</a></li>
+                                <li class="depth3"><a href="#!">유량</a></li>
+                                <li class="depth3"><a href="#!">댐수위</a></li>
+                                <li class="depth3"><a href="#!">저수지</a></li>
+                            </ul>
+                        </li>
+                        <li class="depth2"><a href="#!">기상</a></li>
+                    </ul>
+                </div>
+            </li>
+            <li class="depth1">
+                <a href="#!">도민참여 정보</a>
+                <div class="subnav">
+                    <ul>
+                        <li class="depth2"><a href="#!">노후 수도관 개량지원</a></li>
+                        <li class="depth2"><a href="#!">수돗물 수질검사 신청</a></li>
+                        <li class="depth2"><a href="#!">지역 민간단체 활동지원</a>
+                            <ul>
+                                <li class="depth3"><a href="#!">물환경 거버넌스 운영</a></li>
+                                <li class="depth3"><a href="#!">미래세대 물환경 교육</a></li>
+                                <li class="depth3"><a href="#!">팔당수계 하천정화활동</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+            <li class="depth1">
+                <a href="#!">팔당전망대</a>
+                <div class="subnav">
+                    <ul>
+                        <li class="depth2"><a href="#!">팔당전망대 운영안내</a></li>
+                        <li class="depth2"><a href="#!">단체 관람 신청</a></li>
+                        <li class="depth2"><a href="#!">팔당호 역사 관광지</a></li>
+                        <li class="depth2"><a href="#!">찾아오시는 길</a></li>
+                    </ul>
+                </div>
+            </li>
+            <li class="depth1">
+                <a href="#!">자료마당</a>
+                <div class="subnav">
+                    <ul>
+                        <li class="depth2"><a href="#!">공지사항</a></li>
+                        <li class="depth2"><a href="#!">환경자료</a>
+                            <ul>
+                                <li class="depth3"><a href="#!">환경 용어</a></li>
+                                <li class="depth3"><a href="#!">환경 상식</a></li>
+                                <li class="depth3"><a href="#!">우리동네 환경단체</a></li>
+                            </ul>
+                        </li>
+                        <li class="depth2"><a href="#!">경기도 물 통계</a>
+                            <ul>
+                                <li class="depth3"><a href="#!">하천</a></li>
+                                <li class="depth3"><a href="#!">상수도</a></li>
+                                <li class="depth3"><a href="#!">하수도</a></li>
+                                <li class="depth3"><a href="#!">분뇨처리시설</a></li>
+                            </ul>
+                        </li>
+                        <li class="depth2"><a href="#!">수자원백서</a></li>
+                        <li class="depth2"><a href="#!">보건환경연구원자료</a></li>
+                    </ul>
+                </div>
+            </li>
+            <li class="depth1"><a href="#!">지도서비스</a>
+                <div class="subnav"></div>
+            </li>
+        </ul>
+    </div>
+    <!-- //모바일 메뉴 -->
 
-		<!-- 상단 검색 영역 -->
-		<div id="searchArea" class="">
-			<div class="search_inner">
-				<div class="search_box">
-					<input type="text" class="" name="waterSearchText" id="waterSearchText" placeholder="검색어를 입력해 주세요" value="">
-					<button type="submit" class="searchButton"><i class="tpg-search"></i></button>
-			  	</div>
-				<div class="search_detail_wrap">
-					<div>
-						<span class="search_detail_label">검색기간</span>
-						<div id="calendar" class="search_detail_calendar mt5">
-							<div class="">
-								<input type="date" name="waterSearchStartDate" id="waterSearchStartDate" class="input mr10" value="">
-								<input type="date" name="waterSearchEndDate" id="waterSearchEndDate" class="input" value="">
-							</div>
-							<div class="scbtwrap">
-								<button type="button" class="scbtnn active" onclick="fn_doTopWeek();">1주</button> 
-								<span>/</span>
-								<button type="button" class="scbtnn" onclick="fn_doTopMonth();">1개월</button>
-								<span>/</span>
-								<button type="button" class="scbtnn" onclick="fn_doTopYear();">1년</button>
-							</div>
-						</div>
-					</div>
-					<div class="mt30">
-						<span class="search_detail_label">검색방법</span>
-						<div class="mt5">
-							<input type="text" name="waterSearchOptBadText" id="waterSearchOptBadText" class="input textexpt" value="">
-							<label for="waterSearchOptBadChk" class="ml10">
-								<input type="checkbox" name="waterSearchOptBadChk" id="waterSearchOptBadChk" class="chkbb2" value="Y">
-								제외되는 단어
-							</label> 
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<!-- //상단 검색 영역 -->
+    <!-- 상단 검색 영역 -->
+    <div id="searchArea" class="">
+        <div class="search_inner">
+            <div class="search_box">
+                <input type="text" class="" name="waterSearchText" id="waterSearchText" placeholder="검색어를 입력해 주세요"
+                       value="">
+                <button type="submit" class="searchButton"><i class="tpg-search"></i></button>
+            </div>
+            <div class="search_detail_wrap">
+                <div>
+                    <span class="search_detail_label">검색기간</span>
+                    <div id="calendar" class="search_detail_calendar mt5">
+                        <div class="">
+                            <input type="date" name="waterSearchStartDate" id="waterSearchStartDate" class="input mr10"
+                                   value="">
+                            <input type="date" name="waterSearchEndDate" id="waterSearchEndDate" class="input" value="">
+                        </div>
+                        <div class="scbtwrap">
+                            <button type="button" class="scbtnn active" onclick="fn_doTopWeek();">1주</button>
+                            <span>/</span>
+                            <button type="button" class="scbtnn" onclick="fn_doTopMonth();">1개월</button>
+                            <span>/</span>
+                            <button type="button" class="scbtnn" onclick="fn_doTopYear();">1년</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt30">
+                    <span class="search_detail_label">검색방법</span>
+                    <div class="mt5">
+                        <input type="text" name="waterSearchOptBadText" id="waterSearchOptBadText"
+                               class="input textexpt" value="">
+                        <label for="waterSearchOptBadChk" class="ml10">
+                            <input type="checkbox" name="waterSearchOptBadChk" id="waterSearchOptBadChk" class="chkbb2"
+                                   value="Y">
+                            제외되는 단어
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- //상단 검색 영역 -->
 
-		
-		<div class="container">
-			<div id="sub_contents">
-				<aside id="side_nav">
-					<div class="page_label"><h3>실시간 물정보</h3></div>
-					<nav class="lnb">
-						<ul>
-							<li class="depth2"><a href="#!"><span>주요하천 수질현황황</span></a></li>
-							<li class="depth2 drops"><a href="#!"><span>수질</span></a>
-								<ul class="">
-									<li class="depth3"><a href="#!"><span>하천</span></a></li>
-									<li class="depth3"><a href="#!"><span>호소</span></a></li>
-									<li class="depth3"><a href="#!"><span>농업용수</span></a></li>
-									<li class="depth3"><a href="#!"><span>공단배수</span></a></li>
-									<li class="depth3"><a href="#!"><span>도시관류</span></a></li>
-								</ul>
-							</li>
-							<li class="depth2 drops on"><a href="#!"><span>수량</span></a>
-                                <ul class="on">
-									<li class="depth3"><a href="#!"><span>강우량</span></a></li>
-									<li class="depth3"><a href="#!"><span>수위</span></a></li>
-									<li class="depth3 on"><a href="#!"><span>유량</span></a></li>
-									<li class="depth3"><a href="#!"><span>댐수위</span></a></li>
-									<li class="depth3"><a href="#!"><span>저수지</span></a></li>
-								</ul>
-                            </li>
-							<li class="depth2"><a href="#!"><span>기상</span></a></li>
-						</ul>
-					</nav>
-				</aside>
 
-				<div class="sub_contents">
-					<div class="sub_header">
-						<h4>유량</h4>
-						<ol class="breadcrumb">
-							<li class="home"><a href="#!"><span class="sr-only">홈으로</span></a></li>
-							<li><a href="#!">실시간 물정보</a></li>
-							<li><a href="#!">수량</a></li>
-							<li><a href="#!">유량</a></li>
-						</ol>
-					</div>
+    <div class="container">
+        <div id="sub_contents">
+            <aside id="side_nav">
+                <div class="page_label"><h3>실시간 물정보</h3></div>
+                <nav class="lnb">
+                    <ul>
+                        <li class="depth2"><a href="#!"><span>주요하천 수질현황황</span></a></li>
+                        <li class="depth2 drops"><a href="#!"><span>수질</span></a>
+                            <ul class="">
+                                <li class="depth3"><a href="#!"><span>하천</span></a></li>
+                                <li class="depth3"><a href="#!"><span>호소</span></a></li>
+                                <li class="depth3"><a href="#!"><span>농업용수</span></a></li>
+                                <li class="depth3"><a href="#!"><span>공단배수</span></a></li>
+                                <li class="depth3"><a href="#!"><span>도시관류</span></a></li>
+                            </ul>
+                        </li>
+                        <li class="depth2 drops on"><a href="#!"><span>수량</span></a>
+                            <ul class="on">
+                                <li class="depth3"><a href="#!"><span>강우량</span></a></li>
+                                <li class="depth3"><a href="#!"><span>수위</span></a></li>
+                                <li class="depth3 on"><a href="#!"><span>유량</span></a></li>
+                                <li class="depth3"><a href="#!"><span>댐수위</span></a></li>
+                                <li class="depth3"><a href="#!"><span>저수지</span></a></li>
+                            </ul>
+                        </li>
+                        <li class="depth2"><a href="#!"><span>기상</span></a></li>
+                    </ul>
+                </nav>
+            </aside>
 
-					<!-- contents -->
-					<div class="contents">
+            <div class="sub_contents">
+                <div class="sub_header">
+                    <h4>유량</h4>
+                    <ol class="breadcrumb">
+                        <li class="home"><a href="#!"><span class="sr-only">홈으로</span></a></li>
+                        <li><a href="#!">실시간 물정보</a></li>
+                        <li><a href="#!">수량</a></li>
+                        <li><a href="#!">유량</a></li>
+                    </ol>
+                </div>
 
-                        <!-- 검색 박스 -->
-						<div class="search_group">
-							<div class="se_city">
-								<label for="searchArea2">위치</label>
-								<select class="waterSelect" name="searchArea2"> <!--시군구 선택박스-->
-									<option value="">지역검색</option>
-									<option value="all">전체</option>
-									<option value="수원시">수원시</option>
-									<option value="용인시">용인시</option>
-									<option value="고양시">고양시</option>
-									<option value="화성시">화성시</option>
-									<option value="성남시">성남시</option>
-									<option value="부천시">부천시</option>
-									<option value="남양주시">남양주시</option>
-									<option value="안산시">안산시</option>
-									<option value="평택시">평택시</option>
-									<option value="안양시">안양시</option>
-									<option value="시흥시">시흥시</option>
-									<option value="파주시">파주시</option>
-									<option value="김포시">김포시</option>
-									<option value="의정부시">의정부시</option>
-									<option value="광주시">광주시</option>
-									<option value="하남시">하남시</option>
-									<option value="광명시">광명시</option>
-									<option value="군포시">군포시</option>
-									<option value="양주시">양주시</option>
-									<option value="오산시">오산시</option>
-									<option value="이천시">이천시</option>
-									<option value="안성시">안성시</option>
-									<option value="구리시">구리시</option>
-									<option value="의왕시">의왕시</option>
-									<option value="포천시">포천시</option>
-									<option value="양평군">양평군</option>
-									<option value="여주시">여주시</option>
-									<option value="동두천시">동두천시</option>
-									<option value="과천시">과천시</option>
-									<option value="가평군">가평군</option>
-									<option value="연천군">연천군</option>
-								</select>
-							</div>
-							<div class="se_word">
-								<label for="searchWord2">관측소명</label>
-								<input type="text" name="searchWord2" id="searchWord2" placeholder="관측소명을 입력해주세요." value="">
-								<button type="button" class="">검색</button>
-							</div>
-						</div>
+                <!-- contents -->
+                <div class="contents">
 
-                        <div class="contents_half mt30">
-                            <div>
-                                <h5 class="h5cTit mb10">지도</h5>
-                                <div class="contents_map_wrap">
-                                    <div class="contents_map"></div>
+                    <!-- 검색 박스 -->
+                    <div class="search_group">
+                        <div class="se_city">
+                            <label for="searchArea2">위치</label>
+                            <select class="waterSelect" name="searchArea2"> <!--시군구 선택박스-->
+                                <option value="">지역검색</option>
+                                <option value="all">전체</option>
+                                <option value="수원시">수원시</option>
+                                <option value="용인시">용인시</option>
+                                <option value="고양시">고양시</option>
+                                <option value="화성시">화성시</option>
+                                <option value="성남시">성남시</option>
+                                <option value="부천시">부천시</option>
+                                <option value="남양주시">남양주시</option>
+                                <option value="안산시">안산시</option>
+                                <option value="평택시">평택시</option>
+                                <option value="안양시">안양시</option>
+                                <option value="시흥시">시흥시</option>
+                                <option value="파주시">파주시</option>
+                                <option value="김포시">김포시</option>
+                                <option value="의정부시">의정부시</option>
+                                <option value="광주시">광주시</option>
+                                <option value="하남시">하남시</option>
+                                <option value="광명시">광명시</option>
+                                <option value="군포시">군포시</option>
+                                <option value="양주시">양주시</option>
+                                <option value="오산시">오산시</option>
+                                <option value="이천시">이천시</option>
+                                <option value="안성시">안성시</option>
+                                <option value="구리시">구리시</option>
+                                <option value="의왕시">의왕시</option>
+                                <option value="포천시">포천시</option>
+                                <option value="양평군">양평군</option>
+                                <option value="여주시">여주시</option>
+                                <option value="동두천시">동두천시</option>
+                                <option value="과천시">과천시</option>
+                                <option value="가평군">가평군</option>
+                                <option value="연천군">연천군</option>
+                            </select>
+                        </div>
+                        <div class="se_word">
+                            <label for="searchWord2">관측소명</label>
+                            <input type="text" name="searchWord2" id="searchWord2" placeholder="관측소명을 입력해주세요." value="">
+                            <button type="button" class="">검색</button>
+                        </div>
+                    </div>
+
+                    <div class="contents_half mt30">
+                        <div>
+                            <h5 class="h5cTit mb10">지도</h5>
+                            <div class="contents_map_wrap">
+                                <div class="contents_map" id="sampleMap"></div>
+
+                                <!--                                &lt;!&ndash; 관측소 위치 &ndash;&gt;-->
+                                <!--                                <div class="map_location_icon" style="left: 150px;top: 200px;"><img src="/common/images/drops3.png"/></div>-->
+
+                                <!--                                &lt;!&ndash; 해당 지도 팝업 &ndash;&gt;-->
+                                <!--                                <div class="map_pop">-->
+                                <!--                                    <div class="map_pop_title">-->
+                                <!--                                        <div>안양천</div>-->
+                                <!--                                        <a href="#!"><img src="/common/images/ico_close_w.svg" alt="닫기"></a>-->
+                                <!--                                    </div>-->
+                                <!--                                    <div class="map_pop_con">-->
+                                <!--                                        <dl>-->
+                                <!--                                            <dt>위치</dt>-->
+                                <!--                                            <dd>경기도 안양시 비산동</dd>-->
+                                <!--                                        </dl>-->
+                                <!--                                    </div>-->
+                                <!--                                </div>-->
+
+                                <!-- 범례3_아이콘형태 -->
+                                <div class="map_legend_icon type3">
+                                    <ul>
+                                        <li><span><img src="/common/images/drops3.png"/></span>관측소</li>
+                                    </ul>
                                 </div>
-                            </div>
-                            <div>
-                                <div class="d-flex justify-content-between mb10">
-                                    <h5 class="h5cTit">차트</h5>
-                                    <button class="btn_ico_download" type="button" title="이미지로 저장하기"></button>
-                                </div>
-                                <div class="con_line_box" id="chart-bar"></div>
+                                <!-- //범례3_아이콘형태 -->
                             </div>
                         </div>
-                        <script>
-							// Axios로 데이터 가져오기 예시
-							axios
-							  .get("https://jsonplaceholder.typicode.com/posts")
-							  .then((response) => {
-								console.log(response);
-								const data = response.data
-								  .slice(0, 5)
-								  .map((item) => item.id);
-								console.log(data);
-			
-								// 막대 차트
-								new ApexCharts(document.querySelector("#chart-bar"), {
-								  chart: { type: "bar", height: 300 },
-								  series: [{ name: "API 데이터", data }],
-								  xaxis: { categories: ["A", "B", "C", "D", "E"] },
-								}).render();
-							  });
-						  </script>
-						
-                        <!-- 검색결과 -->
-                        <div class="mt40">
+                        <div>
                             <div class="d-flex justify-content-between mb10">
-                                <div class="total">
-                                    <h5 class="h5cTit">유량 검색결과</h5>
-                                    <span><em>총 186건</em>을 찾았습니다.</span>
-                                </div>
-                                <button class="btn_ico_download" type="button" title="엑셀 다운받기"></button>
+                                <h5 class="h5cTit">차트</h5>
+                                <button class="btn_ico_download" type="button" title="이미지로 저장하기"></button>
                             </div>
-                            <div class="content_tbl table-responsive">
-                                <table class="tbl type2 text-center" summary="정보를 제공합니다." style="table-layout: fixed;">
+                            <div class="con_line_box" id="chart-bar">
+                                <div id="chart01"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <script>
+                        $.ajax({
+                            url: "https://jsonplaceholder.typicode.com/posts",
+                            method: "GET",
+                            success: function (response) {
+                                const data = response.slice(0, 5).map(item => item.id);
+                                drawD3BarChartV3(data);
+                            },
+                            error: function (err) {
+                                console.error("에러 발생:", err);
+                            }
+                        });
+
+                        function drawD3BarChartV3(data) {
+                            d3.select("#chart-bar").selectAll("*").remove();
+
+                            var width = 400,
+                                height = 300,
+                                margin = {top: 20, right: 30, bottom: 40, left: 40};
+
+                            var x = d3.scale.ordinal()
+                                .domain(["A", "B", "C", "D", "E"])
+                                .rangeBands([margin.left, width - margin.right], 0.1);
+
+                            var y = d3.scale.linear()
+                                .domain([0, d3.max(data)])
+                                .range([height - margin.bottom, margin.top]);
+
+                            var svg = d3.select("#chart-bar")
+                                .append("svg")
+                                .attr("width", width)
+                                .attr("height", height);
+
+                            svg.selectAll("rect")
+                                .data(data)
+                                .enter()
+                                .append("rect")
+                                .attr("x", function (d, i) {
+                                    return x(["A", "B", "C", "D", "E"][i]);
+                                })
+                                .attr("y", function (d) {
+                                    return y(d);
+                                })
+                                .attr("height", function (d) {
+                                    return y(0) - y(d);
+                                })
+                                .attr("width", x.rangeBand())
+                                .attr("fill", "#69b3a2");
+
+                            // x축
+                            svg.append("g")
+                                .attr("transform", "translate(0," + (height - margin.bottom) + ")")
+                                .call(d3.svg.axis().scale(x).orient("bottom"));
+
+                            // y축
+                            svg.append("g")
+                                .attr("transform", "translate(" + margin.left + ",0)")
+                                .call(d3.svg.axis().scale(y).orient("left"));
+                        }
+
+                    </script>
+
+                    <!-- 검색결과 -->
+                    <div class="mt40">
+                        <div class="d-flex justify-content-between mb10">
+                            <div class="total">
+                                <h5 class="h5cTit">유량 검색결과</h5>
+                                <span><em>총 186건</em>을 찾았습니다.</span>
+                            </div>
+                            <button class="btn_ico_download" type="button" title="엑셀 다운받기"></button>
+                        </div>
+                        <div class="content_tbl table-responsive">
+                            <table class="tbl type2 text-center" summary="정보를 제공합니다." style="table-layout: fixed;">
+                                <caption>정보</caption>
+                                <colgroup>
+                                    <col style="width: 8%;">
+                                    <col>
+                                    <col>
+                                    <col style="width: 25%;">
+                                    <col>
+                                    <col>
+                                    <col>
+                                    <col>
+                                </colgroup>
+                                <thead>
+                                <tr>
+                                    <th>순번</th>
+                                    <th>관측소명</th>
+                                    <th>위치</th>
+                                    <th>세부위치</th>
+                                    <th>관리기관</th>
+                                    <th>설치일자</th>
+                                    <th>영점표고</th>
+                                    <th>측정결과</th>
+                                </tr>
+                                </thead>
+                                <tbody id="river">
+                                <tr>
+                                    <td>1</td>
+                                    <td>고안</td>
+                                    <td>남양주시 와부읍</td>
+                                    <td>능내리</td>
+                                    <td>국토해양부</td>
+                                    <td>1914-11-01</td>
+                                    <td>10.000</td>
+                                    <td>
+                                        <button type="button" class="btn btn-sm btn-secondary">결과보기</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>고안</td>
+                                    <td>남양주시 와부읍</td>
+                                    <td>능내리</td>
+                                    <td>국토해양부</td>
+                                    <td>1914-11-01</td>
+                                    <td>10.000</td>
+                                    <td>
+                                        <button type="button" class="btn btn-sm btn-secondary">결과보기</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>고안</td>
+                                    <td>남양주시 와부읍</td>
+                                    <td>능내리</td>
+                                    <td>국토해양부</td>
+                                    <td>1914-11-01</td>
+                                    <td>10.000</td>
+                                    <td>
+                                        <button type="button" class="btn btn-sm btn-secondary">결과보기</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>4</td>
+                                    <td>고안</td>
+                                    <td>남양주시 와부읍</td>
+                                    <td>능내리</td>
+                                    <td>국토해양부</td>
+                                    <td>1914-11-01</td>
+                                    <td>10.000</td>
+                                    <td>
+                                        <button type="button" class="btn btn-sm btn-secondary">결과보기</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>5</td>
+                                    <td>고안</td>
+                                    <td>남양주시 와부읍</td>
+                                    <td>능내리</td>
+                                    <td>국토해양부</td>
+                                    <td>1914-11-01</td>
+                                    <td>10.000</td>
+                                    <td>
+                                        <button type="button" class="btn btn-sm btn-secondary">결과보기</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>6</td>
+                                    <td>고안</td>
+                                    <td>남양주시 와부읍</td>
+                                    <td>능내리</td>
+                                    <td>국토해양부</td>
+                                    <td>1914-11-01</td>
+                                    <td>10.000</td>
+                                    <td>
+                                        <button type="button" class="btn btn-sm btn-secondary">결과보기</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>7</td>
+                                    <td>고안</td>
+                                    <td>남양주시 와부읍</td>
+                                    <td>능내리</td>
+                                    <td>국토해양부</td>
+                                    <td>1914-11-01</td>
+                                    <td>10.000</td>
+                                    <td>
+                                        <button type="button" class="btn btn-sm btn-secondary">결과보기</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>8</td>
+                                    <td>고안</td>
+                                    <td>남양주시 와부읍</td>
+                                    <td>능내리</td>
+                                    <td>국토해양부</td>
+                                    <td>1914-11-01</td>
+                                    <td>10.000</td>
+                                    <td>
+                                        <button type="button" class="btn btn-sm btn-secondary">결과보기</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>9</td>
+                                    <td>고안</td>
+                                    <td>남양주시 와부읍</td>
+                                    <td>능내리</td>
+                                    <td>국토해양부</td>
+                                    <td>1914-11-01</td>
+                                    <td>10.000</td>
+                                    <td>
+                                        <button type="button" class="btn btn-sm btn-secondary">결과보기</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>10</td>
+                                    <td>고안</td>
+                                    <td>남양주시 와부읍</td>
+                                    <td>능내리</td>
+                                    <td>국토해양부</td>
+                                    <td>1914-11-01</td>
+                                    <td>10.000</td>
+                                    <td>
+                                        <button type="button" class="btn btn-sm btn-secondary">결과보기</button>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <nav class="text-center mt20 mb20">
+                                <ul class="pagination">
+                                    <li class="pageBtn page_first"><a href="#!" arial-label="prev" title="처음"><span
+                                            aria-hidden="true"></span></a></li>
+                                    <li class="pageBtn page_prev"><a href="#!" aria-label="prev" title="이전"><span
+                                            aria-hidden="true"></span></a></li>
+                                    <li class="on"><a href="#1" title="현재페이지">1</a></li>
+                                    <li><a href="#!">2</a></li>
+                                    <li><a href="#!">3</a></li>
+                                    <li><a href="#!">4</a></li>
+                                    <li><a href="#!">5</a></li>
+                                    <li><a href="#!">6</a></li>
+                                    <li><a href="#!">7</a></li>
+                                    <li><a href="#!">8</a></li>
+                                    <li><a href="#!">9</a></li>
+                                    <li><a href="#!">10</a></li>
+                                    <li class="pageBtn page_next"><a href="#!" arial-label="Next" title="다음"><span
+                                            aria-hidden="true"></span></a></li>
+                                    <li class="pageBtn page_last"><a href="#!" aria-label="Next" title="마지막"><span
+                                            aria-hidden="true"></span></a></li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+
+
+                    <!-- 담당자 정보 -->
+
+                    <!-- //담당자 정보 -->
+                </div>
+                <!-- //contents -->
+
+                <!-- Modal -->
+                <script>
+                    document.addEventListener("DOMContentLoaded", function () {
+                        initMap(); // 페이지 로드시 지도 초기화
+                        drawMNSPLayer();
+                        const riverTable = document.getElementById("river");
+                        const subModal = document.getElementById("subModal");
+                        const closeBtn = document.querySelector(".btnpClose");
+
+                        riverTable.addEventListener("click", function (e) {
+                            const tr = e.target.closest("tr");
+                            if (!tr) return;
+
+                            // 모달 열기
+                            subModal.style.display = "block";
+                        });
+
+                        // 모달 닫기
+                        closeBtn.addEventListener("click", function (e) {
+                            e.preventDefault();
+                            subModal.style.display = "none";
+                        });
+
+                        // ESC 키로 닫기
+                        document.addEventListener("keydown", function (e) {
+                            if (e.key === "Escape") {
+                                subModal.style.display = "none";
+                            }
+                        });
+                    });
+
+                    // 지도와 상태 전역 선언
+                    var map;
+                    var riverProvinceLayer = null;
+                    var isRiverProvinceVisivle = false;
+                    var url = 'http://localhost'
+                    var path = '/data/'
+                    // 마커 배열 (현재 지도에 표시된 마커 저장)
+                    var markerList = [];
+                    var currentInfoWindow ; // 현재 열린 InfoWindow를 저장하는 변수
+                    // 지도 초기화
+                    function initMap() {
+                        map = new naver.maps.Map('sampleMap', {
+                            center: new naver.maps.LatLng(37.5665, 126.9780),
+                            zoom: 9,
+                            mapTypeId: 'normal'
+                        });
+
+                        // 필요한 경우 GeoJSON 등도 여기서 추가 가능
+                    }
+
+                    function drawMNSPLayer() {
+                        var sigunNm = 'all'
+                        if (sigunNm == "all") {
+                            sigunNm = '';
+                        }
+
+                        var param = 'ctzn_excelList_sigunNm_' + sigunNm + '.json';
+
+                        $.ajax({
+                            url: url + path + param,  //https://water.gg.go.kr/ctzn/excelList.do?sigunNm=%EC%88%98%EC%9B%90%EC%8B%9C 수원시
+                            dataType: 'json',
+                            data: {sigunNm: ''},
+                            success: function (geojson) {
+                                console.log("원본 데이터:", geojson);
+
+                                // 중복 제거를 위한 맵 생성
+                                var uniqueDataMap = new Map();
+
+                                // 좌표 변환 적용 및 중복 제거
+                                geojson.forEach(item => {
+                                    if (!uniqueDataMap.has(item.fcltyNm)) {
+                                        var converted = webMercatorToWGS84(parseFloat(item.x), parseFloat(item.y));
+                                        uniqueDataMap.set(item.fcltyNm, {
+                                            ...item,
+                                            latitude: converted.lat,
+                                            longitude: converted.lon
+                                        });
+                                    }
+                                });
+
+                                // 중복 제거된 데이터를 배열로 변환
+                                var transformedData = Array.from(uniqueDataMap.values());
+                                console.log("중복 제거된 데이터 개수:", transformedData.length);
+
+                                if (map) {
+                                    for (var i = 0; i < transformedData.length; i++) {
+                                        (function (i) { //  **즉시 실행 함수 (클로저) 사용**
+                                            var position = new naver.maps.LatLng(transformedData[i].latitude, transformedData[i].longitude);
+                                            var img;
+                                            //if(transformedData[i].inspctRs==='검출'){
+                                            //    img= '/img/sally.png';
+                                            //}else{
+                                            img = '/common/images/drops3.png'
+                                            //}
+                                            var marker = new naver.maps.Marker({
+                                                position: position,
+                                                map: map,
+                                                title: transformedData[i].fcltyNm,
+                                                icon: {
+                                                    content: [
+                                                        /*'<div class="map_marker_title" style="position: absolute; z-index: 10; top: 0; left: 0;">',
+                                                            '<img src="/common/images/ico_marker_1.svg" alt="마커 아이콘" style="width: 24px; height: 37px;">',
+                                                            '<span></span>',
+                                                        '</div>'*/
+                                                        '<div class="map_location_icon">',
+                                                        '<img src="' + img + '" alt="마커 아이콘">',
+                                                        '</div>',
+                                                    ].join(''),
+                                                    size: new naver.maps.Size(38, 58),
+                                                    anchor: new naver.maps.Point(19, 58),
+                                                },
+                                                draggable: false
+                                            });
+
+                                            var isDrinkable = transformedData[i].inspctRs === "불검출"; // 음용 가능 여부 확인
+
+
+                                            var contentString = [
+                                                '<div class="map_pop">', // ✅ 상위 wrapper
+                                                '  <div class="map_pop_title">',
+                                                '      <div>' + transformedData[i].fcltyNm + '</div>',
+                                                '      <a href="#!" class="btn_close"><img src="/common/images/ico_close_w.svg" alt="닫기"></a>',
+                                                '  </div>',
+                                                '  <div class="map_pop_con">',
+                                                '      <dl>',
+                                                '          <dt>위치</dt>',
+                                                '          <dd>' + transformedData[i].adres + '</dd>',
+                                                '      </dl>',
+                                                '  </div>',
+                                                '</div>'
+                                            ].join('');
+
+
+                                            var infowindow = new naver.maps.InfoWindow({
+                                                content: contentString,
+                                                backgroundColor: null,
+                                                borderColor: null,
+                                                borderWidth: 0,
+                                                disableAnchor: true
+                                            });
+
+                                            // **각 마커에 개별적인 InfoWindow 이벤트 추가**
+                                            naver.maps.Event.addListener(marker, "mouseover", function () {
+                                                if (currentInfoWindow && currentInfoWindow.getMap()) {
+                                                    currentInfoWindow.close();
+                                                }
+
+                                                infowindow.open(map, marker);
+                                                currentInfoWindow = infowindow;
+
+                                                // InfoWindow가 열린 직후, 내부 요소에 접근해서 닫기 이벤트 바인딩
+                                                setTimeout(function () {
+                                                    var closeBtn = document.querySelector(".btn_close");
+                                                    if (closeBtn) {
+                                                        closeBtn.addEventListener("click", function (e) {
+                                                            e.preventDefault();
+                                                            infowindow.close();
+                                                            currentInfoWindow = null;
+                                                        });
+                                                    }
+                                                }, 50); // InfoWindow 렌더링 이후 DOM 접근을 위해 약간의 시간 지연
+                                            });
+
+
+
+                                            // 마커 리스트에 추가
+                                            markerList.push(marker);
+                                        })(i); // 즉시 실행 함수 (IIFE) 적용
+                                    }
+                                } else {
+                                    console.error("지도 객체가 초기화되지 않았습니다.");
+                                }
+                            }
+                        });
+
+
+                    }
+
+                    // Web Mercator (EPSG:3857) → WGS84 (EPSG:4326) 변환 함수
+                    function webMercatorToWGS84(x, y) {
+                        var R = 6378137;
+
+                        var lon = (x / R) * (180 / Math.PI);
+                        var lat = (y / R) * (180 / Math.PI);
+                        lat = (180 / Math.PI) * (2 * Math.atan(Math.exp(lat * Math.PI / 180)) - Math.PI / 2);
+
+                        return {lat, lon};
+                    }
+
+                </script>
+                <div class="modal" id="subModal">
+                    <div class="modalPopup">
+                        <div class="modalPopup_header">
+                            <span>상세정보</span>
+                            <a href="#!" class="btnpClose"><img src="/common/images/ico_close_w.svg" alt="닫기"></a>
+                        </div>
+                        <div class="modalPopup_contents">
+                            <div>
+                                <h6 class="popCtitle">상세정보</h6>
+                                <table id="" class="tbl type2" summary="">
                                     <caption>정보</caption>
                                     <colgroup>
-                                        <col style="width: 8%;">
+                                        <col style="width: 15%">
                                         <col>
-                                        <col>
-                                        <col style="width: 25%;">
-                                        <col>
-                                        <col>
-                                        <col>
+                                        <col style="width: 15%">
                                         <col>
                                     </colgroup>
-                                    <thead>
-                                        <tr>
-                                            <th>순번</th>
-                                            <th>관측소명</th>
-                                            <th>위치</th>
-                                            <th>세부위치</th>
-                                            <th>관리기관</th>
-                                            <th>설치일자</th>
-                                            <th>영점표고</th>
-                                            <th>측정결과</th>
-                                        </tr>
-                                    </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>고안</td>
-                                            <td>남양주시 와부읍</td>
-                                            <td>능내리</td>
-                                            <td>국토해양부</td>
-                                            <td>1914-11-01</td>
-                                            <td>10.000</td>
-                                            <td><button type="button" class="btn btn-sm btn-secondary">결과보기</button></td>
-                                        </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td>고안</td>
-                                            <td>남양주시 와부읍</td>
-                                            <td>능내리</td>
-                                            <td>국토해양부</td>
-                                            <td>1914-11-01</td>
-                                            <td>10.000</td>
-                                            <td><button type="button" class="btn btn-sm btn-secondary">결과보기</button></td>
-                                        </tr>
-                                        <tr>
-                                            <td>3</td>
-                                            <td>고안</td>
-                                            <td>남양주시 와부읍</td>
-                                            <td>능내리</td>
-                                            <td>국토해양부</td>
-                                            <td>1914-11-01</td>
-                                            <td>10.000</td>
-                                            <td><button type="button" class="btn btn-sm btn-secondary">결과보기</button></td>
-                                        </tr>
-                                        <tr>
-                                            <td>4</td>
-                                            <td>고안</td>
-                                            <td>남양주시 와부읍</td>
-                                            <td>능내리</td>
-                                            <td>국토해양부</td>
-                                            <td>1914-11-01</td>
-                                            <td>10.000</td>
-                                            <td><button type="button" class="btn btn-sm btn-secondary">결과보기</button></td>
-                                        </tr>
-                                        <tr>
-                                            <td>5</td>
-                                            <td>고안</td>
-                                            <td>남양주시 와부읍</td>
-                                            <td>능내리</td>
-                                            <td>국토해양부</td>
-                                            <td>1914-11-01</td>
-                                            <td>10.000</td>
-                                            <td><button type="button" class="btn btn-sm btn-secondary">결과보기</button></td>
-                                        </tr>
-                                        <tr>
-                                            <td>6</td>
-                                            <td>고안</td>
-                                            <td>남양주시 와부읍</td>
-                                            <td>능내리</td>
-                                            <td>국토해양부</td>
-                                            <td>1914-11-01</td>
-                                            <td>10.000</td>
-                                            <td><button type="button" class="btn btn-sm btn-secondary">결과보기</button></td>
-                                        </tr>
-                                        <tr>
-                                            <td>7</td>
-                                            <td>고안</td>
-                                            <td>남양주시 와부읍</td>
-                                            <td>능내리</td>
-                                            <td>국토해양부</td>
-                                            <td>1914-11-01</td>
-                                            <td>10.000</td>
-                                            <td><button type="button" class="btn btn-sm btn-secondary">결과보기</button></td>
-                                        </tr>
-                                        <tr>
-                                            <td>8</td>
-                                            <td>고안</td>
-                                            <td>남양주시 와부읍</td>
-                                            <td>능내리</td>
-                                            <td>국토해양부</td>
-                                            <td>1914-11-01</td>
-                                            <td>10.000</td>
-                                            <td><button type="button" class="btn btn-sm btn-secondary">결과보기</button></td>
-                                        </tr>
-                                        <tr>
-                                            <td>9</td>
-                                            <td>고안</td>
-                                            <td>남양주시 와부읍</td>
-                                            <td>능내리</td>
-                                            <td>국토해양부</td>
-                                            <td>1914-11-01</td>
-                                            <td>10.000</td>
-                                            <td><button type="button" class="btn btn-sm btn-secondary">결과보기</button></td>
-                                        </tr>
-                                        <tr>
-                                            <td>10</td>
-                                            <td>고안</td>
-                                            <td>남양주시 와부읍</td>
-                                            <td>능내리</td>
-                                            <td>국토해양부</td>
-                                            <td>1914-11-01</td>
-                                            <td>10.000</td>
-                                            <td><button type="button" class="btn btn-sm btn-secondary">결과보기</button></td>
-                                        </tr>
+                                    <tr>
+                                        <th>위치</th>
+                                        <td colspan="3">경기도 남양주시 와부읍</td>
+                                    </tr>
+                                    <tr>
+                                        <th>관측소명</th>
+                                        <td>고안</td>
+                                        <th>영점표고(El.m)</th>
+                                        <td>-</td>
+                                    </tr>
+                                    <tr>
+                                        <th>위도</th>
+                                        <td>37-32-30</td>
+                                        <th>경도</th>
+                                        <td>127-15-00</td>
+                                    </tr>
+                                    <tr>
+                                        <th>수준거표 표고</th>
+                                        <td>-</td>
+                                        <th>최고 독수</th>
+                                        <td>-</td>
+                                    </tr>
+                                    <tr>
+                                        <th>수원 거리</th>
+                                        <td>-</td>
+                                        <th>유역면적</th>
+                                        <td>71</td>
+                                    </tr>
+                                    <tr>
+                                        <th>관리기관</th>
+                                        <td>한국농촌공사</td>
+                                        <th>관측개시일자</th>
+                                        <td>20050103</td>
+                                    </tr>
                                     </tbody>
                                 </table>
-                                <nav class="text-center mt20 mb20">
-                                    <ul class="pagination">
-                                        <li class="pageBtn page_first"><a href="#!" arial-label="prev" title="처음"><span aria-hidden="true"></span></a></li>
-                                        <li class="pageBtn page_prev"><a href="#!" aria-label="prev" title="이전"><span aria-hidden="true"></span></a></li>
-                                        <li class="on"><a href="#1" title="현재페이지">1</a></li>
-                                        <li><a href="#!">2</a></li>
-                                        <li><a href="#!">3</a></li>
-                                        <li><a href="#!">4</a></li>
-                                        <li><a href="#!">5</a></li>
-                                        <li><a href="#!">6</a></li>
-                                        <li><a href="#!">7</a></li>
-                                        <li><a href="#!">8</a></li>
-                                        <li><a href="#!">9</a></li>
-                                        <li><a href="#!">10</a></li>
-                                        <li class="pageBtn page_next"><a href="#!" arial-label="Next" title="다음"><span aria-hidden="true"></span></a></li>
-                                        <li class="pageBtn page_last"><a href="#!" aria-label="Next" title="마지막"><span aria-hidden="true"></span></a></li>
-                                    </ul>
-                                </nav>
                             </div>
                         </div>
+                    </div>
+                </div>
+                <!-- //Modal -->
+            </div>
+        </div>
+    </div>
 
-
-						<!-- 담당자 정보 -->
-						
-						<!-- //담당자 정보 -->
-					</div>
-					<!-- //contents -->
-
-					<!-- Modal -->
-					<!-- //Modal -->
-				</div>
-			</div>
-		</div>
-
-		<footer class="footer">
-			<div class="footer_etc">
-				<div class="container">
-					<div class="footer_inner">
-						<div>
-							<p class="f_logo">경기도 수자원본부</p>
-							<span>(우)12708 광주시 남종면 산수로 1692 / TEL 8008-6933 <Br/>COPYRIGHT© 2025 경기도수자원본부. ALL RIGHTS RESERVED.</span>
-						</div>
-						<a href="#!" class="fmy_btn">패밀리 사이트</a>
-					</div>
-				</div>
-			</div>
-			<div id="fmy_box" class="fmy_box">
-				<div>
-					<p>도 관련기관</p>
-					<ul>
-						<li><a target="_blank" href="https://www.gg.go.kr/">경기도청</a></li>
-						<li><a target="_blank" href="https://www.gg.go.kr/contents/contents.do?ciIdx=937&amp;menuId=2599">경기도 수자원본부</a></li>
-						<li><a target="_blank" href="https://www.gg.go.kr/gg_health">경기도보건환경연구원</a></li>
-						<li><a target="_blank" href="https://www.gri.re.kr/">경기연구원</a></li>
-						<li><a target="_blank" href="https://gto.or.kr/">경기관광공사</a></li>
-						<li><a target="_blank" href="http://www.gwisc.or.kr/">경기도물산업지원센터</a></li>
-						<li><a target="_blank" href="http://www.paldang.or.kr/index.php">특별대책지역수질보전협의회</a></li>
-					</ul>
-				</div>
-				<div>
-					<p>중앙관련기관</p>
-					<ul>
-						<li><a target="_blank" href="http://www.me.go.kr/">환경부</a></li>
-						<li><a target="_blank" href="http://www.molit.go.kr/">국토교통부</a></li>
-						<li><a target="_blank" href="https://www.weather.go.kr/w/index.do">기상청</a></li>
-						<li><a target="_blank" href="https://nier.go.kr/">국립환경과학원</a></li>
-						<li><a target="_blank" href="http://www.hrfco.go.kr/">홍수통제소</a></li>
-						<li><a target="_blank" href="https://www.nier.go.kr/NIER/egovHanIndex.jsp">물환경연구소</a></li>
-						<li><a target="_blank" href="https://www.ekr.or.kr">한국농어촌공사</a></li>
-						<li><a target="_blank" href="https://www.kwater.or.kr/">한국수자원공사</a></li>
-						<li><a target="_blank" href="https://www.keco.or.kr/">한국환경공단</a></li>
-						<li><a target="_blank" href="http://www.khnp.co.kr/">한국수력원자력</a></li>
-					</ul>
-				</div>
-				<div>
-					<p>물관련시스템</p>
-					<ul>
-						<li><a target="_blank" href="http://water.nier.go.kr">물환경정보시스템</a></li>
-						<li><a target="_blank" href="https://www.waternow.go.kr/web">국가상수도정보시스템</a></li>
-						<li><a target="_blank" href="https://www.hasudoinfo.or.kr/">국가하수도정보시스템</a></li>
-						<li><a target="_blank" href="https://www.gims.go.kr/">국가지하수정보센터</a></li>
-						<li><a target="_blank" href="http://www.wamis.go.kr/">국가수자원관리종합정보시스템</a></li>
-						<li><a target="_blank" href="http://floodmap.go.kr">홍수위험지도정보시스템</a></li>
-						<li><a target="_blank" href="http://rawris.ekr.or.kr/main.do">농촌용수종합정보시스템</a></li> 
-						<li><a target="_blank" href="http://sgis.nier.go.kr/">토양지하수정보시스템</a></li>
-						<li><a target="_blank" href="http://www.water.or.kr/">물정보포털(MyWater)</a></li>
-						 <li><a target="_blank" href="http://14.63.69.206:50085">팔당수계물정보시스템</a></li>
-					</ul>
-				</div>
-				<div>
-					<p>시/군 홈페이지</p>
-					<ul class="fmy_grid">
-						<li><a target="_blank" href="http://www.suwon.go.kr/">수원시</a></li>
-						<li><a target="_blank" href="https://www.yongin.go.kr/">용인시</a></li>
-						<li><a target="_blank" href="http://www.goyang.go.kr/">고양시</a></li>
-						<li><a target="_blank" href="http://www.hscity.go.kr/">화성시</a></li>
-						<li><a target="_blank" href="http://www.seongnam.go.kr/">성남시</a></li>
-						<li><a target="_blank" href="http://www.bucheon.go.kr/">부천시</a></li>
-						<li><a target="_blank" href="http://www.nyj.go.kr/">남양주시</a></li>
-						<li><a target="_blank" href="http://www.ansan.go.kr/">안산시</a></li>
-						<li><a target="_blank" href="http://www.pyeongtaek.go.kr/">평택시</a></li>
-						<li><a target="_blank" href="http://www.anyang.go.kr/">안양시</a></li>
-						<li><a target="_blank" href="http://www.siheung.go.kr/">시흥시</a></li>
-						<li><a target="_blank" href="http://www.paju.go.kr/">파주시</a></li>
-						<li><a target="_blank" href="http://www.gimpo.go.kr/">김포시</a></li>
-						<li><a target="_blank" href="https://www.ui4u.go.kr/">의정부시</a></li>
-						<li><a target="_blank" href="https://www.gjcity.go.kr/">광주시</a></li>
-						<li><a target="_blank" href="http://www.hanam.go.kr/">하남시</a></li>
-						<li><a target="_blank" href="http://www.gm.go.kr/">광명시</a></li>
-						<li><a target="_blank" href="http://www.gunpo.go.kr/">군포시</a></li>
-						<li><a target="_blank" href="http://www.yangju.go.kr/">양주시</a></li>
-						<li><a target="_blank" href="http://www.osan.go.kr/">오산시</a></li>
-						<li><a target="_blank" href="http://www.icheon.go.kr/">이천시</a></li>
-						<li><a target="_blank" href="https://www.anseong.go.kr/">안성시</a></li>
-						<li><a target="_blank" href="http://www.guri.go.kr/">구리시</a></li>
-						<li><a target="_blank" href="http://www.uiwang.go.kr/">의왕시</a></li>
-						<li><a target="_blank" href="http://www.pocheon.go.kr/">포천시</a></li>
-						<li><a target="_blank" href="http://www.yp21.go.kr/">양평군</a></li>
-						<li><a target="_blank" href="http://www.yeoju.go.kr/">여주시</a></li>
-						<li><a target="_blank" href="http://www.ddc.go.kr/">동두천시</a></li>
-						<li><a target="_blank" href="http://www.gccity.go.kr/">과천시</a></li>
-						<li><a target="_blank" href="http://www.gp.go.kr/">가평군</a></li>
-						<li><a target="_blank" href="http://www.yeoncheon.go.kr/">연천군</a></li>
-					</ul>
-				</div>
-			</div>
-			<script>
-				$('.fmy_btn').click(function() {
-					$('#fmy_box').toggleClass('open');
-				});
-			</script>
-		</footer>
-	</div>
+    <footer class="footer">
+        <div class="footer_etc">
+            <div class="container">
+                <div class="footer_inner">
+                    <div>
+                        <p class="f_logo">경기도 수자원본부</p>
+                        <span>(우)12708 광주시 남종면 산수로 1692 / TEL 8008-6933 <Br/>COPYRIGHT© 2025 경기도수자원본부. ALL RIGHTS RESERVED.</span>
+                    </div>
+                    <a href="#!" class="fmy_btn">패밀리 사이트</a>
+                </div>
+            </div>
+        </div>
+        <div id="fmy_box" class="fmy_box">
+            <div>
+                <p>도 관련기관</p>
+                <ul>
+                    <li><a target="_blank" href="https://www.gg.go.kr/">경기도청</a></li>
+                    <li><a target="_blank" href="https://www.gg.go.kr/contents/contents.do?ciIdx=937&amp;menuId=2599">경기도
+                        수자원본부</a></li>
+                    <li><a target="_blank" href="https://www.gg.go.kr/gg_health">경기도보건환경연구원</a></li>
+                    <li><a target="_blank" href="https://www.gri.re.kr/">경기연구원</a></li>
+                    <li><a target="_blank" href="https://gto.or.kr/">경기관광공사</a></li>
+                    <li><a target="_blank" href="http://www.gwisc.or.kr/">경기도물산업지원센터</a></li>
+                    <li><a target="_blank" href="http://www.paldang.or.kr/index.php">특별대책지역수질보전협의회</a></li>
+                </ul>
+            </div>
+            <div>
+                <p>중앙관련기관</p>
+                <ul>
+                    <li><a target="_blank" href="http://www.me.go.kr/">환경부</a></li>
+                    <li><a target="_blank" href="http://www.molit.go.kr/">국토교통부</a></li>
+                    <li><a target="_blank" href="https://www.weather.go.kr/w/index.do">기상청</a></li>
+                    <li><a target="_blank" href="https://nier.go.kr/">국립환경과학원</a></li>
+                    <li><a target="_blank" href="http://www.hrfco.go.kr/">홍수통제소</a></li>
+                    <li><a target="_blank" href="https://www.nier.go.kr/NIER/egovHanIndex.jsp">물환경연구소</a></li>
+                    <li><a target="_blank" href="https://www.ekr.or.kr">한국농어촌공사</a></li>
+                    <li><a target="_blank" href="https://www.kwater.or.kr/">한국수자원공사</a></li>
+                    <li><a target="_blank" href="https://www.keco.or.kr/">한국환경공단</a></li>
+                    <li><a target="_blank" href="http://www.khnp.co.kr/">한국수력원자력</a></li>
+                </ul>
+            </div>
+            <div>
+                <p>물관련시스템</p>
+                <ul>
+                    <li><a target="_blank" href="http://water.nier.go.kr">물환경정보시스템</a></li>
+                    <li><a target="_blank" href="https://www.waternow.go.kr/web">국가상수도정보시스템</a></li>
+                    <li><a target="_blank" href="https://www.hasudoinfo.or.kr/">국가하수도정보시스템</a></li>
+                    <li><a target="_blank" href="https://www.gims.go.kr/">국가지하수정보센터</a></li>
+                    <li><a target="_blank" href="http://www.wamis.go.kr/">국가수자원관리종합정보시스템</a></li>
+                    <li><a target="_blank" href="http://floodmap.go.kr">홍수위험지도정보시스템</a></li>
+                    <li><a target="_blank" href="http://rawris.ekr.or.kr/main.do">농촌용수종합정보시스템</a></li>
+                    <li><a target="_blank" href="http://sgis.nier.go.kr/">토양지하수정보시스템</a></li>
+                    <li><a target="_blank" href="http://www.water.or.kr/">물정보포털(MyWater)</a></li>
+                    <li><a target="_blank" href="http://14.63.69.206:50085">팔당수계물정보시스템</a></li>
+                </ul>
+            </div>
+            <div>
+                <p>시/군 홈페이지</p>
+                <ul class="fmy_grid">
+                    <li><a target="_blank" href="http://www.suwon.go.kr/">수원시</a></li>
+                    <li><a target="_blank" href="https://www.yongin.go.kr/">용인시</a></li>
+                    <li><a target="_blank" href="http://www.goyang.go.kr/">고양시</a></li>
+                    <li><a target="_blank" href="http://www.hscity.go.kr/">화성시</a></li>
+                    <li><a target="_blank" href="http://www.seongnam.go.kr/">성남시</a></li>
+                    <li><a target="_blank" href="http://www.bucheon.go.kr/">부천시</a></li>
+                    <li><a target="_blank" href="http://www.nyj.go.kr/">남양주시</a></li>
+                    <li><a target="_blank" href="http://www.ansan.go.kr/">안산시</a></li>
+                    <li><a target="_blank" href="http://www.pyeongtaek.go.kr/">평택시</a></li>
+                    <li><a target="_blank" href="http://www.anyang.go.kr/">안양시</a></li>
+                    <li><a target="_blank" href="http://www.siheung.go.kr/">시흥시</a></li>
+                    <li><a target="_blank" href="http://www.paju.go.kr/">파주시</a></li>
+                    <li><a target="_blank" href="http://www.gimpo.go.kr/">김포시</a></li>
+                    <li><a target="_blank" href="https://www.ui4u.go.kr/">의정부시</a></li>
+                    <li><a target="_blank" href="https://www.gjcity.go.kr/">광주시</a></li>
+                    <li><a target="_blank" href="http://www.hanam.go.kr/">하남시</a></li>
+                    <li><a target="_blank" href="http://www.gm.go.kr/">광명시</a></li>
+                    <li><a target="_blank" href="http://www.gunpo.go.kr/">군포시</a></li>
+                    <li><a target="_blank" href="http://www.yangju.go.kr/">양주시</a></li>
+                    <li><a target="_blank" href="http://www.osan.go.kr/">오산시</a></li>
+                    <li><a target="_blank" href="http://www.icheon.go.kr/">이천시</a></li>
+                    <li><a target="_blank" href="https://www.anseong.go.kr/">안성시</a></li>
+                    <li><a target="_blank" href="http://www.guri.go.kr/">구리시</a></li>
+                    <li><a target="_blank" href="http://www.uiwang.go.kr/">의왕시</a></li>
+                    <li><a target="_blank" href="http://www.pocheon.go.kr/">포천시</a></li>
+                    <li><a target="_blank" href="http://www.yp21.go.kr/">양평군</a></li>
+                    <li><a target="_blank" href="http://www.yeoju.go.kr/">여주시</a></li>
+                    <li><a target="_blank" href="http://www.ddc.go.kr/">동두천시</a></li>
+                    <li><a target="_blank" href="http://www.gccity.go.kr/">과천시</a></li>
+                    <li><a target="_blank" href="http://www.gp.go.kr/">가평군</a></li>
+                    <li><a target="_blank" href="http://www.yeoncheon.go.kr/">연천군</a></li>
+                </ul>
+            </div>
+        </div>
+        <script>
+            $('.fmy_btn').click(function () {
+                $('#fmy_box').toggleClass('open');
+            });
+        </script>
+    </footer>
+</div>
 </body>
 
 </html>

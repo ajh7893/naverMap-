@@ -11,22 +11,22 @@
 	<meta name="description" content="경기도 우리집 수돗물, 안심 물놀이 시설, 우리동네 약수터, 아름다운 물길, 수질, 수량, 기상, 통계 제공">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 	
-	<link rel="shortcut icon" href="common/images/favicon.ico" type="image/x-icon">
+	<link rel="shortcut icon" href="/common/images/favicon.ico" type="image/x-icon">
 
-	<!-- common -->
-	<link rel="stylesheet" type="text/css" href="common/plugin/bootstrap/bootstrap.css">
-	<link rel="stylesheet" type="text/css" href="common/css/default.css">
-	<script src="common/js/jquery-1.12.4.min.js"></script>
-	<script src="common/js/jquery-ui.js"></script>
-	<script src="common/js/customScript.js"></script>
+	<!-- /common -->
+	<link rel="stylesheet" type="text/css" href="/common/plugin/bootstrap/bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="/common/css/default.css">
+	<script src="/common/js/jquery-1.12.4.min.js"></script>
+	<script src="/common/js/jquery-ui.js"></script>
+	<script src="/common/js/customScript.js"></script>
 
 	<!-- plugin -->
-	<link rel="stylesheet" type="text/css" href="common/plugin/slick/slick.css">
-	<script src="common/plugin/slick/slick.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="/common/plugin/slick/slick.css">
+	<script src="/common/plugin/slick/slick.min.js"></script>
 	
 	<!-- design -->
-	<link rel="stylesheet" type="text/css" href="common/css/layout.css">
-	<link rel="stylesheet" type="text/css" href="common/css/theme.css">
+	<link rel="stylesheet" type="text/css" href="/common/css/layout.css">
+	<link rel="stylesheet" type="text/css" href="/common/css/theme.css">
 
 </head>
 
@@ -34,11 +34,38 @@
 	<div id="wrapper">
 		<div class="mask "></div>
 		<div class="gnb_bg"></div>
+
+		<!-- layer Popup -->
+		<div class="pop-layer" style="display: block;">
+			<div class="pop-container">
+				<div class="pop-conts">
+					<!-- popup content -->
+					<div class="popImg">
+						<img src="//common/images/popup_img_250416.jpg">
+					</div>
+					
+					<div class="pop-footer">
+						<div class="btn-l">
+							<label for="chkYn">
+								<input type="checkbox" id="chkYn" name="chkYn" value="N"/>
+								하루동안 보지 않기
+							</label>
+						</div>
+						<div class="btn-r">
+							<a href="#" class="btn-layerClose"><img src="//common/images/ico_close2.svg" alt="창닫기"/></a>
+						</div>
+					</div>
+					<!--// popup content-->
+				</div>
+			</div>
+		</div>
+		<!-- //layer Popup -->
+
 		<header id="header">
 			<div class="container" style="position: relative;">
 				<button id="mobileMenuBtn" class="mobile_menu_btn"></button>
 				<h1>
-					<a href="#!" class="logo"><img src="./common/images/logo.png" alt="경기도물정보시스템"/></a>
+					<a href="#!" class="logo"><img src="/common/images/logo.png" alt="경기도물정보시스템"/></a>
 				</h1>
 				<nav id="nav">
 					<ul>
@@ -309,16 +336,16 @@
 					<div class="main_slide_wrap">
 						<div class="main_slide">
 							<div class="slide">
-								<a href="#!"><img src="/common/images/banner1.jpg" alt=""/></a>
+								<a href="#!"><img src="//common/images/banner1.jpg" alt=""/></a>
 							</div>
 							<div class="slide">
-								<a href="#!"><img src="/common/images/banner1.jpg" alt=""/></a>
+								<a href="#!"><img src="//common/images/banner1.jpg" alt=""/></a>
 							</div>
 							<div class="slide">
-								<a href="#!"><img src="/common/images/banner1.jpg" alt=""/></a>
+								<a href="#!"><img src="//common/images/banner1.jpg" alt=""/></a>
 							</div>
 							<div class="slide">
-								<a href="#!"><img src="/common/images/banner1.jpg" alt=""/></a>
+								<a href="#!"><img src="//common/images/banner1.jpg" alt=""/></a>
 							</div>
 						</div>
 						<div class="custom_paging"></div>
@@ -376,7 +403,7 @@
 						<div class="water_sch_result">
 							<div class="item">
 								<div>
-									<div class="icon"><img src="/common/images/ico_flt_1_w.svg" alt=""/></div>
+									<div class="icon"><img src="//common/images/ico_flt_1_w.svg" alt=""/></div>
 									<span>우리동네 약수터</span>
 								</div>
 								<p>259</p>
@@ -384,7 +411,7 @@
 							</div>
 							<div class="item">
 								<div>
-									<div class="icon"><img src="/common/images/ico_flt_5_w.svg" alt=""/></div>
+									<div class="icon"><img src="//common/images/ico_flt_5_w.svg" alt=""/></div>
 									<span>안심 물놀이시설</span>
 								</div>
 								<p>10</p>
@@ -392,7 +419,7 @@
 							</div>
 							<div class="item">
 								<div>
-									<div class="icon"><img src="/common/images/ico_flt_3_w.svg" alt=""/></div>
+									<div class="icon"><img src="//common/images/ico_flt_3_w.svg" alt=""/></div>
 									<span>아름다운 물길</span>
 								</div>
 								<p>3</p>
@@ -525,25 +552,25 @@
 							<a href="#!" class="item">
 								<div>
 									<div class="ico"></div>
-									<span>수질</span>
+									<span>수량</span>
 								</div>
 							</a>
 							<a href="#!" class="item">
 								<div>
 									<div class="ico"></div>
-									<span>수질</span>
+									<span>기상</span>
 								</div>
 							</a>
 							<a href="#!" class="item">
 								<div>
 									<div class="ico"></div>
-									<span>수질</span>
+									<span>통계</span>
 								</div>
 							</a>
 							<a href="#!" class="item">
 								<div>
 									<div class="ico"></div>
-									<span>수질</span>
+									<span>지도</span>
 								</div>
 							</a>
 						</div>

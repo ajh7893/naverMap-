@@ -47,7 +47,7 @@ table caption{display:none;}
 .chkbx input[type=checkbox] {display : none;}
 .chkbx label {position : relative; display : inline-block; padding : 3px 3px 3px 22px; cursor : pointer; -webkit-transition : all .2s; transition : all .2s;text-indent:0px!important;background:none;width:auto}
 .chkbx label:before,
-.chkbx label:after {position : absolute; content : ''; -webkit-transition : all .2s; transition : all .2s;}
+.chkbx label:after {position : absolute; content : ""; -webkit-transition : all .2s; transition : all .2s;}
 .chkbx label:before { top : 50%; left : 0; width : 14px; height : 14px; margin-top : -8px; background : #f4f4f4; border : 1px solid #ccc; border-radius : 2px;}
 .chkbx label:after { opacity : 0; top : 50%; left : 3px; width : 8px; height : 4px; margin-top : -4px; border-left : 2px solid #3498db; border-bottom : 2px solid #3498db; -webkit-transform : rotate(-45deg) scale(0.5); transform : rotate(-45deg) scale(0.5);}
 .chkbx label:hover:before { background : #fff;}
@@ -333,3 +333,7 @@ input:-ms-input-placeholder{color: #878787;font-size: 14px;}
 .scroll-x{overflow-x:auto}
 .scroll-y{overflow-y:auto}
 .scroll{overflow:auto}
+
+
+
+.h350{height: 350px;}

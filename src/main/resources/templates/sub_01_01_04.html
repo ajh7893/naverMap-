@@ -11,26 +11,29 @@
 	<meta name="description" content="경기도 우리집 수돗물, 안심 물놀이 시설, 우리동네 약수터, 아름다운 물길, 수질, 수량, 기상, 통계 제공">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 	
-	<link rel="shortcut icon" href="common/images/favicon.ico" type="image/x-icon">
+	<link rel="shortcut icon" href="/common/images/favicon.ico" type="image/x-icon">
 
-	<!-- common -->
-	<link rel="stylesheet" type="text/css" href="common/plugin/bootstrap/bootstrap.css">
-	<link rel="stylesheet" type="text/css" href="common/css/default.css">
-	<script src="common/js/jquery-1.12.4.min.js"></script>
-	<script src="common/js/jquery-ui.js"></script>
-	<script src="common/js/customScript.js"></script>
+	<!-- /common -->
+	<link rel="stylesheet" type="text/css" href="/common/plugin/bootstrap/bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="/common/css/default.css">
+	<script src="/common/js/jquery-1.12.4.min.js"></script>
+	<script src="/common/js/jquery-ui.js"></script>
+	<script src="/common/js/customScript.js"></script>
 	
-    <!-- apex chart lib -->
-    <script src="common/js/apexchart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <!-- d3 and c3 -->
+    <link rel="stylesheet" type="text/css" href="/common/css/c3.min.css">
+    <script src="/common/js/d3.v3.min.js"></script>
+    <script src="/common/js/c3.min.js"></script>
+    <script src="/common/js/Chart/common.js"></script>
+    <script src="/common/js/saveSvgAsPng.js"></script>
 
 	<!-- plugin -->
-	<link rel="stylesheet" type="text/css" href="common/plugin/slick/slick.css">
-	<script src="common/plugin/slick/slick.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="/common/plugin/slick/slick.css">
+	<script src="/common/plugin/slick/slick.min.js"></script>
 	
 	<!-- design -->
-	<link rel="stylesheet" type="text/css" href="common/css/layout.css">
-	<link rel="stylesheet" type="text/css" href="common/css/theme.css">
+	<link rel="stylesheet" type="text/css" href="/common/css/layout.css">
+	<link rel="stylesheet" type="text/css" href="/common/css/theme.css">
 
 </head>
 
@@ -42,7 +45,7 @@
 			<div class="container" style="position: relative;">
 				<button id="mobileMenuBtn" class="mobile_menu_btn"></button>
 				<h1>
-					<a href="#!" class="logo"><img src="./common/images/logo.png" alt="경기도물정보시스템"/></a>
+					<a href="#!" class="logo"><img src="/common/images/logo.png" alt="경기도물정보시스템"/></a>
 				</h1>
 				<nav id="nav">
 					<ul>
@@ -400,7 +403,7 @@
 								<button class="btn_ico_download" type="button" title="엑셀 다운받기"></button>
 							</div>
 							<div class="content_tbl table-responsive">
-								<table class="tbl type2 text-center" summary="정보를 제공합니다." style="table-layout: fixed;">
+								<table class="tbl type2 text-center" summary="정보를 제공합니다.">
 									<caption>정보</caption>
 									<colgroup>
 										<col style="width: 8%;">
@@ -506,25 +509,25 @@
 										</tr>
 									</tbody>
 								</table>
-								<nav class="text-center mt20 mb20">
-									<ul class="pagination">
-										<li class="pageBtn page_first"><a href="#!" arial-label="prev" title="처음"><span aria-hidden="true"></span></a></li>
-										<li class="pageBtn page_prev"><a href="#!" aria-label="prev" title="이전"><span aria-hidden="true"></span></a></li>
-										<li class="on"><a href="#1" title="현재페이지">1</a></li>
-										<li><a href="#!">2</a></li>
-										<li><a href="#!">3</a></li>
-										<li><a href="#!">4</a></li>
-										<li><a href="#!">5</a></li>
-										<li><a href="#!">6</a></li>
-										<li><a href="#!">7</a></li>
-										<li><a href="#!">8</a></li>
-										<li><a href="#!">9</a></li>
-										<li><a href="#!">10</a></li>
-										<li class="pageBtn page_next"><a href="#!" arial-label="Next" title="다음"><span aria-hidden="true"></span></a></li>
-										<li class="pageBtn page_last"><a href="#!" aria-label="Next" title="마지막"><span aria-hidden="true"></span></a></li>
-									</ul>
-								</nav>
 							</div>
+							<nav class="text-center mt20 mb20">
+								<ul class="pagination">
+									<li class="pageBtn page_first"><a href="#!" arial-label="prev" title="처음"><span aria-hidden="true"></span></a></li>
+									<li class="pageBtn page_prev"><a href="#!" aria-label="prev" title="이전"><span aria-hidden="true"></span></a></li>
+									<li class="on"><a href="#1" title="현재페이지">1</a></li>
+									<li><a href="#!">2</a></li>
+									<li><a href="#!">3</a></li>
+									<li><a href="#!">4</a></li>
+									<li><a href="#!">5</a></li>
+									<li><a href="#!">6</a></li>
+									<li><a href="#!">7</a></li>
+									<li><a href="#!">8</a></li>
+									<li><a href="#!">9</a></li>
+									<li><a href="#!">10</a></li>
+									<li class="pageBtn page_next"><a href="#!" arial-label="Next" title="다음"><span aria-hidden="true"></span></a></li>
+									<li class="pageBtn page_last"><a href="#!" aria-label="Next" title="마지막"><span aria-hidden="true"></span></a></li>
+								</ul>
+							</nav>
 						</div>
 
 

@@ -36,6 +36,9 @@ body.fixed {overflow: hidden;-webkit-overflow-scrolling: touch;}
 #nav .subnav ul li.depth2:hover > a {color: #1A5CD0;}
 #nav .subnav ul li.depth3:hover > a {text-decoration: underline;}
 #nav .subnav:hover {background-color: #FCFCFC;}
+
+#nav .subnav ul li.depth2.active > a,
+#nav .subnav ul li.depth3.active > a {color: #1A5CD0;font-weight: 600;text-decoration: underline;}/* GNB 메뉴 활성화 .active 사용 : 250408 추가 */
 @media (max-width: 1200px) {
     #nav {display: none;}
 }
@@ -44,17 +47,22 @@ body.fixed {overflow: hidden;-webkit-overflow-scrolling: touch;}
 .mobile_menu {display: none; position: fixed;top: 70px;left: 0;width: 100%;height: 100%;background-color: #09408A;z-index: 10;}
 .mobile_menu.active {display: block;}
 .mobile_menu > ul {padding: 30px 0;}
-.mobile_menu > ul > li {width: 130px;padding: 15px 0 15px 20px;}
-.mobile_menu > ul > li > a {color:#7493BD;}
+.mobile_menu > ul > li {width: 130px;}
+.mobile_menu > ul > li > a {display: inline-block;width: 100%;padding: 15px 0 15px 20px;color:#7493BD;}
 .mobile_menu > ul > li.on > a,
 .mobile_menu > ul > li:hover > a {color: #ffffff;text-decoration: underline;}
 .mobile_menu .subnav {display: none; position: absolute;top: 0;left: 130px;width: calc(100% - 130px);height: 100%;background: #ffffff;border-top: 1px solid #dddddd;z-index: 10;}
 .mobile_menu > ul > li.on .subnav {display: block;}
-.mobile_menu > ul > li.on .subnav > ul > li {padding: 15px 0;margin: 0 15px;border-bottom: 1px solid #dddddd;}
+.mobile_menu > ul > li.on .subnav > ul > li {margin: 0 15px;border-bottom: 1px solid #dddddd;}
+.mobile_menu > ul > li.on .subnav > ul > li > a {display: inline-block; width: 100%; padding: 15px 0;}
+.mobile_menu > ul > li.on .subnav > ul > li > a:hover,
+.mobile_menu > ul > li.on .subnav > ul > li.on > a {font-weight: 600;color: #000000;}
 .mobile_menu > ul > li.on ul li.drops {background: url("../images/ico_add2.svg") no-repeat;background-position: right 15px;}
 .mobile_menu > ul > li.on ul li.drops.on {background: url("../images/ico_minus.svg") no-repeat;background-position: right 15px;}
-.mobile_menu > ul > li.on ul li.drops.on ul {display: block;border-top: 1px solid #dddddd;padding: 10px 0;margin-top: 10px;}
+.mobile_menu > ul > li.on ul li.drops.on ul {display: block;border-top: 1px solid #dddddd;padding: 10px 0;}
 .mobile_menu > ul > li.on ul li.drops.on ul li {padding: 5px 0;font-size: 14px;color: #696969;}
+.mobile_menu > ul > li.on ul li.drops.on ul li a:hover,
+.mobile_menu > ul > li.on ul li.drops.on ul li.active a {text-decoration: underline;font-weight: 600;color: #000000;}
 .mobile_menu > ul > li.on ul li ul {display: none;}
     
 

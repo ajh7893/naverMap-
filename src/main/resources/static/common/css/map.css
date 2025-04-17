@@ -8,3 +8,10 @@
     position: relative;
     z-index: 1;
 }
+
+.map-tooltip {
+    position: absolute;
+    z-index: 1000; /* 충분히 높게! */
+    pointer-events: auto; /* 닫기 버튼도 동작하게 */
+    min-width: 200px;
+}

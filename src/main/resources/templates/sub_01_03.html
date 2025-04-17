@@ -13,16 +13,19 @@
 
     <link rel="shortcut icon" href="/common/images/favicon.ico" type="image/x-icon">
 
-    <!-- /common -->
+    <!-- common -->
     <link rel="stylesheet" type="text/css" href="/common/plugin/bootstrap/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="/common/css/default.css">
     <script src="/common/js/jquery-1.12.4.min.js"></script>
     <script src="/common/js/jquery-ui.js"></script>
     <script src="/common/js/customScript.js"></script>
 
-    <!-- apex chart lib -->
-    <script src="/common/js/apexchart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <!-- d3 and c3 -->
+    <link rel="stylesheet" type="text/css" href="/common/css/c3.min.css">
+    <script src="/common/js/d3.v3.min.js"></script>
+    <script src="/common/js/c3.min.js"></script>
+    <script src="/common/js/ChartCommon.js"></script>
+    <script src="/common/js/saveSvgAsPng.js"></script>
 
     <!-- 네이버  지도 -->
     <script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?govClientId=tzo0erifbf"></script>
@@ -485,8 +488,8 @@
                                     <th>비고</th>
                                 </tr>
                                 </thead>
-                                <tbody>
-                                <tr>
+                                <tbody id="list">
+                                <tr data-lat="37.3595704" data-lng="127.105399">
                                     <td>분수</td>
                                     <td>권선 광장공원 바닥분수</td>
                                     <td>권선구 권선동 1252</td>
@@ -494,7 +497,7 @@
                                     <td>운영중단</td>
                                     <td></td>
                                 </tr>
-                                <tr>
+                                <tr data-lat="37.3595704" data-lng="127.105399">
                                     <td>분수</td>
                                     <td>권선 광장공원 바닥분수</td>
                                     <td>권선구 권선동 1252</td>
@@ -568,156 +571,210 @@
                                 </tr>
                                 </tbody>
                             </table>
-                            <nav class="text-center mt20 mb20">
-                                <ul class="pagination">
-                                    <li class="pageBtn page_first"><a href="#!" arial-label="prev" title="처음"><span
-                                            aria-hidden="true"></span></a></li>
-                                    <li class="pageBtn page_prev"><a href="#!" aria-label="prev" title="이전"><span
-                                            aria-hidden="true"></span></a></li>
-                                    <li class="on"><a href="#1" title="현재페이지">1</a></li>
-                                    <li><a href="#!">2</a></li>
-                                    <li><a href="#!">3</a></li>
-                                    <li><a href="#!">4</a></li>
-                                    <li><a href="#!">5</a></li>
-                                    <li><a href="#!">6</a></li>
-                                    <li><a href="#!">7</a></li>
-                                    <li><a href="#!">8</a></li>
-                                    <li><a href="#!">9</a></li>
-                                    <li><a href="#!">10</a></li>
-                                    <li class="pageBtn page_next"><a href="#!" arial-label="Next" title="다음"><span
-                                            aria-hidden="true"></span></a></li>
-                                    <li class="pageBtn page_last"><a href="#!" aria-label="Next" title="마지막"><span
-                                            aria-hidden="true"></span></a></li>
-                                </ul>
-                            </nav>
                         </div>
+                        <nav class="text-center mt20 mb20">
+                            <ul class="pagination">
+                                <li class="pageBtn page_first"><a href="#!" arial-label="prev" title="처음"><span
+                                        aria-hidden="true"></span></a></li>
+                                <li class="pageBtn page_prev"><a href="#!" aria-label="prev" title="이전"><span
+                                        aria-hidden="true"></span></a></li>
+                                <li class="on"><a href="#1" title="현재페이지">1</a></li>
+                                <li><a href="#!">2</a></li>
+                                <li><a href="#!">3</a></li>
+                                <li><a href="#!">4</a></li>
+                                <li><a href="#!">5</a></li>
+                                <li><a href="#!">6</a></li>
+                                <li><a href="#!">7</a></li>
+                                <li><a href="#!">8</a></li>
+                                <li><a href="#!">9</a></li>
+                                <li><a href="#!">10</a></li>
+                                <li class="pageBtn page_next"><a href="#!" arial-label="Next" title="다음"><span
+                                        aria-hidden="true"></span></a></li>
+                                <li class="pageBtn page_last"><a href="#!" aria-label="Next" title="마지막"><span
+                                        aria-hidden="true"></span></a></li>
+                            </ul>
+                        </nav>
                     </div>
 
-                    <div class="contents_map_wrap mt30" id="contents_map">
-                        <div class="contents_map"></div>
-                        <!-- <div class="contents_map_tail">
-                            <p class="txt_alert">실제 데이터와 일부 다를 수 있습니다.</p>
-                        </div> -->
+                    <div class="contents_map_wrap mt30">
+                        <div id="sampleMap" class="contents_map"></div>
+
+                        <!-- 해당 지도 팝업 -->
+                        <!--                        <div class="map_pop">-->
+                        <!--                            <div class="map_pop_title">-->
+                        <!--                                <div>정자공원 바닥분수</div>-->
+                        <!--                                <a href="#!"><img src="/common/images/ico_close_w.svg" alt="닫기"></a>-->
+                        <!--                            </div>-->
+                        <!--                            <div class="map_pop_con">-->
+                        <!--                                <dl>-->
+                        <!--                                    <dt>주소</dt>-->
+                        <!--                                    <dd>경기도 수원시 장안구 정자동 869-1</dd>-->
+                        <!--                                </dl>-->
+                        <!--                            </div>-->
+                        <!--                        </div>-->
+
+                        <!-- 범례3_아이콘형태 -->
+                        <div class="map_legend_icon">
+                            <ul>
+                                <li><span><img src="/common/images/ico_flt_2.svg" alt="분수"></span> 분수</li>
+                                <li><span><img src="/common/images/ico_flt_3.svg" alt="계류시설"></span> 계류시설</li>
+                                <li><span><img src="/common/images/ico_flt_4.svg" alt="벽천"></span> 벽천</li>
+                                <li><span><img src="/common/images/ico_flt_5.svg" alt="조합놀이대"></span> 조합놀이대</li>
+                            </ul>
+                        </div>
+                        <!-- //범례3_아이콘형태 -->
                     </div>
 
                     <script>
-                        // 지역 GeoJSON 데이터를 담을 배열과 로딩 개수를 추적할 변수 선언
-                        var regionGeoJson = [],
-                            loadCount = 0;
-
-                        // 네이버 지도 객체 생성
-                        var map = new naver.maps.Map(document.getElementById('contents_map'), {
-                            zoom: 9, // 초기 확대 레벨
+                        var map = new naver.maps.Map(document.getElementById('sampleMap'), {
+                            zoom: 10, // 초기 확대 레벨
                             mapTypeId: 'normal', // 일반 지도 타입
-                            center: new naver.maps.LatLng(37.5662952, 126.9779451) //서울 시청
-
+                            center: new naver.maps.LatLng(37.3595704, 127.105399)
                         });
 
-                        // 지도 초기화가 완료되었을 때 단 한 번 실행되는 콜백 함수 등록
-                        naver.maps.Event.once(map, 'init', function () {
-                            var keyword = '01'; // 키워드 설정 (현재는 사용되지 않음)
+                        drawWATERFCLTSLayer('FOUNTAIN')
+                        drawWATERFCLTSLayer('MOORAGE')
+                        drawWATERFCLTSLayer('WATERFLOW')
+                        drawWATERFCLTSLayer('COMBINATION')
 
-                            // GeoJSON 파일 비동기 로드 (경기도 지역)
-                            //https://water.gg.go.kr/geoserver/GWMS_works/ows?service=WFS&version=1.1.0&request=GetFeature&typeName=GWMS_works:SIGUNGU&outputFormat=application/json&SRSNAME=EPSG:4326
+                        function drawWATERFCLTSLayer(markerNm) {
+                            var url = 'http://localhost'
+                            var path = '/data/'
+
+
+                            var img;
+                            var hydrKndType = '분수';
+
+                            switch (markerNm) {
+                                case "FOUNTAIN":
+                                    img = '/common/images/ico_marker_2.svg';
+                                    hydrKndType = "분수";
+                                    break;
+                                case "MOORAGE":
+                                    img = '/common/images/ico_marker_3.svg';
+                                    hydrKndType = "계류시설";
+                                    break;
+                                case "WATERFLOW":
+                                    img = '/common/images/ico_marker_4.svg';
+                                    hydrKndType = "벽천";
+                                    break;
+                                case "COMBINATION":
+                                    img = '/common/images/ico_marker_5.svg';
+                                    hydrKndType = "조합놀이대";
+                                    break;
+                            }
+
+                            var param = 'ctzn_selectDrawMapData_' + hydrKndType + '.json';
+
                             $.ajax({
-                                url: 'http://localhost/data/경기도.json', // 지역별 GeoJSON 파일 경로 https://water.gg.go.kr/geoserver/GWMS_works/ows?service=WFS&version=1.1.0&request=GetFeature&typeName=GWMS_works:SIGUNGU&outputFormat=application/json&SRSNAME=EPSG:4326
+                                url: url + path + param,  //https://water.gg.go.kr/ctzn/selectDrawMapData.do?sigunNm=all&hydrKndType=%EB%B6%84%EC%88%98
+                                dataType: 'json',
+                                data: {sigunNm: ''},
                                 success: function (geojson) {
-                                    regionGeoJson[0] = geojson; // 데이터 저장
-                                    console.log(regionGeoJson); // 디버깅용 출력
-                                    loadCount++;
+                                    console.log("원본 데이터:", geojson.list);
+                                    var transformedData = geojson.list.map(item => {
+                                        var converted = webMercatorToWGS84(parseFloat(item.x), parseFloat(item.y));
+                                        return {
+                                            ...item,
+                                            latitude: converted.lat,
+                                            longitude: converted.lon
+                                        };
+                                    });
 
-                                    // 모든 데이터를 다 불러왔을 때만 지도에 레이어 표시 시작
-                                    if (loadCount === 1) {
-                                        startDataLayer();
+                                    if (map) {
+                                        var markerList = []; // 새롭게 추가될 마커 리스트
+
+                                        for (var i = 0; i < transformedData.length; i++) {
+                                            (function (i) {
+                                                var position = new naver.maps.LatLng(transformedData[i].latitude, transformedData[i].longitude);
+                                                var marker = new naver.maps.Marker({
+                                                    position: position,
+                                                    map: map,
+                                                    title: transformedData[i].fcltyNm,
+                                                    icon: {
+                                                        content: [
+                                                            '<div className="map_marker">',
+                                                            '    <div className="point_img flt_1"></div>',
+                                                            '<img src="' + img + '" alt="마커 아이콘" style="width: 24px; height: 37px;">',
+                                                            '</div>',
+                                                        ].join(''),
+                                                        size: new naver.maps.Size(38, 58),
+                                                        anchor: new naver.maps.Point(19, 58),
+                                                    },
+                                                    draggable: false
+                                                });
+
+                                                var contentString = [
+                                                    '<div class="mapPopUp" style="top:0%;left:0%;">',
+                                                    '    <div class="place_title">',
+                                                    '        <div class="flt_icon flt_1">' + hydrKndType + '</div>',
+                                                    '        <span class="able">' + hydrKndType + '</span>',
+                                                    '        <a href="#!" class="btn_close" onclick="closeInfoWindow()"></a>',
+                                                    '    </div>',
+                                                    '    <div class="place_con">',
+                                                    '        <div class="img" style="background-image: url(\'/common/images/sample_img.jpg\');"></div>',
+                                                    '        <div>',
+                                                    '            <p class="place_name">' + transformedData[i].fcltyNm + '</p>',
+                                                    '            <ul class="place_info">',
+                                                    '                <li>검사일 : <span>' + (transformedData[i].inspctDt || "정보 없음") + '</span></li>',
+                                                    '                <li>주소 : <span>' + transformedData[i].adres + '</span></li>',
+                                                    '                <li>담당부서 : <span>' + (transformedData[i].inspctEngn || "정보 없음") + '</span></li>',
+                                                    '                <li>연락처 : <span>' + (transformedData[i].contact || "정보 없음") + '</span></li>',
+                                                    '            </ul>',
+                                                    '        </div>',
+                                                    '    </div>',
+                                                    '</div>'
+                                                ].join('');
+
+                                                var infowindow = new naver.maps.InfoWindow({
+                                                    content: contentString,
+                                                    backgroundColor: null,
+                                                    borderColor: null,
+                                                    borderWidth: null,
+                                                    disableAnchor: true //네이버지도 마커 말풍선 옵션
+                                                });
+
+                                                naver.maps.Event.addListener(marker, "click", function () {
+                                                    if (infowindow.getMap()) {
+                                                        console.log('close');
+                                                        infowindow.close();
+                                                    } else {
+                                                        console.log('open');
+                                                        infowindow.open(map, marker);
+                                                        currentInfoWindow = infowindow;
+                                                    }
+                                                });
+
+                                                markerList.push(marker); // 마커 리스트에 추가
+                                            })(i);
+                                        }
+
+                                    } else {
+                                        console.error("지도 객체가 초기화되지 않았습니다.");
                                     }
                                 }
                             });
-                        });
+                        }
 
-                        // 지도 위에 나타날 툴팁(div 엘리먼트) 생성
-                        var tooltip = $('<div style="position:absolute;z-index:1000;padding:5px 10px;background-color:#fff;border:solid 2px #000;font-size:14px;pointer-events:none;display:none;"></div>');
+                        var currentInfoWindow; // 현재 열린 InfoWindow를 저장하는 변수
 
-                        // 툴팁을 지도 floatPane(레이어 중 하나)에 추가
-                        tooltip.appendTo(map.getPanes().floatPane);
+                        function closeInfoWindow() {
+                            console.log('close')
+                            console.log(currentInfoWindow)
+                            if (currentInfoWindow) {
+                                currentInfoWindow.close();
+                                currentInfoWindow = null; // 변수 초기화
+                            }
+                        }
 
-                        // GeoJSON 데이터를 지도에 스타일링해서 뿌려주는 함수
-                        function startDataLayer() {
-                            // feature별로 스타일 지정
-                            map.data.setStyle(function (feature) {
-                                var regionName = feature.getProperty('SIGUNGU_NM');
+                        function webMercatorToWGS84(x, y) {
+                            var R = 6378137;
 
+                            var lon = (x / R) * (180 / Math.PI);
+                            var lat = (y / R) * (180 / Math.PI);
+                            lat = (180 / Math.PI) * (2 * Math.atan(Math.exp(lat * Math.PI / 180)) - Math.PI / 2);
 
-                                var styleOptions = {
-                                    fillColor: '#ff0000',     // 기본 빨간색 채우기
-                                    fillOpacity: 0.0001,      // 거의 투명
-                                    strokeColor: '#ff0000',   // 테두리 색
-                                    strokeWeight: 2,          // 테두리 두께
-                                    strokeOpacity: 0.4        // 테두리 투명도
-                                };
-
-                                // 가평군일 때만 빨간색으로 꽉 채우기
-                                //if (regionName === '가평군') {
-                                 //   styleOptions.fillOpacity = 0.6;
-                                //}
-                                // focus 속성이 true인 경우 강조 스타일 적용
-                                if (feature.getProperty('focus')) {
-                                    styleOptions.fillOpacity = 0.6;
-                                    styleOptions.fillColor = '#0f0';     // 초록색 강조
-                                    styleOptions.strokeColor = '#0f0';
-                                    styleOptions.strokeWeight = 4;
-                                    styleOptions.strokeOpacity = 1;
-                                }
-                                // 특정 지역만 색을 채우기
-                                if (feature.getProperty('fill') === true) {
-                                    styleOptions.fillOpacity = 0.5; // 꽉 채우기
-                                }
-
-                                return styleOptions;
-                            });
-
-                            // 불러온 GeoJSON 데이터를 지도에 추가
-                            regionGeoJson.forEach(function (geojson) {
-                                map.data.addGeoJson(geojson);
-                            });
-
-                            // feature 클릭 시 강조/비강조 토글
-                            map.data.addListener('click', function (e) {
-                                var feature = e.feature;
-
-                                if (feature.getProperty('focus') !== true) {
-                                    feature.setProperty('focus', true);  // 강조
-                                } else {
-                                    feature.setProperty('focus', false); // 비강조
-                                }
-                            });
-
-                            // 마우스를 feature 위에 올렸을 때 툴팁 표시 + 임시 스타일 강조
-                            map.data.addListener('mouseover', function (e) {
-                                var feature = e.feature,
-                                    regionName = feature.getProperty('SIGUNGU_NM'); // 지역명 속성 추출
-
-                                //console.log(feature); // feature 객체 확인
-
-                                // 툴팁 위치 및 텍스트 설정
-                                tooltip.css({
-                                    display: '',
-                                    left: e.offset.x,
-                                    top: e.offset.y
-                                }).text(regionName );
-
-                                // 마우스 오버 시 임시 스타일 적용
-                                map.data.overrideStyle(feature, {
-                                    fillOpacity: 0.6,
-                                    strokeWeight: 4,
-                                    strokeOpacity: 1
-                                });
-                            });
-
-                            // 마우스가 feature를 벗어났을 때 툴팁 숨기고 원래 스타일로 복구
-                            map.data.addListener('mouseout', function (e) {
-                                tooltip.hide().empty();
-                                map.data.revertStyle();
-                            });
+                            return {lat, lon};
                         }
 
                     </script>
@@ -730,7 +787,8 @@
                 <!-- //contents -->
 
                 <!-- Modal -->
-                <div class="modal" id="subModal">
+                <!-- Modal : 물놀이 시설 팝업 -->
+                <div class="modal" id="subModal"  >
                     <div class="modalPopup popWidth1">
                         <div class="modalPopup_header">
                             <span>권선 광장공원 바닥분수</span>
@@ -752,12 +810,15 @@
                                             <tr>
                                                 <th>위치</th>
                                                 <td>
-                                                    <div class="d-flex justify-content-between mb10">
+                                                    <div class="d-flex justify-content-between align-items-center">
                                                         <span>권선구 권선동 1252</span>
-                                                        <ul class="d-flex">
-                                                            <li><a href="#!">as</a></li>
-                                                            <li><a href="#!">as</a></li>
-                                                            <li><a href="#!">as</a></li>
+                                                        <ul class="popup_sns">
+                                                            <li class="sns_k"><a href="#!" target="_blank"
+                                                                                 title="카카오톡"></a></li>
+                                                            <li class="sns_x"><a href="#!" target="_blank"
+                                                                                 title="트위터"></a></li>
+                                                            <li class="sns_f"><a href="#!" target="_blank"
+                                                                                 title="페이스북"></a></li>
                                                         </ul>
                                                     </div>
                                                 </td>
@@ -786,7 +847,7 @@
                                         </table>
                                     </div>
                                     <div>
-                                        <div class="d-flex justify-content-between mb10">
+                                        <div class="d-flex justify-content-between">
                                             <h6 class="popCtitle">검사 결과</h6>
                                             <div>
                                                 <select class="input" name="result1">
@@ -827,21 +888,22 @@
                                 </div>
                                 <div class="right">
                                     <h6 class="popCtitle">물놀이시설 보기</h6>
-                                    <div class="modal_map"></div>
+                                    <div class="modal_map" id="map"></div>
                                 </div>
+
                             </div>
                             <div class="mt20">
                                 <h6 class="popCtitle">물놀이시설 사진</h6>
                                 <div class="popSlider_wrap">
                                     <div class="popSlider">
                                         <div class="slide">
-                                            <a href="#!"><img src="//common/images/sample_img.jpg" alt=""/></a>
+                                            <a href="#!"><img src="/common/images/sample_img.jpg" alt=""/></a>
                                         </div>
                                         <div class="slide">
-                                            <a href="#!"><img src="//common/images/ic_wf_01.jpg" alt=""/></a>
+                                            <a href="#!"><img src="/common/images/ic_wf_01.jpg" alt=""/></a>
                                         </div>
                                         <div class="slide">
-                                            <a href="#!"><img src="//common/images/sample_img.jpg" alt=""/></a>
+                                            <a href="#!"><img src="/common/images/sample_img.jpg" alt=""/></a>
                                         </div>
                                     </div>
                                     <div class="pop_custom_paging"></div>
@@ -850,6 +912,64 @@
                         </div>
                     </div>
                 </div>
+                <script>
+
+                    // 전역 변수 선언
+                    let modalMap = null;
+                    let marker = null;
+
+                    document.addEventListener("DOMContentLoaded", function () {
+                        const rowList = document.querySelectorAll("#list tr"); // ✅ 각 tr을 배열로 선택
+                        const modal = document.getElementById("subModal");
+                        const closeBtn = document.querySelector(".btnpClose");
+
+                        rowList.forEach(function (row) {
+                            row.addEventListener("click", function () {
+                                const lat = parseFloat(row.dataset.lat || "37.3595704");
+                                const lng = parseFloat(row.dataset.lng || "127.105399");
+                                const position = new naver.maps.LatLng(lat, lng);
+
+                                // 모달 열기
+                                modal.style.display = "block";
+
+                                // 지도 초기화 또는 재사용
+                                if (!modalMap) {
+                                    modalMap = new naver.maps.Map("map", {
+                                        center: position,
+                                        zoom: 15
+                                    });
+                                } else {
+                                    modalMap.setCenter(position);
+                                    naver.maps.Event.trigger(modalMap, 'resize');
+                                }
+
+                                // 기존 마커 제거
+                                if (marker) {
+                                    marker.setMap(null);
+                                }
+
+                                // 새 마커 추가
+                                marker = new naver.maps.Marker({
+                                    position: position,
+                                    map: modalMap,
+                                    title: "위치",
+                                    icon: {
+                                        url: "/common/images/ico_marker_2.svg",
+                                        size: new naver.maps.Size(24, 37),
+                                        anchor: new naver.maps.Point(12, 37)
+                                    }
+                                });
+                            });
+                        });
+
+                        // 닫기 버튼
+                        closeBtn.addEventListener("click", function (e) {
+                            e.preventDefault();
+                            modal.style.display = "none";
+                        });
+                    });
+
+                </script>
                 <!-- //Modal -->
             </div>
         </div>
